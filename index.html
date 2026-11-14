@@ -546,6 +546,22 @@ body:not([data-screen="world"]) #pad{display:none}
   .bpanel .mrow .log{border-right:0;border-bottom:3px dashed var(--lcd-2);padding:2px 4px 6px}
 }
 @media (prefers-reduced-motion:reduce){.mon,.arena *{animation:none!important}.sp-bar em{transition:none}}
+/* start-screen import box, streak and critical hits */
+#stImport{border:3px solid var(--ink);border-radius:4px;background:#f6fae9;padding:8px 10px;display:flex;flex-direction:column;gap:6px;font-size:13px}
+#stImport[hidden]{display:none}
+.st-row{grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px}
+.st-row .btn{font-size:13px;line-height:1.2;padding:4px 3px;min-height:46px}
+#start .flash{margin:0;padding:6px 10px;font-size:13px}
+@media (max-width:520px),(max-height:640px){#start .btn.primary small{font-size:11px}#start [data-act="continue"]{min-height:44px;padding:5px 8px}#start.has-cont .track small{display:none}}
+#stCode{width:100%;height:64px;font:12px/1.35 var(--body);border:2px solid var(--ink);border-radius:3px;padding:6px;background:#fff;color:var(--ink);word-break:break-all;resize:none}
+#stImport .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+#stMsg{font-weight:700;color:var(--hurt)}
+.stk{margin-top:3px;font:700 10.5px/1.2 var(--body);color:#5a6170;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stk.hot{color:#b3122c}
+.crit{font-weight:800;color:#8a5a00;background:var(--gold);border-radius:3px;padding:2px 8px;display:inline-block}
+.arena.crit{animation:shake .45s .3s}
+.arena.crit .flash{background:var(--gold);animation:goldflash .4s .3s}
+@media (orientation:landscape) and (max-height:560px){#stImport{grid-column:1/-1}}
 </style>
 </head>
 <body data-screen="world">
@@ -949,6 +965,8 @@ function bgmToggle() {
 
 /* ───────────── STATE ───────────── */
 let mode = 'world', b = null, cool = 3, frame = 0;
+let combo = 0;   // consecutive right answers in battles; every 3rd one earns a streak bonus (extra mastery and +1 HP, never skipped practice)
+const CRIT = '<p class="crit">★ STREAK BONUS! Double mastery XP · +1 HP</p>';
 const P = { x: S.x, y: S.y, dir: S.dir, moving: false, pr: 0, tx: S.x, ty: S.y, step: 0 };
 const DX = [0, 0, -1, 1], DY = [1, -1, 0, 0];
 const held = [];
@@ -1220,12 +1238,15 @@ function answerWild(v) {
   const w = b.w, q = b.q, d = dexOf(w.h), ok = v === q.ans, H = zh('<b class="han">' + w.h + '</b>');
   b.phase = 'res';
   if (ok) {
-    const gain = b.hint ? 5 : 10;   // a hint halves the XP for that answer
+    combo++;
+    const crit = combo % 3 === 0;   // streak bonus: the spirit still takes 1 damage, so no question is skipped
+    const gain = (b.hint ? 5 : 10) * (crit ? 2 : 1);   // a hint halves the XP for that answer, a streak bonus doubles it
     d.xp = Math.min(100, d.xp + gain);
+    if (crit) { S.hp = Math.min(maxHP(), S.hp + 1); hud(); }
     let cleared = markHit(d);
     if (q.action === 'atk') {
-      b.fx = 'hit'; sfx('hit');
-      b.hp--;
+      b.fx = crit ? 'hit crit' : 'hit'; sfx(crit ? 'crit' : 'hit');
+      b.hp = Math.max(0, b.hp - 1);
       if (b.hp <= 0) { b.over = 1; b.log = `<p class="good">Correct! ${H} is out of energy and drifts back into the grass.</p><p>${d.c ? 'Mastery +' + gain + ' XP.' : 'It was not sealed. Next time, Seal it when one heart is left.'}</p>`; }
       else b.log = `<p class="good">Correct! Your strike lands.</p><p>${b.hp === 1 && !d.c ? 'One heart left. A Seal cannot fail now.' : 'Mastery +' + gain + ' XP.'}</p>`;
     } else if (Math.random() < [1, 1, 0.6, 0.3][b.hp]) {
@@ -1233,8 +1254,10 @@ function answerWild(v) {
       if (!b.missed && d.missedCount > 0) { d.missedCount = 0; d.streak = 0; cleared = true; }
       b.log = `<p class="good">Correct, and the seal holds!</p><p>${H} was added to your HanziDex.</p>`;
     } else b.fx = 'seal-fail', sfx('sealfail'), b.log = `<p class="good">Correct, but ${H} broke the seal.</p><p>Weaken it first. At one heart the seal always holds.</p>`;
+    if (crit) b.log = CRIT + b.log;
     if (cleared) b.log += CLEARED;
   } else {
+    combo = 0;
     markMiss(d); b.missed = 1; b.fx = 'miss'; sfx('miss');
     const dmg = 3 + w.z, why = whyText(q, w);
     hurt(dmg);
@@ -1264,10 +1287,21 @@ function checkSentence() {
   const full = `<span class="sent" lang="zh-Hans">${s.ok[0]}</span><br><span>${s.tiles.map(t => t.p).join(' ')}</span>`;
   b.phase = 'res';
   if (ok) {
-    b.queue.shift(); b.fx = 'hit'; sfx('hit'); speak(mine);
-    b.log = `<p class="good">Direct hit! "${s.en}"</p><p>${full}</p>`;
+    combo++;
+    const crit = combo % 3 === 0;   // streak bonus: every sentence is still played
+    b.queue.shift();
+    let bonus = '';
+    if (crit) {   // +1 HP, and extra mastery for every sealed spirit that appears in this sentence
+      S.hp = Math.min(maxHP(), S.hp + 1); hud();
+      const got = WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c && s.ok[0].includes(w.h));
+      got.forEach(w => { S.dex[w.h].xp = Math.min(100, S.dex[w.h].xp + 10); });
+      bonus = `<p class="crit">★ STREAK BONUS! +1 HP${got.length ? ' · +10 mastery for ' + zh(got.map(w => w.h).join(' ')) : ''}</p>`;
+    }
+    b.fx = crit ? 'hit crit' : 'hit'; sfx(crit ? 'crit' : 'hit'); speak(mine);
+    b.log = `${bonus}<p class="good">Direct hit! "${s.en}"</p><p>${full}</p>`;
     if (!b.queue.length) b.over = 1;
   } else {
+    combo = 0;
     b.queue.push(b.queue.shift()); b.fx = 'miss'; sfx('miss');
     const dmg = 4 + zoneOf(b.n.x) + (b.n.gym != null ? 1 : 0); hurt(dmg);
     b.log = `<p class="bad">Not quite. ${b.n.name} hits you for ${dmg} HP.</p><div class="fbrow"><div class="fb no"><span class="tagl">✗ WRONG · YOUR ORDER</span><span class="sent" lang="zh-Hans">${mine}</span><br>${b.placed.map(i => s.tiles[i].p).join(' ')}</div><div class="fb yes"><span class="tagl">✓ CORRECT ORDER</span>${full}<br>"${s.en}"</div></div><p><b>Why:</b> ${G[s.g].replace(/[⺀-鿿…]+/g, m => zh(m))}</p>`;
@@ -1306,6 +1340,7 @@ const SFX = {
   hit: [[880, 0, .05, 'square'], [440, .06, .08, 'square'], [220, .14, .12, 'sawtooth']],
   miss: [[130, .1, .16, 'sawtooth'], [98, .26, .24, 'sawtooth']],
   seal: [[660, 0, .07, 'square'], [520, .62, .05, 'square'], [520, .86, .05, 'square'], [520, 1.1, .05, 'square'], [784, 1.4, .08, 'square'], [1047, 1.48, .08, 'square'], [1319, 1.56, .18, 'square']],
+  crit: [[880, 0, .05, 'square'], [440, .06, .08, 'square'], [220, .14, .12, 'sawtooth'], [988, .3, .07, 'square'], [1319, .38, .07, 'square'], [1760, .46, .16, 'square']],
   sealfail: [[660, 0, .07, 'square'], [520, .62, .05, 'square'], [520, .86, .05, 'square'], [520, 1.1, .05, 'square'], [196, 1.4, .28, 'sawtooth']],
 };
 function sfx(name) {
@@ -1343,7 +1378,8 @@ function arenaHTML() {
   return `<div class="arena${b.fx ? ' fx-' + b.fx : ''}"><div class="plat foe"></div>${foe}${plate}<i class="flash"></i><span class="talis" lang="zh-Hans" aria-hidden="true">封</span><div class="plat me"></div><img class="me-img" src="${spriteURL(av.col, 1, 'av' + S.avatar)}" alt="">
     <div class="splate me"><div class="sp-top"><b>${av.name}</b><span>${Math.max(0, S.hp)}/${m}</span></div>
       <div class="sp-bar"><span>HP</span><i><em class="${hpCls(pf)}" ${slide('p', 100 * pf)}></em></i></div>
-      <div class="sp-bar xpbar"><span>XP</span><i><em class="xp" style="width:${xp}%"></em></i></div></div></div>`;
+      <div class="sp-bar xpbar"><span>XP</span><i><em class="xp" style="width:${xp}%"></em></i></div>
+      <div class="stk${combo % 3 === 2 ? ' hot' : ''}">🔥 Streak: ${combo}${combo % 3 === 2 ? ' · bonus next' : ''}</div></div></div>`;
 }
 function render() {
   if (!b) return;
@@ -1933,7 +1969,7 @@ C: { name: 'HSK 3+', cards: [
 
 /* ───────────── START SCREEN AND TRACKS ───────────── */
 const FEEDBACK_URL = 'https://forms.gle/sxKa1P7Hz9RGFvTa6';
-const VERSION = 'v2.6 Beta';
+const VERSION = 'v2.7 Beta';
 const DRAGON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="0" y="0" width="1" height="1" fill="#f2b632"/><rect x="15" y="0" width="1" height="1" fill="#f2b632"/><rect x="0" y="1" width="2" height="1" fill="#f2b632"/><rect x="14" y="1" width="2" height="1" fill="#f2b632"/><rect x="1" y="2" width="2" height="1" fill="#f2b632"/><rect x="13" y="2" width="2" height="1" fill="#f2b632"/><rect x="2" y="3" width="2" height="1" fill="#f2b632"/><rect x="4" y="3" width="8" height="1" fill="#c8102e"/><rect x="12" y="3" width="2" height="1" fill="#f2b632"/><rect x="0" y="4" width="1" height="1" fill="#f2b632"/><rect x="2" y="4" width="1" height="1" fill="#7a0a1c"/><rect x="3" y="4" width="10" height="1" fill="#c8102e"/><rect x="13" y="4" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="4" width="1" height="1" fill="#f2b632"/><rect x="0" y="5" width="1" height="1" fill="#f2b632"/><rect x="1" y="5" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="5" width="1" height="1" fill="#c8102e"/><rect x="3" y="5" width="3" height="1" fill="#7a0a1c"/><rect x="6" y="5" width="4" height="1" fill="#c8102e"/><rect x="10" y="5" width="3" height="1" fill="#7a0a1c"/><rect x="13" y="5" width="1" height="1" fill="#c8102e"/><rect x="14" y="5" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="5" width="1" height="1" fill="#f2b632"/><rect x="1" y="6" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="6" width="1" height="1" fill="#c8102e"/><rect x="3" y="6" width="2" height="1" fill="#ffffff"/><rect x="5" y="6" width="1" height="1" fill="#1b1b2f"/><rect x="6" y="6" width="4" height="1" fill="#c8102e"/><rect x="10" y="6" width="1" height="1" fill="#1b1b2f"/><rect x="11" y="6" width="2" height="1" fill="#ffffff"/><rect x="13" y="6" width="1" height="1" fill="#c8102e"/><rect x="14" y="6" width="1" height="1" fill="#7a0a1c"/><rect x="0" y="7" width="1" height="1" fill="#f2b632"/><rect x="1" y="7" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="7" width="1" height="1" fill="#c8102e"/><rect x="3" y="7" width="1" height="1" fill="#ffffff"/><rect x="4" y="7" width="2" height="1" fill="#1b1b2f"/><rect x="6" y="7" width="4" height="1" fill="#c8102e"/><rect x="10" y="7" width="2" height="1" fill="#1b1b2f"/><rect x="12" y="7" width="1" height="1" fill="#ffffff"/><rect x="13" y="7" width="1" height="1" fill="#c8102e"/><rect x="14" y="7" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="7" width="1" height="1" fill="#f2b632"/><rect x="0" y="8" width="1" height="1" fill="#f2b632"/><rect x="1" y="8" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="8" width="12" height="1" fill="#c8102e"/><rect x="14" y="8" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="8" width="1" height="1" fill="#f2b632"/><rect x="1" y="9" width="1" height="1" fill="#f2b632"/><rect x="2" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="3" y="9" width="3" height="1" fill="#c8102e"/><rect x="6" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="7" y="9" width="2" height="1" fill="#c8102e"/><rect x="9" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="10" y="9" width="3" height="1" fill="#c8102e"/><rect x="13" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="14" y="9" width="1" height="1" fill="#f2b632"/><rect x="1" y="10" width="1" height="1" fill="#f2b632"/><rect x="3" y="10" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="10" width="8" height="1" fill="#c8102e"/><rect x="12" y="10" width="1" height="1" fill="#7a0a1c"/><rect x="14" y="10" width="1" height="1" fill="#f2b632"/><rect x="0" y="11" width="1" height="1" fill="#f2b632"/><rect x="3" y="11" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="11" width="1" height="1" fill="#ffffff"/><rect x="5" y="11" width="1" height="1" fill="#c8102e"/><rect x="6" y="11" width="1" height="1" fill="#ffffff"/><rect x="7" y="11" width="2" height="1" fill="#c8102e"/><rect x="9" y="11" width="1" height="1" fill="#ffffff"/><rect x="10" y="11" width="1" height="1" fill="#c8102e"/><rect x="11" y="11" width="1" height="1" fill="#ffffff"/><rect x="12" y="11" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="11" width="1" height="1" fill="#f2b632"/><rect x="0" y="12" width="1" height="1" fill="#f2b632"/><rect x="3" y="12" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="12" width="8" height="1" fill="#c8102e"/><rect x="12" y="12" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="12" width="1" height="1" fill="#f2b632"/><rect x="4" y="13" width="8" height="1" fill="#7a0a1c"/><rect x="3" y="14" width="1" height="1" fill="#f2b632"/><rect x="5" y="14" width="2" height="1" fill="#f2b632"/><rect x="9" y="14" width="2" height="1" fill="#f2b632"/><rect x="12" y="14" width="1" height="1" fill="#f2b632"/><rect x="2" y="15" width="1" height="1" fill="#f2b632"/><rect x="6" y="15" width="1" height="1" fill="#f2b632"/><rect x="9" y="15" width="1" height="1" fill="#f2b632"/><rect x="13" y="15" width="1" height="1" fill="#f2b632"/></svg>';
 const TRACKS = {
   A: { lv: 'TRACK A · BEGINNER', t: 'Foundations First', d: 'Tones, radicals and word order. Opens the Curriculum and Radical Guide, then the HSK 1 Village. Pinyin on.' },
@@ -1941,17 +1977,19 @@ const TRACKS = {
   C: { lv: 'TRACK C · INTERMEDIATE', t: 'HSK 3+ Fast-Track', d: 'Zones 2 and 3 open now. HSK 3 grammar, work, health, renting, environment, culture. Pinyin off.' },
 };
 let started = false, infoBack = 'world', infoView = 'curr', currTab = 'A';
-function showStart() {
+function showStart(flash) {
   mode = 'start'; held.length = 0; screen_('start');
   const can = hadSave || started, sealed = WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c).length, ph = Object.keys(PHR).filter(i => S.ph[i] > 0).length, ext = /^https?:/.test(FEEDBACK_URL);
   $('#start').className = can ? 'has-cont' : '';
   $('#start').innerHTML = `<div class="st-title"><span class="emblem" role="img" aria-label="Red dragon emblem">${DRAGON_SVG}</span><div><h1>HanziMon</h1><p class="st-sub">HSK 1–3</p></div></div>
+    ${typeof flash === 'string' ? `<div class="flash">${flash}</div>` : ''}
     ${can ? `<button class="btn primary" data-act="continue">Continue Adventure<small>${S.badges.filter(Boolean).length} of 3 badges · ${sealed} spirits sealed · ${ph} phrases${S.track ? ' · Track ' + S.track : ''}</small></button>` : ''}
     <p class="st-pick">CHOOSE YOUR TRAINER</p>
     <div class="avs">${AVATARS.map((a, i) => `<button class="btn av${S.avatar === i ? ' cur' : ''}" data-av="${i}" aria-pressed="${S.avatar === i}"><img src="${spriteURL(a.col, 0, 'av' + i)}" alt=""><b>${a.name}</b><small>${a.sex}</small></button>`).join('')}</div>
     <p class="st-pick">${can ? 'OR SWITCH TRACK · YOUR PROGRESS IS KEPT' : 'CHOOSE A STARTING TRACK'}</p>
     <div class="tracks">${Object.keys(TRACKS).map(k => `<button class="btn track${S.track === k ? ' cur' : ''}" data-track="${k}"><span class="tk">${k}</span><span class="lv">${TRACKS[k].lv}</span><b>${TRACKS[k].t}</b><small>${TRACKS[k].d}</small></button>`).join('')}</div>
-    <div class="st-row"><button class="btn" data-act="curr">Curriculum</button><a class="btn" id="fbLink" href="${FEEDBACK_URL}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>Send Feedback</a>${can ? '<button class="btn" data-act="newgame">New Game</button>' : ''}</div>
+    <div class="st-row"><button class="btn" data-act="curr">Curriculum</button><a class="btn" id="fbLink" href="${FEEDBACK_URL}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>Send Feedback</a><button class="btn" data-act="simport">Import Save</button>${can ? '<button class="btn" data-act="newgame">New Game</button>' : ''}</div>
+    <div id="stImport" hidden><label for="stCode">Paste the Base64 save code from your other device.${can ? ' It replaces the progress in this browser.' : ''}</label><textarea id="stCode" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Paste the code here"></textarea><div class="row"><button class="btn primary" data-act="sload">Load this save</button><span id="stMsg" role="status"></span></div></div>
     <div id="feedback" hidden>No feedback form is linked yet.</div>
     <div class="st-foot"><span class="ver">${VERSION}</span></div>`;
 }
@@ -1988,6 +2026,12 @@ $('#start').addEventListener('click', e => {
   if (t.dataset.track) return pickTrack(t.dataset.track);
   if (t.dataset.act === 'continue') return begin();
   if (t.dataset.act === 'curr') return openInfo('curr');
+  if (t.dataset.act === 'simport') { const box = $('#stImport'); box.hidden = !box.hidden; if (!box.hidden) { box.scrollIntoView({ block: 'nearest' }); $('#stCode').focus(); } return; }
+  if (t.dataset.act === 'sload') {
+    const err = importCode($('#stCode').value);
+    if (err) { $('#stMsg').textContent = err; $('#stImport').scrollIntoView({ block: 'end' }); return; }
+    hadSave = true; return showStart('Save loaded. Tap Continue Adventure to pick up where you left off.');
+  }
 });
 function openInfo(view, back) {
   if (mode === 'battle' || mode === 'dialog') return;
