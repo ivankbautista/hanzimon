@@ -562,6 +562,82 @@ body:not([data-screen="world"]) #pad{display:none}
 .arena.crit{animation:shake .45s .3s}
 .arena.crit .flash{background:var(--gold);animation:goldflash .4s .3s}
 @media (orientation:landscape) and (max-height:560px){#stImport{grid-column:1/-1}}
+/* v2.8: daily goal, due badges, review schedule */
+.daily{display:flex;align-items:center;gap:8px;font:700 12.5px var(--body);margin-top:6px;white-space:nowrap}
+.st-title>div{min-width:0}
+.daily i{flex:1;height:10px;background:var(--lcd-2);border:2px solid var(--ink);border-radius:5px;overflow:hidden;min-width:40px}
+.daily em{display:block;height:100%;background:var(--jade)}
+.daily.done em{background:var(--gold)}
+.daily .dd{color:var(--hurt)}
+.hud-btn .due{color:var(--gold)}
+.hud-btn .due.n{background:var(--hurt);color:#fff;border-radius:8px;padding:1px 5px;margin-left:3px;font-size:8px}
+.srs{grid-column:1/-1;font-size:11.5px;opacity:.85}
+.srs.due{color:var(--hurt);font-weight:700;opacity:1}
+.pace{font-size:13px;border-left:4px solid var(--jade);padding-left:8px}
+@media (max-width:520px),(max-height:640px){.daily{font-size:11.5px;gap:5px;margin-top:4px}.daily i{min-width:24px}}
+@media (orientation:landscape) and (max-height:560px){#start>.daily{grid-column:1/-1}}
+/* v2.9: Dex filters, example sentences, three-character spirits */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.filters .btn{flex:1 1 auto;min-height:44px;padding:4px 10px;font-size:13px;white-space:nowrap}
+.filters .btn small{display:inline;font-weight:400;opacity:.75}
+.filters .btn[aria-selected="true"]{background:var(--jade);color:#fff}
+.exl{font-size:12.5px}
+.card .note.exl{border-left:3px solid var(--jade);padding-left:6px;opacity:1}
+.exb{background:none;border:0;padding:2px 4px;font-size:14px;cursor:pointer;min-width:28px;min-height:28px}
+@media (max-width:520px){.filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.filters .btn{min-height:40px;padding:3px 4px;font-size:12px}}
+.foebox.three .foe-glyph{font-size:min(22cqh,10.5cqw)}
+.foebox.three .mon{width:min(20cqh,9cqw)}
+@media (max-width:520px),(max-height:640px){.splate.foe .sp-meta{max-height:2.6em;overflow:hidden}}
+/* v3.0: coins, shop, bag, summary card, low-HP warning */
+.coins{display:flex;align-items:center;gap:5px;font:10px var(--display);color:var(--gold)}
+.coin{display:inline-block;box-sizing:border-box;width:14px;height:14px;border-radius:50%;background:var(--gold);border:2px solid #a8741a;position:relative;vertical-align:-2px;flex-shrink:0}
+.coin::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px 0 0 -2px;background:#7a4f10}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#hpfill.warn,.sp-bar em.warn{animation:hpwarn .8s steps(2,jump-none) infinite}
+@keyframes hpwarn{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){#hpfill.warn,.sp-bar em.warn{animation:none!important}}
+.cmd{grid-template-columns:repeat(6,minmax(0,1fr))}
+.cmd .c-fight,.cmd .c-seal{grid-column:span 3}
+.cmd .c-bag,.cmd .c-hint,.cmd .c-run{grid-column:span 2}
+.cmd .btn.c-bag{background:#8a5cc7}
+.duo{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+.prompt .bagm{float:right;min-height:36px;margin:-2px 0 4px 8px;font-size:12px;padding:2px 10px}
+.nopy #battle.glass .tile .py{display:block}
+.bagl{display:grid;gap:6px;align-content:start}
+.bagl p{margin:0}
+.bagit{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;min-height:44px;padding:4px 10px;font-size:14px}
+.bagit small{font-weight:400;text-align:right;flex-shrink:0;max-width:45%}
+.vsum{display:flex;flex-wrap:wrap;gap:3px 12px;align-items:center;margin-top:6px;padding:6px 8px;border:2px solid var(--ink);border-radius:5px;background:#fff7d6;font-size:13px;font-weight:700}
+.vsum>b{font:9px var(--display);color:var(--jade);width:100%}
+#battle.shop{gap:8px}
+#battle.shop .chip{font:13px var(--body)}
+.purse{margin-left:auto;display:flex;align-items:center;gap:6px;font:11px var(--display)}
+.purse .cn{font:12px var(--body);opacity:.8}
+.shopsay p{margin:0}.shopsay .who{margin-bottom:4px;font:8px var(--display);color:var(--jade)}
+.trad{opacity:.7;font-size:.85em}
+.shoplist{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.item{background:#fff;border:3px solid var(--ink);border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.4}
+.item.got{border-color:var(--jade)}
+.item .ic{font-size:26px;line-height:1}
+.item .nm{font:900 20px var(--han)}
+.item .btn{margin-top:auto}
+@media (max-width:760px),(max-height:520px){
+  .shoplist{grid-template-columns:1fr;gap:6px}
+  .item{flex-direction:row;align-items:center;padding:6px 8px;gap:8px;font-size:12.5px}
+  .item .inf{flex:1;min-width:0}
+  .item .btn{margin:0;flex-shrink:0;padding:4px 8px;font-size:13px;max-width:104px}
+  .item .ic{font-size:20px}.item .nm{font-size:17px}
+  .purse .cn{display:none}
+}
+.bagl>*{flex-shrink:0}
+.bagit{height:auto;line-height:1.25;white-space:normal}
+.bagit span{min-width:0}
+.bagit i{font-style:normal;font-family:var(--han)}
+.item .u{display:none}
+.item .pyl,.item .own{display:block}
+@media (max-width:760px),(max-height:520px){.item .d{display:none}.item .u{display:inline}.shopsay{font-size:13.5px;padding:6px 8px}.shopsay .sent{font-size:17px}.item .own{display:inline}.item .own::before{content:" · "}.item .pyl{margin-bottom:1px}#battle.shop{gap:6px;padding:8px}}
+@media (max-width:440px){#hud{gap:5px}.hud-btn{padding:7px 6px}.hp .bar{width:40px}.hp{gap:4px}.coins{gap:3px;font-size:9px}.coin{width:12px;height:12px}}
+@media (orientation:landscape) and (max-height:560px){.bagit{min-height:38px;padding:2px 10px}.bagit i{display:none}.bagit br{display:none}}
 </style>
 </head>
 <body data-screen="world">
@@ -570,6 +646,7 @@ body:not([data-screen="world"]) #pad{display:none}
     <div class="brand"><i lang="zh-Hans">汉字</i><span>HANZIMON</span></div>
     <div id="badges" aria-label="Badges"></div>
     <div class="hp"><span>HP</span><div class="bar"><i id="hpfill"></i></div><span id="hptxt"></span></div>
+    <div class="coins" title="Coins 铜钱 (tóngqián)"><i class="coin" aria-hidden="true"></i><span class="vh">Coins </span><b id="coinTxt">0</b></div>
     <button class="hud-btn" id="btnPy" aria-pressed="true">PINYIN ON</button>
     <button class="hud-btn" id="btnBgm" aria-pressed="false" aria-label="Background music"><span class="w">BGM: </span><span class="n">♪ </span>OFF</button>
     <button class="hud-btn" id="btnRad" aria-label="Radical Guide"><span class="w2">RADICAL GUIDE</span><span class="n2" lang="zh-Hans">部首</span></button>
@@ -675,8 +752,57 @@ const RAW = [
 ['把','','bǎ','3','扌','hand','(moves the object forward) / to hold',7,'扌 hand + 巴 bā (sound).'],
 ['被','','bèi','4','衤','clothing','by (passive) / quilt',10,'衤 clothing has 5 strokes. 礻 has 4.'],
 ]];
+/* Vocabulary Pack #1 (v2.9): 45 everyday HSK 1–2 words for eating out, drinks, prices, directions and mobile payment.
+   Same columns as above, plus a 10th: example sentence | pinyin | English. */
+RAW[0].push(
+  ["多少钱", "多少錢", "duōshao qián", "152", "夕", "evening", "how much (money)", 6, "多 many + 少 few asks \"how much\", and 钱 is money.", "这个多少钱？|Zhège duōshao qián?|How much is this?"],
+  ["这", "這", "zhè", "4", "辶", "walk", "this", 7, "Words 文 walking 辶 right up to you: this one here.", "我要这个。|Wǒ yào zhège.|I want this one."],
+  ["那", "", "nà", "4", "阝", "city", "that", 6, "The town 阝 over there: that one.", "那个多少钱？|Nàge duōshao qián?|How much is that one?"],
+  ["要", "", "yào", "4", "西", "west", "to want (firmly)", 9, "A woman 女 with her hands on her hips, saying exactly what she wants.", "我要一杯茶。|Wǒ yào yì bēi chá.|I want a cup of tea."],
+  ["杯", "", "bēi", "1", "木", "tree", "cup / glass", 8, "Early cups were carved from wood 木; 不 gives the sound.", "请给我一杯水。|Qǐng gěi wǒ yì bēi shuǐ.|Please give me a glass of water."],
+  ["个", "個", "gè", "4", "人", "person", "(general measure word)", 3, "A person 人 standing on one stroke: one of something. Inside a sentence it is said lightly, ge.", "我要三个。|Wǒ yào sān ge.|I want three."],
+  ["块", "塊", "kuài", "4", "土", "earth", "dollar / piece", 7, "A lump of earth 土: a piece, and the everyday word for a dollar or yuan.", "一共二十块。|Yígòng èrshí kuài.|Twenty dollars in total."],
+  ["菜", "", "cài", "4", "艹", "grass", "dish / vegetable", 11, "Grass 艹 on top: picked plants become a dish.", "这个菜很好吃。|Zhège cài hěn hǎochī.|This dish is delicious."],
+  ["面", "麵", "miàn", "4", "面", "face", "noodles", 9, "It first meant \"face\"; the simplified form also stands for noodles 麵.", "我想吃面。|Wǒ xiǎng chī miàn.|I would like to eat noodles."],
+  ["热", "熱", "rè", "4", "灬", "fire", "hot", 10, "A hand holding something over four flames 灬.", "今天很热。|Jīntiān hěn rè.|It is hot today."],
+  ["冷", "", "lěng", "3", "冫", "ice", "cold", 7, "Two drops of ice 冫, with 令 lìng for the sound.", "今天很冷。|Jīntiān hěn lěng.|It is cold today."],
+  ["大", "", "dà", "4", "大", "big", "big / large", 3, "A person stretching their arms wide: big.", "我要大杯。|Wǒ yào dà bēi.|I want a large cup."],
+  ["小", "", "xiǎo", "3", "小", "small", "small", 3, "Three tiny grains: small.", "小杯，谢谢。|Xiǎo bēi, xièxie.|A small cup, thanks."],
+  ["少", "", "shǎo", "3", "小", "small", "few / less", 4, "Small 小 with one more stroke sliced away: even less.", "少冰，谢谢。|Shǎo bīng, xièxie.|Less ice, thanks."],
+  ["去", "", "qù", "4", "厶", "private", "to go", 5, "Earth 土 above and a path leading away below: to go.", "我去地铁站。|Wǒ qù dìtiězhàn.|I am going to the subway station."],
+  ["在", "", "zài", "4", "土", "earth", "at / to be at", 6, "Something standing on the earth 土: it is there.", "洗手间在哪儿？|Xǐshǒujiān zài nǎr?|Where is the restroom?"],
+  ["哪儿", "哪兒", "nǎr", "35", "口", "mouth", "where", 9, "A mouth 口 asking about \"that\" 那: where? The 儿 only adds the r sound.", "你去哪儿？|Nǐ qù nǎr?|Where are you going?"],
+  ["前", "", "qián", "2", "刂", "knife", "front / ahead", 9, "A boat cutting forward like a knife 刂.", "一直往前走。|Yìzhí wǎng qián zǒu.|Keep going straight ahead."],
+  ["车", "車", "chē", "1", "车", "vehicle", "car / vehicle", 4, "A cart seen from above: wheels, axle and body.", "我坐车去。|Wǒ zuò chē qù.|I am going by car."],
+  ["店", "", "diàn", "4", "广", "shelter", "shop", 8, "A shelter 广 where goods are laid out; 占 gives the sound.", "这个店很便宜。|Zhège diàn hěn piányi.|This shop is cheap."],
+  ["点", "點", "diǎn", "3", "灬", "fire", "a bit / o'clock / to order", 9, "Dots like sparks 灬 from a fire: a dot, a bit, a point on the clock.", "我想点菜。|Wǒ xiǎng diǎn cài.|I would like to order."],
+  ["想", "", "xiǎng", "3", "心", "heart", "would like to / to think", 13, "Looking at something 相 with your heart 心: you would like it.", "我想喝咖啡。|Wǒ xiǎng hē kāfēi.|I would like to drink coffee."],
+  ["太", "", "tài", "4", "大", "big", "too (much)", 4, "Big 大 with one extra dot: too much.", "太贵了！|Tài guì le!|Too expensive!"],
+  ["怎么", "怎麼", "zěnme", "35", "心", "heart", "how", 9, "A heart 心 wondering how; 么 is neutral.", "地铁站怎么走？|Dìtiězhàn zěnme zǒu?|How do I get to the subway station?"],
+  ["东西", "東西", "dōngxi", "15", "一", "one", "thing / stuff", 5, "East 东 + west 西: everything from east to west is \"stuff\". 西 is neutral here.", "我想买东西。|Wǒ xiǎng mǎi dōngxi.|I want to buy something."]);
+RAW[1].push(
+  ["冰", "", "bīng", "1", "冫", "ice", "ice / iced", 6, "Water 水 with two frozen drops 冫 beside it.", "我要冰的。|Wǒ yào bīng de.|I want the iced one."],
+  ["左", "", "zuǒ", "3", "工", "work", "left", 5, "The hand that holds the tool 工 steady: the left.", "在路口往左走。|Zài lùkǒu wǎng zuǒ zǒu.|Go left at the intersection."],
+  ["右", "", "yòu", "4", "口", "mouth", "right", 5, "The hand that feeds the mouth 口: the right.", "银行在右边。|Yínháng zài yòubian.|The bank is on the right."],
+  ["走", "", "zǒu", "3", "走", "walk", "to walk / to leave", 7, "A person swinging their arms above a striding foot.", "我们走吧。|Wǒmen zǒu ba.|Let us go."],
+  ["站", "", "zhàn", "4", "立", "stand", "station / to stand", 10, "Standing 立 at a fixed spot 占: a station.", "火车站在哪儿？|Huǒchēzhàn zài nǎr?|Where is the train station?"],
+  ["便宜", "", "piányi", "25", "亻", "person", "cheap", 9, "便 is read pián only in this word, and 宜 is neutral.", "便宜一点吧。|Piányi yìdiǎn ba.|A little cheaper, please."],
+  ["支", "", "zhī", "1", "支", "branch", "to support / to pay out", 4, "A hand 又 holding up a branch: to prop up, and so to pay out.", "我用手机支付。|Wǒ yòng shǒujī zhīfù.|I pay with my phone."],
+  ["付", "", "fù", "4", "亻", "person", "to pay", 5, "A person 亻 handing something over with their hand 寸.", "我来付钱。|Wǒ lái fù qián.|I will pay."],
+  ["扫", "掃", "sǎo", "3", "扌", "hand", "to scan / to sweep", 6, "A hand 扌 with a broom 彐: sweep, and now sweep a phone over a code.", "请扫这个码。|Qǐng sǎo zhège mǎ.|Please scan this code."],
+  ["码", "碼", "mǎ", "3", "石", "stone", "code", 8, "Stone 石 counters, with 马 mǎ for the sound: a number, a code.", "请扫我的码。|Qǐng sǎo wǒ de mǎ.|Please scan my code."],
+  ["微信", "", "Wēixìn", "14", "彳", "step", "WeChat", 13, "微 tiny + 信 message: \"micro-message\".", "我可以用微信吗？|Wǒ kěyǐ yòng Wēixìn ma?|Can I use WeChat?"],
+  ["支付宝", "支付寶", "Zhīfùbǎo", "143", "支", "branch", "Alipay", 4, "支付 pay + 宝 treasure: \"payment treasure\".", "我想用支付宝支付。|Wǒ xiǎng yòng Zhīfùbǎo zhīfù.|I want to pay with Alipay."],
+  ["手机", "手機", "shǒujī", "31", "手", "hand", "mobile phone", 4, "Hand 手 + machine 机: the machine in your hand.", "我的手机没电了。|Wǒ de shǒujī méi diàn le.|My phone is out of battery."],
+  ["用", "", "yòng", "4", "用", "use", "to use", 5, "A wooden bucket: something you put to use.", "我想用微信。|Wǒ xiǎng yòng Wēixìn.|I want to use WeChat."],
+  ["可以", "", "kěyǐ", "33", "口", "mouth", "can / may", 5, "Two 3rd tones in a row, so 可 rises: it sounds like kéyǐ.", "可以刷卡吗？|Kěyǐ shuākǎ ma?|Can I pay by card?"],
+  ["给", "給", "gěi", "3", "纟", "silk", "to give", 9, "Silk thread 纟 brought together 合: handing a gift over.", "请给我菜单。|Qǐng gěi wǒ càidān.|Please give me the menu."],
+  ["咖啡", "", "kāfēi", "11", "口", "mouth", "coffee", 8, "Both characters carry 口 mouth: they only copy the sound of \"coffee\".", "我要一杯咖啡。|Wǒ yào yì bēi kāfēi.|I want a cup of coffee."],
+  ["服务员", "服務員", "fúwùyuán", "242", "月", "moon", "waiter / waitress", 8, "服务 service + 员 staff member.", "服务员，买单！|Fúwùyuán, mǎidān!|Waiter, the bill please!"],
+  ["现金", "現金", "xiànjīn", "41", "王", "jade", "cash", 8, "现 present + 金 gold: money you can see right now.", "可以用现金吗？|Kěyǐ yòng xiànjīn ma?|Can I use cash?"],
+  ["两", "兩", "liǎng", "3", "一", "one", "two (of something)", 7, "Two people 人人 sharing one yoke: a pair.", "我要两杯咖啡。|Wǒ yào liǎng bēi kāfēi.|I want two cups of coffee."]);
 const WORDS = [];
-RAW.forEach((list, z) => list.forEach(a => WORDS.push({ h: a[0], tr: a[1], py: a[2], t: [...a[3]].map(Number), r: a[4], rm: a[5], m: a[6], st: a[7], n: a[8], z })));
+RAW.forEach((list, z) => list.forEach(a => WORDS.push({ h: a[0], tr: a[1], py: a[2], t: [...a[3]].map(Number), r: a[4], rm: a[5], m: a[6], st: a[7], n: a[8], ex: a[9] ? a[9].split('|') : null, z })));
 const RADS = [...new Map(WORDS.map(w => [w.r, w.rm])).entries()];
 const TN = { 1: '1st  ˉ  high flat', 2: '2nd  ˊ  rising', 3: '3rd  ˇ  dip', 4: '4th  ˋ  falling', 5: 'neutral  ·' };
 const TS_SHORT = { 1: '1st tone', 2: '2nd tone', 3: '3rd tone', 4: '4th tone', 5: 'neutral tone' };
@@ -860,8 +986,63 @@ const maxHP = () => 20 + 5 * S.badges.filter(Boolean).length;
 const dexOf = h => S.dex[h] || (S.dex[h] = { c: 0, xp: 0, missedCount: 0, streak: 0 });
 // migrateSave: bring a save from any earlier version up to date. It only fills in or repairs keys;
 // it never clears progress, and nothing is written back until the next normal save.
+/* ───────────── v2.8: spaced repetition, Auto-Pace, daily goal ─────────────
+   Every sealed character (S.dex[h]) and practised phrase (S.phs[id]) carries nextReviewAt, intervalDays and srsStage.
+   Gaps step 1 → 3 → 7 → 14 → 30 days. A right answer on a DUE item moves it one step on; a wrong answer sends it back to 1 day. */
+const DAY = 864e5, IV = [1, 3, 7, 14, 30], GOAL = 15;
+const now = () => Date.now() + (window.__skew || 0);
+const dayStr = t => { const d = new Date(t); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const isDue = o => !!o && Number.isFinite(o.nextReviewAt) && o.nextReviewAt <= now();
+function srsInit(o) { o.srsStage = 0; o.intervalDays = 1; o.nextReviewAt = now() + DAY; }
+function srsAnswer(o, ok) {
+  if (!o || !Number.isFinite(o.nextReviewAt)) return;
+  if (!ok) return srsInit(o);                       // wrong: back to the 1-day gap
+  if (o.nextReviewAt > now()) return;               // right but not due yet: the schedule only moves on real reviews
+  o.srsStage = Math.min(5, (o.srsStage || 0) + 1); o.intervalDays = IV[Math.min(4, o.srsStage)]; o.nextReviewAt = now() + o.intervalDays * DAY;
+}
+const mastered = o => !!o && o.srsStage >= 4;      // it has passed the 14-day review
+function srsText(o) {
+  if (!o || !Number.isFinite(o.nextReviewAt)) return '';
+  const left = Math.max(0, o.nextReviewAt - now());
+  return (isDue(o) ? 'Review due now' : 'Next review in ' + (left < DAY ? 'under a day' : Math.ceil(left / DAY) + ' days')) + ' · ' + o.intervalDays + '-day gap' + (mastered(o) ? ' · passed the 14-day review' : '');
+}
+function rollDay() {
+  const t = dayStr(now()); if (S.day.d === t) return;
+  if (S.goalDay !== t && S.goalDay !== dayStr(now() - DAY)) S.dstreak = 0;   // a day without the goal ends the streak
+  S.day = { d: t, n: 0, newC: 0, newP: 0, done: 0 };
+}
+// Auto-Pace: accuracy over the last 20 answers decides how much new material comes in.
+const accuracy = () => S.recent.length ? S.recent.reduce((a, v) => a + v, 0) / S.recent.length : null;
+function updatePace() {
+  const a = accuracy();
+  S.pace = S.recent.length < 10 ? 'mid' : a < 0.75 ? 'low' : (S.pace === 'low' && a < 0.8) ? 'low' : a > 0.9 ? 'high' : 'mid';
+}
+const pace = () => S.auto ? S.pace : 'off';
+const PACE_NOTE = {
+  low: 'Auto-Pace: accuracy is under 75%. New spirits are paused and pinyin is shown until you are back above 80%.',
+  mid: 'Auto-Pace: you are in the sweet spot. New spirits are mixed in with your reviews.',
+  high: 'Auto-Pace: accuracy is above 90%. More new spirits, pinyin hidden on sealed spirits, more listening challenges.',
+};
+const newCap = () => pace() === 'off' ? [Infinity, Infinity] : pace() === 'high' ? [12, 6] : [8, 4];   // new characters, new phrases per day
+const pyBase = () => pace() === 'low' ? true : !!S.py;
+const showPy = w => pace() === 'high' && w && S.dex[w.h] && S.dex[w.h].c ? false : pyBase();
+const dueCount = () => WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c && isDue(S.dex[w.h])).length + Object.keys(S.phs).filter(id => S.ph[id] > 0 && isDue(S.phs[id])).length;
+let dueScenes = new Set();
+// Record one answer: accuracy window, pace, daily goal. Returns any banner to show above the feedback.
+function track(ok) {
+  rollDay();
+  S.recent.push(ok ? 1 : 0); if (S.recent.length > 20) S.recent.shift();
+  const was = S.pace; updatePace(); S.day.n++;
+  let out = '';
+  if (S.auto && S.pace !== was) out += `<p class="pace">${PACE_NOTE[S.pace]}</p>`;
+  if (!S.day.done && S.day.n >= GOAL) {
+    S.day.done = 1; S.dstreak = S.goalDay === dayStr(now() - DAY) ? S.dstreak + 1 : 1; S.goalDay = S.day.d; S.txp += 25; sfx('crit');
+    out = `<p class="crit">🎯 Daily Goal Complete! +25 Bonus XP · 🔥 ${S.dstreak} Day${S.dstreak === 1 ? '' : 's'}</p>` + out;
+  }
+  hud(); return out;
+}
 function migrateSave(s) {
-  const DEF = { x: 4, y: 7, dir: 0, hp: 20, py: 1, heal: 0, intro: 0, grad: 0, seenDaily: 0, track: '', fast: 0, slow: 0, avatar: 0 };
+  const DEF = { x: 4, y: 7, dir: 0, hp: 20, py: 1, heal: 0, intro: 0, grad: 0, seenDaily: 0, track: '', fast: 0, slow: 0, avatar: 0, auto: 1, dstreak: 0, txp: 0, goalDay: '', pace: 'mid' };
   for (const k in DEF) if (typeof s[k] !== typeof DEF[k] || (typeof DEF[k] === 'number' && !Number.isFinite(s[k]))) s[k] = typeof s[k] === 'boolean' ? (s[k] ? 1 : 0) : DEF[k];
   s.badges = [0, 1, 2].map(i => Array.isArray(s.badges) && s.badges[i] ? 1 : 0);
   ['dex', 'beat', 'ph', 'stamps'].forEach(k => { if (!s[k] || typeof s[k] !== 'object' || Array.isArray(s[k])) s[k] = {}; });
@@ -877,10 +1058,25 @@ function migrateSave(s) {
   s.avatar = s.avatar >= 0 && s.avatar < 4 ? Math.floor(s.avatar) : 0;
   if (!['A', 'B', 'C'].includes(s.track)) s.track = '';
   s.heal = Math.max(0, Math.min(2, Math.floor(s.heal)));
-  s.v = 26;
+  // v2.8: review schedules, accuracy window, daily goal. Items sealed before v2.8 start out due now.
+  s.recent = (Array.isArray(s.recent) ? s.recent : []).filter(v => v === 0 || v === 1).slice(-20);
+  if (!s.phs || typeof s.phs !== 'object' || Array.isArray(s.phs)) s.phs = {};
+  const sched = o => { if (!Number.isFinite(o.nextReviewAt)) { o.srsStage = 0; o.nextReviewAt = now(); } o.srsStage = Math.max(0, Math.min(5, Math.floor(o.srsStage) || 0)); o.intervalDays = IV[Math.min(4, o.srsStage)]; };
+  Object.keys(s.dex).forEach(h => { if (s.dex[h].c) sched(s.dex[h]); });
+  Object.keys(s.ph).forEach(id => { if (s.ph[id] > 0) { if (!s.phs[id] || typeof s.phs[id] !== 'object') s.phs[id] = {}; sched(s.phs[id]); } });
+  if (!s.day || typeof s.day !== 'object' || typeof s.day.d !== 'string') s.day = { d: '', n: 0, newC: 0, newP: 0, done: 0 };
+  ['n', 'newC', 'newP', 'done'].forEach(k => { if (!Number.isFinite(s.day[k])) s.day[k] = 0; });
+  if (!['low', 'mid', 'high'].includes(s.pace)) s.pace = 'mid';
+  // v3.0: coins, the bag, and a one-time starter gift for anyone who has neither coins nor items
+  s.coins = Number.isFinite(s.coins) && s.coins > 0 ? Math.floor(s.coins) : 0;
+  if (!s.bag || typeof s.bag !== 'object' || Array.isArray(s.bag)) s.bag = {};
+  ['tea', 'tal', 'gls'].forEach(k => { s.bag[k] = Number.isFinite(s.bag[k]) && s.bag[k] > 0 ? Math.floor(s.bag[k]) : 0; });
+  if (!s.gift) { if (!s.coins && !s.bag.tea && !s.bag.tal && !s.bag.gls) { s.coins = 30; s.bag.tea = 1; } s.gift = 1; }
+  s.seenShop = s.seenShop ? 1 : 0;
+  s.v = 30;
   return s;
 }
-migrateSave(S);
+migrateSave(S); rollDay();
 /* Smart spawn weighting: a wrong answer flags the character (missedCount > 0, 3x spawn weight).
    Two correct answers in a row, or a clean seal, clears the flag. */
 function markMiss(d) { d.missedCount = (d.missedCount || 0) + 1; d.streak = 0; }
@@ -890,7 +1086,14 @@ function markHit(d) {
   if (d.streak >= 2) { d.missedCount = 0; d.streak = 0; return true; }
   return false;
 }
-const spawnWeight = w => { const d = S.dex[w.h]; return !d || !d.c || d.missedCount > 0 ? 3 : 1; };
+const spawnWeight = w => {
+  const d = S.dex[w.h];
+  if (d && d.c) return isDue(d) ? 6 : d.missedCount > 0 ? 3 : 1;      // sealed: due reviews come first
+  if (pace() === 'off') return 3;
+  if (pace() === 'low') return 0;                                       // struggling: no new spirits for now
+  if (!(d && d.s) && S.day.newC >= newCap()[0]) return 0;               // daily cap on brand-new characters
+  return pace() === 'high' ? 6 : 3;
+};
 const CLEARED = '<p>Review flag cleared: it will now appear at the normal rate.</p>';
 
 /* ───────────── AUDIO ───────────── */
@@ -965,6 +1168,14 @@ function bgmToggle() {
 
 /* ───────────── STATE ───────────── */
 let mode = 'world', b = null, cool = 3, frame = 0;
+// v3.0: tap-to-walk route, and the item list
+let route = [], routeAct = null, tapMark = null, camX = 0, camY = 0;
+const stopRoute = () => { route.length = 0; routeAct = null; tapMark = null; };
+const ITEMS = {
+  tea: { h: '珍珠奶茶', tr: '', p: 'zhēnzhū nǎichá', en: 'Bubble Tea', cost: 20, ic: '🧋', use: '+10 HP', d: 'Restores 10 HP, in battle or on the map.' },
+  tal: { h: '声调符', tr: '聲調符', p: 'shēngdiào fú', en: 'Tone Talisman', cost: 35, ic: '📜', use: 'SEAL ×2 this battle', d: 'Doubles the chance that SEAL holds, for one battle.' },
+  gls: { h: '拼音眼镜', tr: '拼音眼鏡', p: 'pīnyīn yǎnjìng', en: 'Pinyin Glasses', cost: 30, ic: '👓', use: 'Pinyin for 1 turn', d: 'Shows pinyin for one turn in battle. On a tone question the tone marks stay hidden.' },
+};
 let combo = 0;   // consecutive right answers in battles; every 3rd one earns a streak bonus (extra mastery and +1 HP, never skipped practice)
 const CRIT = '<p class="crit">★ STREAK BONUS! Double mastery XP · +1 HP</p>';
 const P = { x: S.x, y: S.y, dir: S.dir, moving: false, pr: 0, tx: S.x, ty: S.y, step: 0 };
@@ -972,7 +1183,7 @@ const DX = [0, 0, -1, 1], DY = [1, -1, 0, 0];
 const held = [];
 const npcPos = n => (n.gym != null && (S.badges[n.gym] || (S.fast && n.gym < 2))) ? [n.ax, n.ay] : [n.x, n.y];
 const npcAt = (x, y) => NPCS.find(n => { const p = npcPos(n); return p[0] === x && p[1] === y; });
-const SOLID = { 3: 1, 4: 1, 5: 1, 6: 1, 8: 1, 12: 1 };
+const SOLID = { 3: 1, 4: 1, 5: 1, 6: 1, 8: 1, 12: 1, 13: 1, 14: 1, 15: 1 };
 function walkable(x, y) {
   if (x < 0 || y < 0 || x >= MW || y >= MH) return false;
   const t = map[y][x];
@@ -983,17 +1194,22 @@ function walkable(x, y) {
 /* ───────────── HUD / DIALOG ───────────── */
 function hud() {
   const m = maxHP(); S.hp = Math.max(0, Math.min(S.hp, m));
-  const f = $('#hpfill'); f.style.width = (100 * S.hp / m) + '%'; f.className = S.hp / m <= 0.3 ? 'low' : '';
+  const f = $('#hpfill'); f.style.width = (100 * S.hp / m) + '%'; f.className = S.hp / m < 0.25 ? 'low warn' : S.hp / m <= 0.3 ? 'low' : '';
+  $('#coinTxt').textContent = S.coins;
   $('#hptxt').textContent = S.hp + '/' + m;
   $('#badges').innerHTML = BADGES.map((bd, i) => `<span class="badge${S.badges[i] ? ' on' : ''}" title="${bd.n}${S.badges[i] ? '' : ' (not earned)'}" lang="zh-Hans">${bd.c}</span>`).join('');
-  const pb = $('#btnPy'); pb.innerHTML = '<span class="w">PINYIN</span><span class="n">PY</span> ' + (S.py ? 'ON' : 'OFF'); pb.setAttribute('aria-pressed', S.py ? 'true' : 'false');
-  document.body.classList.toggle('nopy', !S.py);
+  const pb = $('#btnPy'); pb.innerHTML = '<span class="w">PINYIN</span><span class="n">PY</span> ' + (pace() === 'low' && !S.py ? 'AUTO' : S.py ? 'ON' : 'OFF'); pb.setAttribute('aria-pressed', pyBase() ? 'true' : 'false');
+  document.body.classList.toggle('nopy', !pyBase());
+  const due = dueCount(), db = $('#btnDex');
+  db.innerHTML = '<span class="w">HANZI</span>DEX' + (due ? `<span class="due w"> (${due} Due)</span><span class="due n">${due}</span>` : '');
+  db.setAttribute('aria-label', 'Menu' + (due ? ', ' + due + ' reviews due' : ''));
+  dueScenes = new Set(Object.keys(S.phs).filter(id => PHR[id] && S.ph[id] > 0 && isDue(S.phs[id])).map(id => CATS[PHR[id][0]][1]));
 }
 let tagT;
 function tag(text) { const z = $('#zoneTag'); z.textContent = text; z.classList.add('show'); clearTimeout(tagT); tagT = setTimeout(() => z.classList.remove('show'), 2200); }
 let dq = [], dcb = null;
 function say(lines, cb, name) {
-  dq = lines.slice(); dcb = cb || null; mode = 'dialog'; held.length = 0;
+  dq = lines.slice(); dcb = cb || null; mode = 'dialog'; held.length = 0; stopRoute();
   $('#dlgName').textContent = name || ''; $('#dialog').hidden = false; nextLine();
 }
 function nextLine() {
@@ -1006,6 +1222,7 @@ function interact() {
   const fx = P.x + DX[P.dir], fy = P.y + DY[P.dir], n = npcAt(fx, fy);
   if (n) {
     n.dir = [1, 0, 3, 2][P.dir];
+    if (n.shop) return greetShop(n);
     if (n.scroll) return say(['An old dojo scroll hangs here. It shows how characters are built from radicals, each with a picture and a story.'], () => openInfo('rad'), n.name);
     if (n.scene) return say([n.intro], () => startScene(n.scene), n.name);
     if (n.tea) return say(['Welcome to the Tea House, 茶馆 (cháguǎn). Answer one review question about a spirit you have sealed, and the tea is yours.'], () => startQuiz('tea'), n.name);
@@ -1014,6 +1231,8 @@ function interact() {
     return say([again ? 'Back for a rematch? Let us practise again!' : n.intro], () => startTrainer(n), n.name);
   }
   if (fy >= 0 && fy < MH && map[fy][fx] === 8) say([SIGNS[zoneOf(fx)]]);
+  if (fy >= 0 && fy < MH && map[fy][fx] === 15) say(TIPS[fx + ',' + fy] || ['A blank signpost.'], null, 'Tutorial Signpost');
+  if (fy >= 0 && fy < MH && map[fy][fx] === 14) greetShop(NPCS.find(n => n.shop && zoneOf(n.x) === zoneOf(fx)));
   if (fy >= 0 && map[fy][fx] === 10 && !S.badges[2]) say(['The Academy doors are sealed. Dean Lóng must hand you the Dragon Badge first.']);
 }
 function onStep() {
@@ -1045,10 +1264,15 @@ function update(dt) {
     return;
   }
   if (held.length) {
+    stopRoute();
     const d = held[held.length - 1]; P.dir = d;
     const nx = P.x + DX[d], ny = P.y + DY[d];
     if (walkable(nx, ny)) { P.tx = nx; P.ty = ny; P.moving = true; P.pr = 0; }
-  }
+  } else if (route.length) {          // tap-to-walk: follow the route one tile at a time
+    const d = route.shift(); P.dir = d;
+    const nx = P.x + DX[d], ny = P.y + DY[d];
+    if (walkable(nx, ny)) { P.tx = nx; P.ty = ny; P.moving = true; P.pr = 0; } else stopRoute();
+  } else if (routeAct) { P.dir = routeAct.dir; stopRoute(); interact(); }
 }
 
 /* ───────────── RENDER (pixel art, drawn with rects) ───────────── */
@@ -1082,6 +1306,14 @@ function tile(t, tx, ty, px, py) {
     case 6: f(Z.roof, 0, 0, 16, 16); f('rgba(0,0,0,.18)', 0, 7, 16, 1); f('rgba(0,0,0,.18)', 0, 15, 16, 1); f('rgba(255,255,255,.22)', 0, 0, 16, 1); f('rgba(0,0,0,.1)', (h % 2) * 8, 1, 1, 6); f('rgba(0,0,0,.1)', 4 + (h % 2) * 8, 8, 1, 7); break;
     case 7: f('#c9363f', 2, 2, 12, 12); f('#fff', 3, 3, 10, 10); f('#c9363f', 7, 5, 2, 6); f('#c9363f', 5, 7, 6, 2); break;
     case 8: f('#7a4a22', 7, 9, 2, 6); f('#c79a5b', 2, 3, 12, 7); f('#7a4a22', 2, 3, 12, 1); f('#7a4a22', 2, 9, 12, 1); f('#5c3a1a', 4, 5, 8, 1); f('#5c3a1a', 4, 7, 6, 1); break;
+    case 13: {   // blue shop roof: a coin emblem on the top-middle tile, a striped awning on the lower row
+      const top = map[ty - 1][tx] !== 13, midx = map[ty][tx - 1] === 13 && map[ty][tx + 1] === 13;
+      f('#2f7fe0', 0, 0, 16, 16); f('rgba(255,255,255,.28)', 0, 0, 16, 1); f('rgba(0,0,0,.18)', 0, 7, 16, 1);
+      if (top) { if (midx) { f('#1b1b2f', 3, 4, 10, 10); f('#f2b632', 4, 5, 8, 8); f('#ffe9a8', 5, 6, 2, 2); f('#1b1b2f', 7, 8, 2, 2); } }
+      else { for (let i = 0; i < 4; i++) f(i % 2 ? '#2f7fe0' : '#f4f7ff', i * 4, 9, 4, 6); f('rgba(0,0,0,.28)', 0, 15, 16, 1); }
+      break; }
+    case 14: f('#f3e6c8', 0, 0, 16, 16); f('#cbb78a', 0, 15, 16, 1); f('#1f4f9c', 3, 2, 10, 14); f('#7a4a22', 4, 3, 8, 13); f('#bfe3ff', 5, 4, 6, 4); f('#f2b632', 10, 10, 1, 2); break;
+    case 15: f('rgba(0,0,0,.2)', 5, 14, 6, 2); f('#7a4a22', 7, 9, 2, 6); f('#5c3616', 1, 1, 14, 9); f('#f0d9a0', 2, 2, 12, 7); f('#1f8a70', 7, 3, 2, 1); f('#1f8a70', 7, 5, 2, 3); break;
     case 9: f('#e8505b', 3, 4, 2, 2); f('#f6d44d', 3, 4, 1, 1); f('#fff', 10, 9, 2, 2); f('#f6d44d', 11, 10, 1, 1); f('#e8505b', 11, 3, 2, 2); f('#fff', 5, 11, 2, 2); break;
   }
 }
@@ -1103,7 +1335,8 @@ function sprite(px, py, dir, fr, c, mark) {
   if (c.tail) { if (dir === 1) { f(c.hair, 4, 3, 8, 6); f('#f2b632', 7, 5, 2, 1); } else if (dir === 0) { f(c.hair, 3, 4, 1, 5); f(c.hair, 12, 4, 1, 5); } else f(c.hair, dir === 2 ? 11 : 3, 4, 2, 6); }
   if (c.knot) { f(c.hair, 7, -1, 2, 2); f(c.sash || '#f2b632', 7, 0, 2, 1); }
   if (c.buns) { f(c.hair, 3, -1, 3, 2); f(c.hair, 10, -1, 3, 2); }
-  if (mark === 'chat') { f('#1b1b2f', 3, -9, 10, 7); f('#ffffff', 4, -8, 8, 5); f('#1b1b2f', 6, -2, 2, 1); f('#1f8a70', 5, -6, 1, 1); f('#1f8a70', 7, -6, 1, 1); f('#1f8a70', 9, -6, 1, 1); }
+  if (mark === 'chat' || mark === 'chatdue') { const dc = mark === 'chatdue' ? '#e8102e' : '#1f8a70'; f('#1b1b2f', 3, -9, 10, 7); f(mark === 'chatdue' ? '#ffe9a8' : '#ffffff', 4, -8, 8, 5); f('#1b1b2f', 6, -2, 2, 1); f(dc, 5, -6, 1, 1); f(dc, 7, -6, 1, 1); f(dc, 9, -6, 1, 1); }
+  else if (mark === 'coin') { f('#1b1b2f', 4, -10, 8, 8); f('#f2b632', 5, -9, 6, 6); f('#ffe9a8', 5, -9, 2, 2); f('#1b1b2f', 7, -7, 2, 2); }
   else if (mark === 'cup') { f('#1b1b2f', 4, -8, 8, 7); f('#e7efd3', 5, -6, 5, 4); f('#2f8f6b', 5, -6, 5, 1); f('#e7efd3', 10, -5, 1, 2); }
   else if (mark) { const bob = (frame >> 4) & 1; f('#1b1b2f', 6, -8 + bob, 4, 7); f(mark, 7, -7 + bob, 2, 3); f(mark, 7, -3 + bob, 2, 1); }
 }
@@ -1143,9 +1376,14 @@ function draw() {
   const CW = cv.width, CH = cv.height;
   const camx = Math.round(Math.max(0, Math.min(MW * TS - CW, ppx + 8 - CW / 2)));
   const camy = Math.round(Math.max(0, Math.min(MH * TS - CH, ppy + 8 - CH / 2)));
+  camX = camx; camY = camy;
   const x0 = camx >> 4, y0 = camy >> 4, xn = x0 + Math.ceil(CW / TS), yn = y0 + Math.ceil(CH / TS);
   for (let ty = y0; ty <= yn && ty < MH; ty++) for (let tx = x0; tx <= xn && tx < MW; tx++) tile(map[ty][tx], tx, ty, tx * TS - camx, ty * TS - camy);
-  const ents = NPCS.map(n => { const p = npcPos(n); return { y: p[1] * TS, d: () => n.scroll ? scrollSprite(p[0] * TS - camx, p[1] * TS - camy) : sprite(p[0] * TS - camx, p[1] * TS - camy - 2, n.dir, 0, n.col, n.tea ? 'cup' : n.scene ? 'chat' : n.talk ? null : S.beat[n.id] ? null : n.gym != null ? '#ff5a5a' : '#f2b632') }; });
+  if (tapMark) {   // where a tap is taking you
+    if (!route.length && !P.moving && !routeAct) tapMark = null;
+    else { const mx = tapMark.x * TS - camx, my = tapMark.y * TS - camy, o = (frame >> 3) & 1; cx.fillStyle = '#1b1b2f'; [[o, o], [12 - o, o], [o, 12 - o], [12 - o, 12 - o]].forEach(([x, y]) => cx.fillRect(mx + x, my + y, 4, 4)); cx.fillStyle = '#ffe9a8'; [[o, o], [12 - o, o], [o, 12 - o], [12 - o, 12 - o]].forEach(([x, y]) => cx.fillRect(mx + x + 1, my + y + 1, 2, 2)); }
+  }
+  const ents = NPCS.map(n => { const p = npcPos(n); return { y: p[1] * TS, d: () => n.scroll ? scrollSprite(p[0] * TS - camx, p[1] * TS - camy) : sprite(p[0] * TS - camx, p[1] * TS - camy - 2, n.dir, 0, n.col, n.tea ? 'cup' : n.shop ? 'coin' : n.scene ? (dueScenes.has(n.scene) ? 'chatdue' : 'chat') : n.talk ? null : S.beat[n.id] ? null : n.gym != null ? '#ff5a5a' : '#f2b632') }; });
   ents.push({ y: ppy, d: () => {
     sprite(Math.round(ppx) - camx, Math.round(ppy) - camy - 2, P.dir, P.moving ? (P.pr > 0.5 ? 1 : 0) ^ P.step : 0, hero());
     if (!P.moving && map[P.y][P.x] === 2) { const Z = PAL[zoneOf(P.x)]; cx.fillStyle = Z.tg; cx.fillRect(P.x * TS - camx, P.y * TS - camy + 11, 16, 5); cx.fillStyle = Z.tg2; for (let i = 0; i < 4; i++) cx.fillRect(P.x * TS - camx + i * 4 + 1, P.y * TS - camy + 9, 2, 3); }
@@ -1154,23 +1392,25 @@ function draw() {
 }
 
 /* ───────────── BATTLES ───────────── */
-function openBattle() { mode = 'battle'; held.length = 0; screen_('battle'); render(); }
+function openBattle() { mode = 'battle'; held.length = 0; stopRoute(); screen_('battle'); render(); }
 function closeBattle(silent) { b = null; mode = 'world'; cool = 3; screen_('world'); S.x = P.x; S.y = P.y; save(); if (!silent) tag('Auto-saved'); }
-function hurt(n) { S.hp = Math.max(0, S.hp - n); hud(); if (S.hp <= 0) b.dead = 1; }
+function hurt(n) { const m = maxHP(), was = S.hp / m; S.hp = Math.max(0, S.hp - n); hud(); if (S.hp <= 0) b.dead = 1; else if (was >= 0.25 && S.hp / m < 0.25) sfx('low'); }   // a soft chime the moment HP drops under 25%
 const btn = (label, act, cls, extra) => `<button class="btn ${cls || ''}" data-act="${act}" ${extra || ''}>${label}</button>`;
 const kopt = (i, label, v, cls) => `<button class="btn ${cls || ''}" data-ans="${v}"><span class="k">${i + 1}</span>${label}</button>`;
 
 function startWild() {
   const z = zoneOf(P.x), pool = WORDS.filter(w => w.z === z);
-  const wt = spawnWeight;
+  rollDay();
+  const wt = pool.some(x => spawnWeight(x) > 0) ? spawnWeight : () => 1;   // if everything is paused or capped, fall back to an even pick
   let r = Math.random() * pool.reduce((a, w) => a + wt(w), 0), w = pool[0];
   for (const c of pool) { r -= wt(c); if (r <= 0) { w = c; break; } }
   const first = !S.dex[w.h] || (!S.dex[w.h].s && !S.dex[w.h].c);   // teach first: an unsealed character you have never met
+  if (first) S.day.newC++;
   dexOf(w.h).s = 1;
   b = { type: 'wild', w, hp: 3, phase: 'menu', last: '', log: `<p>A wild ${zh('<b class="han">' + w.h + '</b>')} spirit appeared!</p><p>What will you do?</p>` };
   // Listening-first: some spirits stay hidden in the grass and you have to recognise them by ear.
   if (first) b.phase = 'intro';
-  else if (canSpeak && Math.random() < 0.3) { b.q = buildQ(w, ['hear']); b.q.action = 'atk'; b.last = 'hear'; b.phase = 'q'; speak(w.h); }
+  else if (canSpeak && Math.random() < (pace() === 'high' ? 0.6 : 0.3)) { b.q = buildQ(w, ['hear']); b.q.action = 'atk'; b.last = 'hear'; b.phase = 'q'; speak(w.h); }
   openBattle();
 }
 function buildQ(w, kinds) {
@@ -1201,7 +1441,7 @@ function makeQ(action) {
 /* Review quizzes: Tea House (1 question, full heal) and Meditate & Review (3 flashcards, pass 2, heal 50%) */
 const caught = () => WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c);
 function startQuiz(kind) {
-  const pool = shuffle(caught());
+  const pool = shuffle(caught()).sort((x, y) => isDue(S.dex[y.h]) - isDue(S.dex[x.h]));   // due reviews first
   if (!pool.length) {
     if (kind !== 'tea') return;
     S.hp = maxHP(); S.heal = zoneOf(P.x); hud(); save(); beep(1);
@@ -1232,16 +1472,18 @@ function answerQuiz(v) {
     if (b.right >= 2) { const m = maxHP(), gain = Math.min(m - S.hp, Math.ceil(m / 2)); S.hp += gain; log += `<p class="good">${b.right} of 3 correct. You feel calm and focused: +${gain} HP.</p>`; }
     else log += `<p class="bad">${b.right} of 3 correct. You need 2 of 3 to heal. Breathe and try again.</p>`;
   }
-  b.log = log; hud(); save(); render();
+  srsAnswer(d, ok);
+  b.log = track(ok) + log; hud(); save(); render();
 }
 function answerWild(v) {
   const w = b.w, q = b.q, d = dexOf(w.h), ok = v === q.ans, H = zh('<b class="han">' + w.h + '</b>');
-  b.phase = 'res';
+  b.phase = 'res'; b.glass = 0;
+  if (d.c) srsAnswer(d, ok);
   if (ok) {
     combo++;
     const crit = combo % 3 === 0;   // streak bonus: the spirit still takes 1 damage, so no question is skipped
     const gain = (b.hint ? 5 : 10) * (crit ? 2 : 1);   // a hint halves the XP for that answer, a streak bonus doubles it
-    d.xp = Math.min(100, d.xp + gain);
+    d.xp = Math.min(100, d.xp + gain); b.xpGain = (b.xpGain || 0) + gain;
     if (crit) { S.hp = Math.min(maxHP(), S.hp + 1); hud(); }
     let cleared = markHit(d);
     if (q.action === 'atk') {
@@ -1249,8 +1491,8 @@ function answerWild(v) {
       b.hp = Math.max(0, b.hp - 1);
       if (b.hp <= 0) { b.over = 1; b.log = `<p class="good">Correct! ${H} is out of energy and drifts back into the grass.</p><p>${d.c ? 'Mastery +' + gain + ' XP.' : 'It was not sealed. Next time, Seal it when one heart is left.'}</p>`; }
       else b.log = `<p class="good">Correct! Your strike lands.</p><p>${b.hp === 1 && !d.c ? 'One heart left. A Seal cannot fail now.' : 'Mastery +' + gain + ' XP.'}</p>`;
-    } else if (Math.random() < [1, 1, 0.6, 0.3][b.hp]) {
-      d.c = 1; d.xp = Math.min(100, d.xp + 10); b.over = 1; b.fx = 'seal-ok'; sfx('seal');
+    } else if (Math.random() < Math.min(1, [1, 1, 0.6, 0.3][b.hp] * (b.tal ? 2 : 1))) {   // a Tone Talisman doubles the chance
+      d.c = 1; d.xp = Math.min(100, d.xp + 10); b.xpGain = (b.xpGain || 0) + 10; earn(10 + rnd(6)); b.over = 1; b.fx = 'seal-ok'; sfx('seal'); srsInit(d);
       if (!b.missed && d.missedCount > 0) { d.missedCount = 0; d.streak = 0; cleared = true; }
       b.log = `<p class="good">Correct, and the seal holds!</p><p>${H} was added to your HanziDex.</p>`;
     } else b.fx = 'seal-fail', sfx('sealfail'), b.log = `<p class="good">Correct, but ${H} broke the seal.</p><p>Weaken it first. At one heart the seal always holds.</p>`;
@@ -1263,6 +1505,8 @@ function answerWild(v) {
     hurt(dmg);
     b.log = `<p class="bad">Not quite. ${H} hits you for ${dmg} HP.</p><div class="fbrow">${pickedHTML(q, v)}<div class="fb yes"><span class="tagl">✓ CORRECT ANSWER</span>${why}</div></div>`;
   }
+  b.log = track(ok) + b.log;
+  if (b.over && !b.dead) b.log += summaryHTML();
   save(); render();
 }
 
@@ -1279,13 +1523,13 @@ function mixed(s) {
 function loadSentence() {
   const s = b.s = b.queue[0]; b.placed = []; b.phase = b.intro ? 'menu' : 'build'; if (!b.intro) b.thint = 0;
   b.order = mixed(s);
-  b.dict = canSpeak && Math.random() < 0.34;   // listening-first: build the sentence from audio alone
+  b.dict = canSpeak && Math.random() < (pace() === 'high' ? 0.7 : 0.34);   // listening-first: build the sentence from audio alone
   if (b.dict && !b.intro) speak(s.ok[0]);
 }
 function checkSentence() {
   const s = b.s, mine = b.placed.map(i => s.tiles[i].h).join(''), ok = s.ok.includes(mine);
   const full = `<span class="sent" lang="zh-Hans">${s.ok[0]}</span><br><span>${s.tiles.map(t => t.p).join(' ')}</span>`;
-  b.phase = 'res';
+  b.phase = 'res'; b.glass = 0;
   if (ok) {
     combo++;
     const crit = combo % 3 === 0;   // streak bonus: every sentence is still played
@@ -1294,12 +1538,12 @@ function checkSentence() {
     if (crit) {   // +1 HP, and extra mastery for every sealed spirit that appears in this sentence
       S.hp = Math.min(maxHP(), S.hp + 1); hud();
       const got = WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c && s.ok[0].includes(w.h));
-      got.forEach(w => { S.dex[w.h].xp = Math.min(100, S.dex[w.h].xp + 10); });
+      got.forEach(w => { S.dex[w.h].xp = Math.min(100, S.dex[w.h].xp + 10); }); b.xpGain = (b.xpGain || 0) + 10 * got.length;
       bonus = `<p class="crit">★ STREAK BONUS! +1 HP${got.length ? ' · +10 mastery for ' + zh(got.map(w => w.h).join(' ')) : ''}</p>`;
     }
     b.fx = crit ? 'hit crit' : 'hit'; sfx(crit ? 'crit' : 'hit'); speak(mine);
     b.log = `${bonus}<p class="good">Direct hit! "${s.en}"</p><p>${full}</p>`;
-    if (!b.queue.length) b.over = 1;
+    if (!b.queue.length) { b.over = 1; earn(b.n.gym != null ? 25 : 15 + rnd(6)); }
   } else {
     combo = 0;
     b.queue.push(b.queue.shift()); b.fx = 'miss'; sfx('miss');
@@ -1307,6 +1551,8 @@ function checkSentence() {
     b.log = `<p class="bad">Not quite. ${b.n.name} hits you for ${dmg} HP.</p><div class="fbrow"><div class="fb no"><span class="tagl">✗ WRONG · YOUR ORDER</span><span class="sent" lang="zh-Hans">${mine}</span><br>${b.placed.map(i => s.tiles[i].p).join(' ')}</div><div class="fb yes"><span class="tagl">✓ CORRECT ORDER</span>${full}<br>"${s.en}"</div></div><p><b>Why:</b> ${G[s.g].replace(/[⺀-鿿…]+/g, m => zh(m))}</p>`;
     b.listen = s.ok[0];
   }
+  b.log = track(ok) + b.log;
+  if (b.over && !b.dead) b.log += summaryHTML();
   save(); render();
 }
 function winTrainer() {
@@ -1338,6 +1584,9 @@ function monSVG(rad) {
 // Short 8-bit battle sounds: [frequency, start, length, wave]
 const SFX = {
   hit: [[880, 0, .05, 'square'], [440, .06, .08, 'square'], [220, .14, .12, 'sawtooth']],
+  low: [[988, .5, .08, 'triangle'], [740, .62, .16, 'triangle']],
+  item: [[523, 0, .06, 'square'], [784, .07, .06, 'square'], [1047, .14, .12, 'square']],
+  coin: [[1319, 0, .05, 'square'], [1760, .06, .14, 'square']],
   miss: [[130, .1, .16, 'sawtooth'], [98, .26, .24, 'sawtooth']],
   seal: [[660, 0, .07, 'square'], [520, .62, .05, 'square'], [520, .86, .05, 'square'], [520, 1.1, .05, 'square'], [784, 1.4, .08, 'square'], [1047, 1.48, .08, 'square'], [1319, 1.56, .18, 'square']],
   crit: [[880, 0, .05, 'square'], [440, .06, .08, 'square'], [220, .14, .12, 'sawtooth'], [988, .3, .07, 'square'], [1319, .38, .07, 'square'], [1760, .46, .16, 'square']],
@@ -1360,12 +1609,12 @@ function arenaHTML() {
   if (wild) {
     const w = b.w, q = b.q, d = dexOf(w.h), asking = b.phase === 'q', res = b.phase === 'res' || b.phase === 'intro', mask = asking && q.kind === 'tone', hear = asking && q.kind === 'hear';
     const glyph = hear ? '<span class="dim">？</span>' : [...w.h].map((c, i) => `<span class="${mask ? (i === q.syl ? 'ask' : 'dim') : 't' + w.t[i]}">${c}</span>`).join('');
-    const py = mask || hear ? '· · ·' : (res || S.py) ? w.py : 'WILD SPIRIT';
+    const py = b.glass && !res ? (mask ? toneless(w.py) : w.py) : mask || hear ? '· · ·' : (res || showPy(w)) ? w.py : 'WILD SPIRIT';
     const rad = hear || (asking && q.kind === 'rad') ? '?' : `<b lang="zh-Hans">${w.r}</b> ${w.rm}`;
-    foe = `<div class="foebox${w.h.length > 1 ? ' two' : ''}${b.hp <= 0 ? ' ko' : ''}"><span class="mon">${monSVG(w.r)}</span><button class="glyph foe-glyph" data-act="listen" lang="zh-Hans" aria-label="Listen to this spirit">${glyph}</button></div>`;
+    foe = `<div class="foebox${w.h.length > 2 ? ' two three' : w.h.length > 1 ? ' two' : ''}${b.hp <= 0 ? ' ko' : ''}"><span class="mon">${monSVG(w.r)}</span><button class="glyph foe-glyph" data-act="listen" lang="zh-Hans" aria-label="Listen to this spirit">${glyph}</button></div>`;
     plate = `<div class="splate foe"><div class="sp-top"><b>${py}</b><span>HSK ${w.z + 1}</span></div>
       <div class="sp-bar"><span>HP</span><i><em class="${hpCls(b.hp / 3)}" ${slide('f', Math.max(0, b.hp) / 3 * 100)}></em></i></div>
-      <div class="sp-meta"><span>${d.c ? 'sealed' : 'new'}</span>${d.missedCount > 0 ? '<span class="rv">review</span>' : ''}<span>radical ${rad}</span>${res ? `<span>${w.m}</span>` : ''}${res && w.tr ? `<span>trad. <b lang="zh-Hant">${w.tr}</b></span>` : ''}</div></div>`;
+      <div class="sp-meta">${res ? `<span><b>${w.m}</b></span>` : ''}<span>${d.c ? 'sealed' : 'new'}</span>${d.missedCount > 0 ? '<span class="rv">review</span>' : ''}<span>radical ${rad}</span>${res && w.tr ? `<span>trad. <b lang="zh-Hant">${w.tr}</b></span>` : ''}</div></div>`;
     xp = d.xp;
   } else {
     const n = b.n, left = b.queue.length;
@@ -1377,25 +1626,26 @@ function arenaHTML() {
   }
   return `<div class="arena${b.fx ? ' fx-' + b.fx : ''}"><div class="plat foe"></div>${foe}${plate}<i class="flash"></i><span class="talis" lang="zh-Hans" aria-hidden="true">封</span><div class="plat me"></div><img class="me-img" src="${spriteURL(av.col, 1, 'av' + S.avatar)}" alt="">
     <div class="splate me"><div class="sp-top"><b>${av.name}</b><span>${Math.max(0, S.hp)}/${m}</span></div>
-      <div class="sp-bar"><span>HP</span><i><em class="${hpCls(pf)}" ${slide('p', 100 * pf)}></em></i></div>
+      <div class="sp-bar"><span>HP</span><i><em class="${pf < 0.25 ? 'low warn' : hpCls(pf)}" ${slide('p', 100 * pf)}></em></i></div>
       <div class="sp-bar xpbar"><span>XP</span><i><em class="xp" style="width:${xp}%"></em></i></div>
       <div class="stk${combo % 3 === 2 ? ' hot' : ''}">🔥 Streak: ${combo}${combo % 3 === 2 ? ' · bonus next' : ''}</div></div></div>`;
 }
 function render() {
   if (!b) return;
   const el = $('#battle'); let h = '';
-  el.className = (b.type === 'tr' ? 'arn trn' : b.type === 'wild' ? 'arn wild' : b.type === 'scene' ? 'scene' : 'spiritly') + (b.phase === 'res' ? ' res' : '') + (b.phase === 'build' ? ' build' : '') + (b.phase === 'intro' ? ' res intro' : '') + (b.phase === 'q' ? ' st-q' : '') + (b.phase === 'menu' ? ' st-menu' : '');
+  el.className = (b.type === 'shop' ? 'shop' : b.type === 'tr' ? 'arn trn' : b.type === 'wild' ? 'arn wild' : b.type === 'scene' ? 'scene' : 'spiritly') + (b.bag ? ' res bagv' : (b.phase === 'res' ? ' res' : '') + (b.phase === 'build' ? ' build' : '') + (b.phase === 'intro' ? ' res intro' : '') + (b.phase === 'q' ? ' st-q' : '') + (b.phase === 'menu' ? ' st-menu' : '')) + (b.glass ? ' glass' : '');
   const tb = (s, i, where) => `<button class="tile" data-${where}="${i}"><b lang="zh-Hans">${s.tiles[i].h}</b><span class="py">${s.tiles[i].p}</span></button>`;
   const card = () => {
     const w = b.w, q = b.q, asking = b.phase === 'q', res = b.phase === 'res' || b.phase === 'intro', mask = asking && q.kind === 'tone';
     const hear = asking && q.kind === 'hear';
     const glyph = hear ? '<span class="dim">？</span>' : [...w.h].map((c, i) => `<span class="${mask ? (i === q.syl ? 'ask' : 'dim') : 't' + w.t[i]}">${c}</span>`).join('');
-    const py = mask || hear ? '· · ·' : (res || S.py) ? w.py : '';
+    const py = mask || hear ? '· · ·' : (res || showPy(w)) ? w.py : '';
     const rad = hear || (asking && q.kind === 'rad') ? '?' : `<b lang="zh-Hans">${w.r}</b> ${w.rm}`;
     return `<div class="spirit"><div class="glyph" lang="zh-Hans">${glyph}</div><div class="pyline">${py}</div>
       <div class="meta"><span>radical ${rad}</span>${res ? `<span>${w.m}</span>` : ''}${res && w.tr ? `<span>trad. <b lang="zh-Hant">${w.tr}</b></span>` : ''}</div></div>`;
   };
-  if (b.type === 'quiz') {
+  if (b.type === 'shop') h += shopHTML();
+  else if (b.type === 'quiz') {
     const q = b.q, tea = b.kind === 'tea';
     h += `<div class="plate"><span>${tea ? 'TEA HOUSE ' + zh('<b class="han">茶馆</b>') : 'MEDITATE &amp; REVIEW'}</span><span class="chip">${tea ? 'REVIEW QUESTION' : 'CARD ' + (b.i + 1) + ' OF 3'}</span>
       <span class="hearts" style="color:var(--jade)">${tea ? '100% HP' : '+50% HP'}</span></div>` + card();
@@ -1404,19 +1654,19 @@ function render() {
   } else if (b.type === 'wild') {
     const w = b.w, q = b.q, d = dexOf(w.h), asking = b.phase === 'q', res = b.phase === 'res';
     h += arenaHTML() + '<div class="bpanel">';
-    if (b.phase === 'intro') {
+    if (b.bag) h += bagHTML(); else if (b.phase === 'intro') {
       const r = RADINFO[w.r];
       h += `<div class="log"><p class="q">Component breakdown and memory story</p>
         <p>${zh('<b class="han">' + w.r + '</b>')} ${r ? r[2] + ' ' : ''}<b>${w.rm}</b> is the main radical${w.h.length > 1 ? ' of ' + zh(w.h[0]) : ''}. ${r ? hz(r[3]) : ''}</p>
-        <p>${hz(w.n)} ${w.st} strokes${w.h.length > 1 ? ' in ' + zh(w.h[0]) : ''}.</p></div>
+        <p>${hz(w.n)} ${w.st} strokes${w.h.length > 1 ? ' in ' + zh(w.h[0]) : ''}.</p>${w.ex ? `<p class="exl">Example: ${zh('<b class="han">' + w.ex[0] + '</b>')} ${w.ex[1]} – ${w.ex[2]}</p>` : ''}</div>
         <div class="panel">${btn('Start the battle', 'begin', 'primary')}${btn('🔊 Listen', 'listen')}</div>`;
     } else if (asking) {
-      h += `<div class="log"><p class="q">${q.text}</p>${b.hint ? hintHTML() : ''}</div><div class="panel">${q.opts.map((o, i) => kopt(i, o.l, o.v, o.cls)).join('')}<div class="duo">${btn('🔊 Listen', 'listen')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}</div>${q.kind === 'hear' ? btn('No sound? Show it', 'reveal') + btn('Run', 'run') : ''}</div>`;
+      h += `<div class="log"><p class="q">${q.text}</p>${b.hint ? hintHTML() : ''}</div><div class="panel">${q.opts.map((o, i) => kopt(i, o.l, o.v, o.cls)).join('')}<div class="duo">${btn('🔊 Listen', 'listen')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}${btn('🎒 Bag' + bagN(), 'bag')}</div>${q.kind === 'hear' ? btn('No sound? Show it', 'reveal') + btn('Run', 'run') : ''}</div>`;
     } else if (res) {
       h += `<div class="log">${b.log}</div><div class="panel">${btn('Continue', 'cont', 'primary')}${btn('🔊 Listen', 'listen')}</div>`;
     } else {
-      h += `<div class="mrow"><div class="log say">${b.log}${d.c ? '' : `<p class="sub">SEAL works ${[0, 100, 60, 30][b.hp]}% of the time at ${b.hp} HP.</p>`}</div><div class="cmd">
-        ${btn('FIGHT', 'fight', 'c-fight primary')}${btn(d.c ? 'SEALED' : 'SEAL', 'seal', 'c-seal', d.c ? 'disabled' : '')}${btn('HINT', 'mhint', 'c-hint')}${btn('RUN', 'run', 'c-run')}</div></div>`;
+      h += `<div class="mrow"><div class="log say">${b.log}${d.c ? '' : `<p class="sub">SEAL works ${Math.min(100, [0, 100, 60, 30][b.hp] * (b.tal ? 2 : 1))}% of the time at ${b.hp} HP.${b.tal ? ' ' + zh('声调符') + ' Tone Talisman active.' : ''}</p>`}</div><div class="cmd">
+        ${btn('FIGHT', 'fight', 'c-fight primary')}${btn(d.c ? 'SEALED' : 'SEAL', 'seal', 'c-seal', d.c ? 'disabled' : '')}${btn('BAG' + bagN(), 'bag', 'c-bag')}${btn('HINT', 'mhint', 'c-hint')}${btn('RUN', 'run', 'c-run')}</div></div>`;
     }
     h += '</div>';
   } else if (b.type === 'scene') {
@@ -1433,13 +1683,13 @@ function render() {
   } else {
     const s = b.s, n = b.n, left = b.queue.length;
     h += arenaHTML() + '<div class="bpanel">';
-    if (b.phase === 'menu') {
+    if (b.bag) h += bagHTML(); else if (b.phase === 'menu') {
       h += `<div class="mrow"><div class="log say">${b.log}</div><div class="cmd">
-        ${btn('FIGHT', 'fight', 'c-fight primary')}${btn('SEAL', 'seal', 'c-seal', 'disabled')}${btn('HINT', 'mhint', 'c-hint')}${btn('RUN', 'run', 'c-run')}</div></div>`;
+        ${btn('FIGHT', 'fight', 'c-fight primary')}${btn('SEAL', 'seal', 'c-seal', 'disabled')}${btn('BAG' + bagN(), 'bag', 'c-bag')}${btn('HINT', 'mhint', 'c-hint')}${btn('RUN', 'run', 'c-run')}</div></div>`;
     } else
     if (b.phase === 'build') {
       const tileBtn = (i, where) => tb(s, i, where);
-      h += `<div class="prompt"><small>${b.dict ? 'LISTEN AND BUILD' : 'SAY IT IN CHINESE'}</small>${b.dict ? 'Build the sentence you hear.' : s.en}${b.thint ? `<p class="hint">💡 ${hz(G[s.g])}</p>` : ''}</div>
+      h += `<div class="prompt">${btn('🎒 Bag' + bagN(), 'bag', 'mini bagm')}<small>${b.dict ? 'LISTEN AND BUILD' : 'SAY IT IN CHINESE'}</small>${b.dict ? 'Build the sentence you hear.' : s.en}${b.thint ? `<p class="hint">💡 ${hz(G[s.g])}</p>` : ''}</div>
         <div class="slots">${b.placed.map(i => tileBtn(i, 'out')).join('')}</div>
         <div class="bank">${b.order.filter(i => !b.placed.includes(i)).map(i => tileBtn(i, 'in')).join('')}</div>
         <div class="panel four">${btn('⚔ Attack', 'check', 'primary', b.placed.length === s.tiles.length ? '' : 'disabled')}${btn('Clear', 'clear')}${btn('💡 Hint', 'mhint', '', b.thint && !b.dict ? 'disabled' : '')}${btn('Run', 'run')}${b.dict ? btn('🔊 Play again', 'listenS', 'span2') + btn('Show English', 'showEn', 'span2') : ''}</div>`;
@@ -1485,6 +1735,11 @@ $('#battle').addEventListener('click', e => {
     case 'reveal': b.q.kind = 'mean'; b.q.text = `What does ${zh('<b>' + b.w.h + '</b>')} mean?`; render(); break;
     case 'showEn': b.dict = false; render(); break;
     case 'listenS': speak(b.listen || (b.s && b.s.ok[0]) || ''); break;
+    case 'bag': b.bag = 1; b.bagMsg = ''; render(); break;
+    case 'bagBack': b.bag = 0; render(); break;
+    case 'use': useItem(d.item); break;
+    case 'buy': buyItem(d.item); break;
+    case 'shopHi': speak(b.msg.h); break;
     case 'run': closeBattle(); break;
     case 'clear': b.placed = []; render(); break;
     case 'check': if (b.type === 'scene') answerScene(null); else checkSentence(); break;
@@ -1647,13 +1902,14 @@ market: { title: 'Market 市场', short: 'Market', who: 'Stall owner', make() {
   ];
 } },
 };
-function startScene(id) { b = { type: 'scene', id, sc: SCENES[id], turns: SCENES[id].make(), i: 0, log: '' }; loadTurn(); openBattle(); }
+function startScene(id) { b = { type: 'scene', id, sc: SCENES[id], turns: SCENES[id].make(), i: 0, log: '', ph0: phSum() }; loadTurn(); openBattle(); }
 function loadTurn() {
   const t = b.turns[b.i]; b.phase = 'q'; b.listen = null;
   if (t.kind === 'build') { b.s = t.s; b.placed = []; b.order = mixed(t.s); } else b.opts = shuffle(t.opts.slice());
   if (t.npc) speak(t.npc.h);
 }
 function answerScene(idx) {
+  let capped = 0;
   const t = b.turns[b.i]; let ok, mine = '';
   if (t.kind === 'build') { mine = b.placed.map(i => b.s.tiles[i].h).join(''); ok = b.s.ok.includes(mine); }
   else { ok = !!b.opts[idx].ok; mine = b.opts[idx].h || ''; }
@@ -1665,14 +1921,23 @@ function answerScene(idx) {
   const f = t.full, line = `<span class="sent" lang="zh-Hans">${f.h}</span><br>${f.p}<br>"${f.en}"`, why = t.why ? `<p><b>Tip:</b> ${hz(t.why)}</p>` : '';
   b.phase = 'res'; b.good = ok; b.listen = t.say || f.h;
   if (ok) {
-    beep(1); (t.ph || []).forEach(id => { S.ph[id] = Math.min(100, (S.ph[id] || 0) + 20); });
+    beep(1);
+    (t.ph || []).forEach(id => {
+      if (S.ph[id] > 0) { S.ph[id] = Math.min(100, S.ph[id] + 20); srsAnswer(S.phs[id], true); return; }
+      if (S.day.newP >= newCap()[1]) { capped = 1; return; }            // daily cap on newly collected phrases
+      S.day.newP++; S.ph[id] = 20; S.phs[id] = {}; srsInit(S.phs[id]);
+    });
     if (t.say) speak(t.say);
     b.log = `<div class="fb yes"><span class="tagl">✓ CORRECT · ${t.hide ? 'YOU HEARD IT RIGHT' : 'WELL SAID'}</span>${line}</div>${why}`;
-    if (b.i === b.turns.length - 1) b.over = 1;
+    if (b.i === b.turns.length - 1) { b.over = 1; earn(15 + rnd(6)); }
   } else {
     beep(0); hurt(2);
     b.log = `<p class="bad">Not quite. That costs 2 HP.</p><div class="fbrow"><div class="fb no">${said}</div><div class="fb yes"><span class="tagl">✓ CORRECT · ${t.hide ? 'THEY SAID' : 'SAY THIS'}</span>${line}</div></div>${why}`;
   }
+  if (!ok) (t.ph || []).forEach(id => { if (S.ph[id] > 0) srsAnswer(S.phs[id], false); });
+  if (capped) b.log += `<p class="pace">Today's limit of ${newCap()[1]} new phrases is reached, so this one was not collected. Use it again tomorrow to add it.</p>`;
+  b.log = track(ok) + b.log;
+  if (b.over && !b.dead) b.log += summaryHTML();
   save(); render();
 }
 function finishScene() {
@@ -1680,7 +1945,8 @@ function finishScene() {
   const n = S.stamps[id]; closeBattle(); hud(); save();
   say([`Scene cleared! You earned a ${sc.short} stamp (${n} so far) and recovered 5 HP.`, 'The phrases you used are now in your Phrasebook: open the DEX and tap Phrasebook. Play again and the details change.'], null, 'Daily Life');
 }
-let dexTab = 'dex';
+let dexTab = 'dex', dexFilter = 'all';
+const DEX_FILTERS = { all: ['All', () => true], due: ['Due', (w, d) => !!(d && d.c) && isDue(d)], hsk1: ['HSK 1', w => w.z === 0], hsk2: ['HSK 2', w => w.z === 1], hsk3: ['HSK 3', w => w.z === 2], unsealed: ['Unsealed', (w, d) => !(d && d.c)] };
 function phrasebookHTML() {
   const ids = Object.keys(PHR), got = ids.filter(i => S.ph[i] > 0).length;
   let h = `<p class="autosave">${got} of ${ids.length} phrases collected. Clear Daily Life scenes in the Village (the people with a speech bubble) to collect more. Tap a phrase to hear it.</p>
@@ -1689,7 +1955,7 @@ function phrasebookHTML() {
     h += `<h3>${CATS[c][0].toUpperCase()}</h3><div class="cards wide">`;
     ids.filter(i => PHR[i][0] === c).forEach(i => {
       const p = PHR[i], xp = S.ph[i] || 0;
-      h += xp ? `<div class="card pcard"><button class="ph" data-say="${p[1]}" lang="zh-Hans" aria-label="Listen to ${p[2]}">${p[1]}</button>${p[4] ? `<small lang="zh-Hant">[${p[4]}]</small>` : ''}<div><b>${p[2]}</b></div><div class="m">${p[3]}</div>${p[5] ? `<div class="note">${hz(p[5])}</div>` : ''}<div class="xp" title="Mastery ${xp}/100"><i style="width:${xp}%"></i></div><div class="foot"><span>${xp >= 100 ? '★ Mastered' : 'Mastery ' + xp + '/100'}</span></div></div>`
+      h += xp ? `<div class="card pcard"><button class="ph" data-say="${p[1]}" lang="zh-Hans" aria-label="Listen to ${p[2]}">${p[1]}</button>${p[4] ? `<small lang="zh-Hant">[${p[4]}]</small>` : ''}<div><b>${p[2]}</b></div><div class="m">${p[3]}</div>${p[5] ? `<div class="note">${hz(p[5])}</div>` : ''}<div class="xp" title="Mastery ${xp}/100"><i style="width:${xp}%"></i></div><div class="foot"><span>${mastered(S.phs[i]) ? '★ Mastered' : 'Mastery ' + xp + '/100'}</span></div>${S.phs[i] ? `<div class="srs${isDue(S.phs[i]) ? ' due' : ''}">${srsText(S.phs[i])}${isDue(S.phs[i]) ? ' · replay the ' + SCENES[CATS[c][1]].short + ' conversation' : ''}</div>` : ''}</div>`
         : `<div class="card pcard locked"><div class="m">${p[3]}</div><div>Clear the ${SCENES[CATS[c][1]].short} scene to collect this phrase.</div></div>`;
     });
     h += '</div>';
@@ -1738,6 +2004,55 @@ Object.assign(PHR, {
   k5: ['culture', '新年快乐！', 'Xīnnián kuàilè!', 'Happy New Year!', '新年快樂！', 'Occasion + 快乐: 生日快乐 = happy birthday.'],
   k6: ['culture', '谢谢你的礼物，我非常喜欢！', 'Xièxie nǐ de lǐwù, wǒ fēicháng xǐhuan!', 'Thank you for the gift, I like it very much!', '謝謝你的禮物，我非常喜歡！', '非常 goes before the verb.'],
 });
+Object.assign(PHR, {
+  n1: ['pay', '这个多少钱？太贵了，便宜一点吧。', 'Zhège duōshao qián? Tài guì le, piányi yìdiǎn ba.', 'How much is this? Too expensive, a little cheaper please.', '這個多少錢？太貴了，便宜一點吧。', '一 is written yī but said yì before 点. Adjective + 一点 = a little more ….'],
+  n2: ['pay', '我可以扫微信支付吗？', 'Wǒ kěyǐ sǎo Wēixìn zhīfù ma?', 'Can I scan WeChat Pay?', '我可以掃微信支付嗎？', '可以 + verb = may I. 扫 = scan the QR code.'],
+  n3: ['pay', '我想用支付宝支付。', 'Wǒ xiǎng yòng Zhīfùbǎo zhīfù.', 'I want to pay with Alipay.', '我想用支付寶支付。', '用 + tool comes BEFORE the action: 用支付宝 + 支付.'],
+  n4: ['pay', '请给我一杯冰美式，少冰。', 'Qǐng gěi wǒ yì bēi bīng měishì, shǎo bīng.', 'Please give me an iced Americano, less ice.', '請給我一杯冰美式，少冰。', '一 is said yì before 杯. 少冰 = less ice, 去冰 qù bīng = no ice.'],
+  n5: ['pay', '请扫这个码。', 'Qǐng sǎo zhège mǎ.', 'Please scan this code.', '請掃這個碼。', 'What the shopkeeper says when holding out a QR code.'],
+  n6: ['pay', '微信不行，支付宝可以。', 'Wēixìn bù xíng, Zhīfùbǎo kěyǐ.', 'WeChat will not work, but Alipay is fine.', '微信不行，支付寶可以。', '不行 = will not do. 可以 = fine.'],
+});
+CATS.pay = ['Night market and mobile pay', 'night'];
+SCENES.night = { title: 'Night Market 夜市', short: 'Night Market', who: 'Shopkeeper', make() {
+  const p1 = 80 + rnd(19), p2 = p1 - 10 - rnd(15);
+  return [
+    pickT({ npc: L('欢迎！想喝点儿什么？', 'Huānyíng! Xiǎng hē diǎnr shénme?', 'Welcome! What would you like to drink?'), goal: 'At the drinks stall, order an iced Americano with less ice.',
+      right: L('请给我一杯冰美式，少冰。', 'Qǐng gěi wǒ yì bēi bīng měishì, shǎo bīng.', 'Please give me an iced Americano, less ice.'),
+      wrong: [L('请给我一本冰美式，少冰。', 'Qǐng gěi wǒ yì běn bīng měishì, shǎo bīng.', 'Please give me an iced Americano, counted like a book. (wrong measure word)'), L('请给我一杯热美式，多冰。', 'Qǐng gěi wǒ yì bēi rè měishì, duō bīng.', 'Please give me a hot Americano, extra ice.'), L('请我给一杯冰美式，少冰。', 'Qǐng wǒ gěi yì bēi bīng měishì, shǎo bīng.', 'Please I give an iced Americano. (给 must come before 我)')],
+      why: '请给我 + 一杯 + drink. 冰 = iced, 少冰 = less ice. 一 is said yì before 杯.', ph: ['n4'] }),
+    pickT({ npc: L('来看看！都很便宜！', 'Lái kànkan! Dōu hěn piányi!', 'Come and look! Everything is cheap!'), goal: 'At the next stall, point at something and ask the price.', right: L('这个多少钱？', 'Zhège duōshao qián?', 'How much is this one?'),
+      wrong: [L('这个几位？', 'Zhège jǐ wèi?', 'This one, how many people?'), L('多少这个钱？', 'Duōshao zhège qián?', 'How much this money? (the word order is wrong)'), L('这个多少杯？', 'Zhège duōshao bēi?', 'This one, how many cups?')], why: 'Thing + 多少钱. 多少 asks how much or how many.', ph: ['s1'] }),
+    hearT({ npc: L(`这个${numHan(p1)}块。`, `Zhège ${numPy(p1)} kuài.`, `This one is ${p1} dollars.`), goal: 'Listen. What is the price?', rightEn: '$' + p1, wrongEn: decoys(p1).map(x => '$' + x), why: 'Tens first, then ones. 块 (kuài) = dollars.' }),
+    pickT({ goal: 'Say it is too expensive and ask for a little cheaper.', right: L('太贵了，便宜一点吧。', 'Tài guì le, piányi yìdiǎn ba.', 'Too expensive, a little cheaper please.'),
+      wrong: [L('太便宜了，贵一点吧。', 'Tài piányi le, guì yìdiǎn ba.', 'Too cheap, a little more expensive please.'), L('太贵了，便宜有点吧。', 'Tài guì le, piányi yǒudiǎn ba.', 'Too expensive, cheap a bit. (it should be 一点 after the adjective)'), L('很贵吗，便宜一点了。', 'Hěn guì ma, piányi yìdiǎn le.', 'Is it expensive, it got a little cheaper.')],
+      why: '太 + adjective + 了 = too …. Adjective + 一点 = a little more …. 吧 turns it into a suggestion. 一 is said yì before 点.', ph: ['n1'] }),
+    hearT({ npc: L(`好吧，${numHan(p2)}块。`, `Hǎo ba, ${numPy(p2)} kuài.`, `All right, ${p2} dollars.`), goal: 'Listen. What is the new price?', rightEn: '$' + p2, wrongEn: decoys(p2).map(x => '$' + x), why: '好吧 = all right then.' }),
+    pickT({ goal: 'Ask whether you can scan to pay with WeChat Pay.', right: L('我可以扫微信支付吗？', 'Wǒ kěyǐ sǎo Wēixìn zhīfù ma?', 'Can I scan WeChat Pay?'),
+      wrong: [L('我可以扫微信支付。', 'Wǒ kěyǐ sǎo Wēixìn zhīfù.', 'I can scan WeChat Pay. (a statement, not a question)'), L('我扫可以微信支付吗？', 'Wǒ sǎo kěyǐ Wēixìn zhīfù ma?', 'I scan can WeChat Pay? (可以 must come before the verb)'), L('我可以看微信支付吗？', 'Wǒ kěyǐ kàn Wēixìn zhīfù ma?', 'Can I look at WeChat Pay?')],
+      why: '可以 + verb + 吗 = may I …? 扫 (sǎo) = scan.', ph: ['n2'] }),
+    hearT({ npc: L('微信不行，支付宝可以。', 'Wēixìn bù xíng, Zhīfùbǎo kěyǐ.', 'WeChat will not work, but Alipay is fine.'), goal: 'Listen. Which payment does the shopkeeper accept?', rightEn: 'Alipay, but not WeChat', wrongEn: ['WeChat, but not Alipay', 'Cash only', 'Both WeChat and Alipay'], why: '不行 = will not do. 可以 = fine.', ph: ['n6'] }),
+    pickT({ goal: 'Say you want to pay with Alipay.', right: L('我想用支付宝支付。', 'Wǒ xiǎng yòng Zhīfùbǎo zhīfù.', 'I want to pay with Alipay.'),
+      wrong: [L('我想支付用支付宝。', 'Wǒ xiǎng zhīfù yòng Zhīfùbǎo.', 'I want to pay with Alipay, in English word order. (用 + tool must come before the verb)'), L('我用想支付宝支付。', 'Wǒ yòng xiǎng Zhīfùbǎo zhīfù.', 'I use want Alipay pay. (想 must come before 用)'), L('我想用支付宝吃饭。', 'Wǒ xiǎng yòng Zhīfùbǎo chīfàn.', 'I want to eat with Alipay.')],
+      why: '用 + tool comes BEFORE the action: 想 + 用支付宝 + 支付.', ph: ['n3'] }),
+    hearT({ npc: L('好的，请扫这个码。', 'Hǎo de, qǐng sǎo zhège mǎ.', 'OK, please scan this code.'), goal: 'Listen. What should you do now?', rightEn: 'Scan this code', wrongEn: ['Show your own code', 'Pay in cash', 'Wait a moment'], why: '扫 = scan, 码 = code.', ph: ['n5'] }),
+  ];
+} };
+NPCS.push({ id: 'sc_night', dir: 0, scene: 'night', x: 20, y: 8, name: 'Shopkeeper · 夜市 Night Market', col: C('#3b2a1a', '#b3261e', '#2b2b2b'), intro: 'Practise a night market run: order an iced Americano, ask a price, haggle, and pay with WeChat Pay or Alipay.' });
+// v2.9 trainer sentences: mobile payment, haggling and ordering
+Object.assign(G, {
+  yong: '用 + tool comes BEFORE the action: 用支付宝 + 支付. 想 goes before 用.',
+  keyi: '可以 + verb = may / can. Add 吗 at the end to turn it into a question.',
+  yidian: '太 + adjective + 了 = too …. Adjective + 一点 = a little more …. 吧 softens it into a suggestion.',
+  geiwo: '请给我 + number + measure word + thing. Extra requests such as 少冰 come last.',
+  duoshao: 'Thing + 多少钱. 多少 asks how much.',
+});
+POOLS.t2.push(
+  sen('How much is this one?', '这个 zhège|多少 duōshao|钱 qián', 'duoshao'),
+  sen('Please give me an iced Americano, less ice.', '请 qǐng|给 gěi|我 wǒ|一杯 yì bēi|冰美式 bīng měishì|少冰 shǎo bīng', 'geiwo'));
+POOLS.t4.push(
+  sen('I want to pay with Alipay.', '我 wǒ|想 xiǎng|用 yòng|支付宝 Zhīfùbǎo|支付 zhīfù', 'yong'),
+  sen('Can I scan WeChat Pay?', '我 wǒ|可以 kěyǐ|扫 sǎo|微信 Wēixìn|支付 zhīfù|吗 ma', 'keyi'),
+  sen('Too expensive, a little cheaper please.', '太 tài|贵 guì|了 le|便宜 piányi|一点 yìdiǎn|吧 ba', 'yidian', ['便宜一点吧太贵了']));
 Object.assign(CATS, { cafe: ['Cafés', 'cafe'], hello: ['Greetings and weather', 'hello'], home: ['Renting a home', 'rent'], health: ['Health', 'clinic'], work: ['Work', 'work'], eco: ['Environment', 'eco'], culture: ['Culture and festivals', 'culture'] });
 Object.assign(SCENES, {
 cafe: { title: 'Café 咖啡店', short: 'Café', who: 'Barista', make() {
@@ -1903,6 +2218,26 @@ const RADINFO = {};
   ['虫', 'insect', '🐛', 'A small creature rearing its head.', '蛋 虽 虾'],
   ['雨', 'rain', '🌧️', 'Drops falling from a cloud.', '需 雪 零'],
   ['乛', 'hook', '🪝', 'A single bent stroke; more of a dictionary filing label than a picture.', '买'],
+  ["夕", "evening", "🌆", "A crescent moon low in the sky at dusk.", "多 外 名"],
+  ["阝", "city", "🏘️", "On the right side of a character it is a walled town; on the left it is a hill.", "那 都 部"],
+  ["西", "west", "🧭", "A bird settling on its nest as the sun goes down in the west.", "要 票"],
+  ["人", "person", "🧍", "A person walking, seen from the side (it becomes 亻 on the left).", "个 会 今"],
+  ["面", "face", "😶", "A face drawn with an eye inside its outline.", "面"],
+  ["大", "big", "🙆", "A person stretching arms and legs as wide as they can.", "大 太 天"],
+  ["小", "small", "🤏", "Three tiny grains.", "小 少 尖"],
+  ["工", "work", "🛠️", "A carpenter's square, the tool of the trade.", "左 工 红"],
+  ["刂", "knife", "🔪", "A blade standing upright (full form 刀).", "前 到 别"],
+  ["走", "walk", "🏃", "A person swinging their arms above a striding foot.", "走 起 超"],
+  ["立", "stand", "🧍‍♂️", "A person standing firmly on the ground.", "站 位 音"],
+  ["车", "vehicle", "🚗", "A cart seen from above: wheels, axle and body.", "车 轻 辆"],
+  ["广", "shelter", "⛺", "A lean-to with one open side; it marks buildings.", "店 床 座"],
+  ["支", "branch", "🌿", "A hand holding up a branch: to support, and so to pay out.", "支 技"],
+  ["石", "stone", "🪨", "A rock lying at the foot of a cliff.", "码 碗 确"],
+  ["彳", "step", "👣", "The left half of a crossroads; it marks walking and movement.", "微 很 得 行"],
+  ["手", "hand", "🖐️", "A hand with its five fingers (it becomes 扌 on the left).", "手 拿 掌"],
+  ["用", "use", "🪣", "A wooden bucket: something you put to use.", "用"],
+  ["心", "heart", "❤️", "A heart with its chambers (it becomes 忄 on the left).", "想 怎 您"],
+  ["一", "one", "➖", "A single stroke; often just a dictionary filing label.", "东 两 七"],
 ].forEach(r => { RADINFO[r[0]] = r; });
 const RAD_TOP = Object.keys(RADINFO).slice(0, 25);
 function hintHTML() {
@@ -1969,7 +2304,7 @@ C: { name: 'HSK 3+', cards: [
 
 /* ───────────── START SCREEN AND TRACKS ───────────── */
 const FEEDBACK_URL = 'https://forms.gle/sxKa1P7Hz9RGFvTa6';
-const VERSION = 'v2.7 Beta';
+const VERSION = 'v3.0 Beta';
 const DRAGON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="0" y="0" width="1" height="1" fill="#f2b632"/><rect x="15" y="0" width="1" height="1" fill="#f2b632"/><rect x="0" y="1" width="2" height="1" fill="#f2b632"/><rect x="14" y="1" width="2" height="1" fill="#f2b632"/><rect x="1" y="2" width="2" height="1" fill="#f2b632"/><rect x="13" y="2" width="2" height="1" fill="#f2b632"/><rect x="2" y="3" width="2" height="1" fill="#f2b632"/><rect x="4" y="3" width="8" height="1" fill="#c8102e"/><rect x="12" y="3" width="2" height="1" fill="#f2b632"/><rect x="0" y="4" width="1" height="1" fill="#f2b632"/><rect x="2" y="4" width="1" height="1" fill="#7a0a1c"/><rect x="3" y="4" width="10" height="1" fill="#c8102e"/><rect x="13" y="4" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="4" width="1" height="1" fill="#f2b632"/><rect x="0" y="5" width="1" height="1" fill="#f2b632"/><rect x="1" y="5" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="5" width="1" height="1" fill="#c8102e"/><rect x="3" y="5" width="3" height="1" fill="#7a0a1c"/><rect x="6" y="5" width="4" height="1" fill="#c8102e"/><rect x="10" y="5" width="3" height="1" fill="#7a0a1c"/><rect x="13" y="5" width="1" height="1" fill="#c8102e"/><rect x="14" y="5" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="5" width="1" height="1" fill="#f2b632"/><rect x="1" y="6" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="6" width="1" height="1" fill="#c8102e"/><rect x="3" y="6" width="2" height="1" fill="#ffffff"/><rect x="5" y="6" width="1" height="1" fill="#1b1b2f"/><rect x="6" y="6" width="4" height="1" fill="#c8102e"/><rect x="10" y="6" width="1" height="1" fill="#1b1b2f"/><rect x="11" y="6" width="2" height="1" fill="#ffffff"/><rect x="13" y="6" width="1" height="1" fill="#c8102e"/><rect x="14" y="6" width="1" height="1" fill="#7a0a1c"/><rect x="0" y="7" width="1" height="1" fill="#f2b632"/><rect x="1" y="7" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="7" width="1" height="1" fill="#c8102e"/><rect x="3" y="7" width="1" height="1" fill="#ffffff"/><rect x="4" y="7" width="2" height="1" fill="#1b1b2f"/><rect x="6" y="7" width="4" height="1" fill="#c8102e"/><rect x="10" y="7" width="2" height="1" fill="#1b1b2f"/><rect x="12" y="7" width="1" height="1" fill="#ffffff"/><rect x="13" y="7" width="1" height="1" fill="#c8102e"/><rect x="14" y="7" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="7" width="1" height="1" fill="#f2b632"/><rect x="0" y="8" width="1" height="1" fill="#f2b632"/><rect x="1" y="8" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="8" width="12" height="1" fill="#c8102e"/><rect x="14" y="8" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="8" width="1" height="1" fill="#f2b632"/><rect x="1" y="9" width="1" height="1" fill="#f2b632"/><rect x="2" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="3" y="9" width="3" height="1" fill="#c8102e"/><rect x="6" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="7" y="9" width="2" height="1" fill="#c8102e"/><rect x="9" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="10" y="9" width="3" height="1" fill="#c8102e"/><rect x="13" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="14" y="9" width="1" height="1" fill="#f2b632"/><rect x="1" y="10" width="1" height="1" fill="#f2b632"/><rect x="3" y="10" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="10" width="8" height="1" fill="#c8102e"/><rect x="12" y="10" width="1" height="1" fill="#7a0a1c"/><rect x="14" y="10" width="1" height="1" fill="#f2b632"/><rect x="0" y="11" width="1" height="1" fill="#f2b632"/><rect x="3" y="11" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="11" width="1" height="1" fill="#ffffff"/><rect x="5" y="11" width="1" height="1" fill="#c8102e"/><rect x="6" y="11" width="1" height="1" fill="#ffffff"/><rect x="7" y="11" width="2" height="1" fill="#c8102e"/><rect x="9" y="11" width="1" height="1" fill="#ffffff"/><rect x="10" y="11" width="1" height="1" fill="#c8102e"/><rect x="11" y="11" width="1" height="1" fill="#ffffff"/><rect x="12" y="11" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="11" width="1" height="1" fill="#f2b632"/><rect x="0" y="12" width="1" height="1" fill="#f2b632"/><rect x="3" y="12" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="12" width="8" height="1" fill="#c8102e"/><rect x="12" y="12" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="12" width="1" height="1" fill="#f2b632"/><rect x="4" y="13" width="8" height="1" fill="#7a0a1c"/><rect x="3" y="14" width="1" height="1" fill="#f2b632"/><rect x="5" y="14" width="2" height="1" fill="#f2b632"/><rect x="9" y="14" width="2" height="1" fill="#f2b632"/><rect x="12" y="14" width="1" height="1" fill="#f2b632"/><rect x="2" y="15" width="1" height="1" fill="#f2b632"/><rect x="6" y="15" width="1" height="1" fill="#f2b632"/><rect x="9" y="15" width="1" height="1" fill="#f2b632"/><rect x="13" y="15" width="1" height="1" fill="#f2b632"/></svg>';
 const TRACKS = {
   A: { lv: 'TRACK A · BEGINNER', t: 'Foundations First', d: 'Tones, radicals and word order. Opens the Curriculum and Radical Guide, then the HSK 1 Village. Pinyin on.' },
@@ -1978,10 +2313,11 @@ const TRACKS = {
 };
 let started = false, infoBack = 'world', infoView = 'curr', currTab = 'A';
 function showStart(flash) {
+  rollDay();
   mode = 'start'; held.length = 0; screen_('start');
   const can = hadSave || started, sealed = WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c).length, ph = Object.keys(PHR).filter(i => S.ph[i] > 0).length, ext = /^https?:/.test(FEEDBACK_URL);
   $('#start').className = can ? 'has-cont' : '';
-  $('#start').innerHTML = `<div class="st-title"><span class="emblem" role="img" aria-label="Red dragon emblem">${DRAGON_SVG}</span><div><h1>HanziMon</h1><p class="st-sub">HSK 1–3</p></div></div>
+  $('#start').innerHTML = `<div class="st-title"><span class="emblem" role="img" aria-label="Red dragon emblem">${DRAGON_SVG}</span><div><h1>HanziMon</h1><p class="st-sub">HSK 1–3</p><div class="daily${S.day.done ? ' done' : ''}"><span>Daily Goal: ${Math.min(S.day.n, GOAL)}/${GOAL}${S.day.done ? ' ✓' : ''}</span><i><em style="width:${Math.min(100, 100 * S.day.n / GOAL)}%"></em></i><span>🔥 ${S.dstreak} Day${S.dstreak === 1 ? '' : 's'}</span>${dueCount() ? `<span class="dd">${dueCount()} due</span>` : ''}</div></div></div>
     ${typeof flash === 'string' ? `<div class="flash">${flash}</div>` : ''}
     ${can ? `<button class="btn primary" data-act="continue">Continue Adventure<small>${S.badges.filter(Boolean).length} of 3 badges · ${sealed} spirits sealed · ${ph} phrases${S.track ? ' · Track ' + S.track : ''}</small></button>` : ''}
     <p class="st-pick">CHOOSE YOUR TRAINER</p>
@@ -2000,7 +2336,7 @@ function enterTrack(k) {
       'Walk into tall grass to meet Hanzi Spirits. The first time you meet one you get its breakdown and memory story before the quiz. Use the 💡 Hint button whenever you are stuck.',
       'The Radical Guide is in the top bar, and the Dojo Scroll stands just east of here. Grandpa Chén, to the south-east, explains the tone colours.']
     : k === 'B' ? ['Track B, Daily Conversation. Welcome to the Town Market! Everyone here with a speech bubble will talk with you.',
-      'Lǎo Zhāng: greetings and weather. Barista: the café. Waiter: the restaurant. Stall Owner: shopping and numbers. MTR Staff: directions. Xiǎo Lì: getting to know someone.',
+      'Lǎo Zhāng: greetings and weather. Barista: the café. Waiter: the restaurant. Stall Owner: shopping and numbers. Shopkeeper: the night market and mobile pay. MTR Staff: directions. Xiǎo Lì: getting to know someone.',
       'Each line has a 🔊 1x and a 🐢 0.7x button. Listen, repeat the line aloud, then reply.']
     : ['Track C, HSK 3+ Fast-Track. The roads to the Crossroads and the Academy are open, and pinyin is off. Turn it back on in the top bar whenever you need it.',
       'In the Academy, people with a speech bubble cover modern topics: work, the clinic, renting, the environment and culture.',
@@ -2081,28 +2417,35 @@ function openDex(flash) {
     ${typeof flash === 'string' ? `<div class="flash">${flash}</div>` : ''}
     <div class="menu">
       <button class="btn primary" data-act="med" ${got ? '' : 'disabled'}>Meditate &amp; Review<small>${got ? '3 flashcards · pass 2 to heal 50% HP' : 'seal a spirit first'}</small></button>
+      <button class="btn" data-act="tea" ${S.bag.tea > 0 && S.hp < maxHP() ? '' : 'disabled'}>🧋 Drink Bubble Tea ×${S.bag.tea}<small>+10 HP${S.hp >= maxHP() ? ' · HP is full' : ''} · Bag: 📜 ×${S.bag.tal} · 👓 ×${S.bag.gls}</small></button>
       <button class="btn" data-act="export">Export Save<small>Base64 code to move this save to another device</small></button>
       <button class="btn" data-act="import">Import Save<small>paste a Base64 code from another device</small></button>
       <button class="btn" data-act="curr">HSK 3.0 Curriculum<small>study cards for the three tracks</small></button>
       <button class="btn" data-act="rad">Radical Guide<small>picture meanings and memory stories</small></button>
       <button class="btn" data-act="slow">Slow audio 0.7x: ${S.slow ? 'ON' : 'OFF'}<small>applies to every Listen button</small></button>
+      <button class="btn" data-act="auto">Auto-Pace: ${S.auto ? 'ON' : 'OFF'}<small>adjusts new material to your accuracy</small></button>
       <button class="btn" data-act="home">Start screen<small>tracks and feedback</small></button>
     </div>
     <div id="saveBox" hidden></div>
-    <p class="autosave">HP ${S.hp}/${maxHP()} · Progress saves in this browser after every battle and heal. Unsealed spirits and ones you have missed appear 3× as often in the grass${(n => n ? ' (' + n + ' flagged for review now)' : '')(WORDS.filter(w => S.dex[w.h] && S.dex[w.h].missedCount > 0).length)}.</p>
+    <p class="autosave">HP ${S.hp}/${maxHP()} · Coins ${S.coins} · Daily Goal ${Math.min(S.day.n, GOAL)}/${GOAL} · 🔥 ${S.dstreak} Day${S.dstreak === 1 ? '' : 's'} · Bonus XP ${S.txp} · ${dueCount()} review${dueCount() === 1 ? '' : 's'} due.<br>
+      Accuracy over your last ${S.recent.length} answer${S.recent.length === 1 ? '' : 's'}: ${accuracy() == null ? 'none yet' : Math.round(accuracy() * 100) + '%'}. ${S.auto ? PACE_NOTE[S.pace] : 'Auto-Pace is off: no caps or pauses, and pinyin follows the top-bar button.'}</p>
     <div class="tabs" role="tablist"><button class="btn" role="tab" data-act="tabDex" aria-selected="${dexTab === 'dex'}">HanziDex ${got}/${WORDS.length}</button><button class="btn" role="tab" data-act="tabPh" aria-selected="${dexTab === 'ph'}">Phrasebook ${Object.keys(PHR).filter(i => S.ph[i] > 0).length}/${Object.keys(PHR).length}</button></div>
+    ${dexTab === 'ph' ? '' : `<div class="filters" role="tablist" aria-label="Filter the HanziDex">${Object.keys(DEX_FILTERS).map(k => `<button class="btn" role="tab" data-filter="${k}" aria-selected="${k === dexFilter}">${DEX_FILTERS[k][0]} <small>${WORDS.filter(w => DEX_FILTERS[k][1](w, S.dex[w.h])).length}</small></button>`).join('')}</div>`}
     <div class="legend" ${dexTab === 'ph' ? 'hidden' : ''}><span class="t1">■ 1st tone</span><span class="t2">■ 2nd tone</span><span class="t3">■ 3rd tone</span><span class="t4">■ 4th tone</span><span class="t5">■ neutral</span><span>Tap a character to hear it.</span></div>`;
   if (dexTab === 'ph') h += phrasebookHTML();
+  else if (!WORDS.some(w => DEX_FILTERS[dexFilter][1](w, S.dex[w.h]))) h += `<p class="autosave">${dexFilter === 'due' ? 'Nothing is due right now. Sealed spirits come back here when their review date arrives.' : 'Nothing in this filter yet.'}</p>`;
   else ZONES.forEach((zn, z) => {
-    h += `<h3>${zn.toUpperCase()}</h3><div class="cards">`;
-    WORDS.filter(w => w.z === z).forEach(w => {
+    const list = WORDS.filter(w => w.z === z && DEX_FILTERS[dexFilter][1](w, S.dex[w.h]));
+    if (!list.length) return;
+    h += `<h3>${zn.toUpperCase()} · ${list.length}</h3><div class="cards">`;
+    list.forEach(w => {
       const d = S.dex[w.h];
       if (d && d.c) {
         h += `<div class="card"><button class="g" data-say="${w.h}" lang="zh-Hans" aria-label="Listen to ${w.py}">${[...w.h].map((c, i) => `<span class="t${w.t[i]}">${c}</span>`).join('')}${w.tr ? `<small lang="zh-Hant">[${w.tr}]</small>` : ''}</button>
           <div><b>${w.py}</b> <span class="monic">${monSVG(w.r)}</span></div><div class="m">${w.m}</div>
-          <div class="note">Radical <b lang="zh-Hans">${w.r}</b> ${w.rm} · ${w.st} strokes${w.h.length > 1 ? ' in ' + zh(w.h[0]) : ''}. ${w.n.replace(/[⺀-鿿]+/g, m => zh(m))}</div>
+          <div class="note">Radical <b lang="zh-Hans">${w.r}</b> ${w.rm} · ${w.st} strokes${w.h.length > 1 ? ' in ' + zh(w.h[0]) : ''}. ${w.n.replace(/[⺀-鿿]+/g, m => zh(m))}</div>${w.ex ? `<div class="note exl"><button class="exb" data-say="${w.ex[0]}" aria-label="Listen to the example">🔊</button> ${zh('<b>' + w.ex[0] + '</b>')} ${w.ex[1]} – ${w.ex[2]}</div>` : ''}
           <div class="xp" title="Mastery ${d.xp}/100"><i style="width:${d.xp}%"></i></div>
-          <div class="foot"><span>${d.xp >= 100 ? '★ Mastered' : 'Mastery ' + d.xp + '/100 XP'}</span><span${d.missedCount > 0 ? ' class="rev"' : ''}>${d.missedCount > 0 ? 'Needs review · ' + d.missedCount + ' miss' + (d.missedCount > 1 ? 'es' : '') + (d.streak ? ' · 1 more right clears it' : '') : 'no open misses'}</span></div></div>`;
+          <div class="foot"><span>${mastered(d) ? '★ Mastered' : 'Mastery ' + d.xp + '/100 XP'}</span><span${d.missedCount > 0 ? ' class="rev"' : ''}>${d.missedCount > 0 ? 'Needs review · ' + d.missedCount + ' miss' + (d.missedCount > 1 ? 'es' : '') + (d.streak ? ' · 1 more right clears it' : '') : 'no open misses'}</span></div><div class="srs${isDue(d) ? ' due' : ''}">${srsText(d)}</div></div>`;
       } else {
         h += `<div class="card locked"><div class="g" lang="zh-Hans">${d && d.s ? w.h : '？'}</div><div><b>${d && d.s ? 'Seen, not sealed' : 'Not found yet'}</b></div><div>${d && d.missedCount > 0 ? 'Needs review · ' + d.missedCount + ' miss' + (d.missedCount > 1 ? 'es' : '') : 'Search the tall grass'}</div></div>`;
       }
@@ -2119,11 +2462,16 @@ function importCode(str) {
   if (!j || typeof j !== 'object' || !Array.isArray(j.badges) || !j.dex || typeof j.dex !== 'object') return 'That is not a HanziMon save code.';
   const num = (v, d, lo, hi) => { v = Math.round(Number(v)); return Number.isFinite(v) ? Math.max(lo, Math.min(hi, v)) : d; };
   const dex = {}, beat = {};
-  WORDS.forEach(w => { const d = j.dex[w.h]; if (d && typeof d === 'object') dex[w.h] = { c: d.c ? 1 : 0, xp: num(d.xp, 0, 0, 100), missedCount: num(d.missedCount != null ? d.missedCount : d.m, 0, 0, 9999), streak: num(d.streak, 0, 0, 1), s: 1 }; });
+  WORDS.forEach(w => { const d = j.dex[w.h]; if (d && typeof d === 'object') dex[w.h] = { c: d.c ? 1 : 0, xp: num(d.xp, 0, 0, 100), missedCount: num(d.missedCount != null ? d.missedCount : d.m, 0, 0, 9999), streak: num(d.streak, 0, 0, 1), s: 1, ...(Number.isFinite(d.nextReviewAt) ? { nextReviewAt: d.nextReviewAt, srsStage: num(d.srsStage, 0, 0, 5) } : {}) }; });
   NPCS.forEach(n => { if (n.pool && j.beat && j.beat[n.id]) beat[n.id] = 1; });
   Object.assign(S, { badges: [0, 1, 2].map(i => j.badges[i] ? 1 : 0), dex, beat, py: j.py ? 1 : 0, heal: num(j.heal, 0, 0, 2), intro: 1, grad: j.grad ? 1 : 0, ph: {}, stamps: {}, seenDaily: 1, track: ['A', 'B', 'C'].includes(j.track) ? j.track : '', fast: j.fast ? 1 : 0, slow: j.slow ? 1 : 0, avatar: num(j.avatar, 0, 0, 3) });
   Object.keys(PHR).forEach(id => { const v = j.ph && num(j.ph[id], 0, 0, 100); if (v) S.ph[id] = v; });
   Object.keys(SCENES).forEach(id => { const v = j.stamps && num(j.stamps[id], 0, 0, 9999); if (v) S.stamps[id] = v; });
+  S.phs = {};
+  Object.keys(PHR).forEach(id => { const o = j.phs && j.phs[id]; if (S.ph[id] && o && Number.isFinite(o.nextReviewAt)) S.phs[id] = { nextReviewAt: o.nextReviewAt, srsStage: num(o.srsStage, 0, 0, 5) }; });
+  Object.assign(S, { recent: j.recent, auto: j.auto === 0 ? 0 : 1, pace: j.pace, day: j.day, dstreak: num(j.dstreak, 0, 0, 99999), goalDay: typeof j.goalDay === 'string' ? j.goalDay : '', txp: num(j.txp, 0, 0, 1e9),
+    coins: num(j.coins, 0, 0, 1e9), bag: { tea: num(j.bag && j.bag.tea, 0, 0, 999), tal: num(j.bag && j.bag.tal, 0, 0, 999), gls: num(j.bag && j.bag.gls, 0, 0, 999) }, gift: j.gift ? 1 : 0, seenShop: j.seenShop ? 1 : 0 });
+  migrateSave(S); rollDay();
   S.hp = num(j.hp, maxHP(), 1, maxHP());
   let x = num(j.x, 4, 0, MW - 1), y = num(j.y, 7, 0, MH - 1);
   if (!walkable(x, y)) [x, y] = HEALS[S.heal];
@@ -2133,18 +2481,21 @@ function importCode(str) {
 function wipeSave() {
   try { localStorage.removeItem(KEY); } catch (err) {}
   const keepAvatar = S.avatar;
-  Object.assign(S, { x: 4, y: 7, dir: 0, hp: 20, badges: [0, 0, 0], dex: {}, beat: {}, heal: 0, intro: 0, grad: 0, ph: {}, stamps: {}, seenDaily: 0, track: '', fast: 0, slow: 0 });
+  Object.assign(S, { x: 4, y: 7, dir: 0, hp: 20, badges: [0, 0, 0], dex: {}, beat: {}, heal: 0, intro: 0, grad: 0, ph: {}, stamps: {}, seenDaily: 0, track: '', fast: 0, slow: 0, phs: {}, recent: [], day: null, dstreak: 0, goalDay: '', txp: 0, auto: 1, pace: 'mid', coins: 0, bag: null, gift: 0, seenShop: 0 });
     P.x = P.tx = 4; P.y = P.ty = 7; P.dir = 0; P.moving = false; onStep.z = -1; hadSave = false; started = false; hud(); 
-  S.avatar = keepAvatar; migrateSave(S); hud(); showStart();
+  S.avatar = keepAvatar; migrateSave(S); rollDay(); hud(); showStart();
 }
 function closeDex() { mode = 'world'; screen_('world'); }
 $('#dex').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t) return;
   if (t.dataset.say) return speak(t.dataset.say);
   if (t.dataset.act === 'close') return closeDex();
+  if (t.dataset.act === 'tea') { if (!(S.bag.tea > 0) || S.hp >= maxHP()) return; const was = S.hp; S.bag.tea--; S.hp = Math.min(maxHP(), S.hp + 10); sfx('item'); hud(); save(); return openDex(`🧋 ${zh('珍珠奶茶')} Bubble Tea: +${S.hp - was} HP. You are at ${S.hp}/${maxHP()}.`); }
+  if (t.dataset.filter) { dexFilter = t.dataset.filter; const top = $('#dex').scrollTop; openDex(); $('#dex').scrollTop = top; return; }
   if (t.dataset.act === 'tabDex' || t.dataset.act === 'tabPh') { dexTab = t.dataset.act === 'tabPh' ? 'ph' : 'dex'; return openDex(); }
   if (t.dataset.act === 'curr' || t.dataset.act === 'rad') { mode = 'world'; return openInfo(t.dataset.act); }
   if (t.dataset.act === 'slow') { S.slow = S.slow ? 0 : 1; save(); return openDex(); }
+  if (t.dataset.act === 'auto') { S.auto = S.auto ? 0 : 1; hud(); save(); return openDex(); }
   if (t.dataset.act === 'home') return showStart();
   if (t.dataset.act === 'med') { closeDex(); return startQuiz('med'); }
   const box = $('#saveBox');
@@ -2173,6 +2524,106 @@ $('#dex').addEventListener('click', e => {
     wipeSave();
   }
 });
+
+/* ───────────── v3.0: coins, Item Shop, bag, victory summary, signposts, tap-to-walk ───────────── */
+function earn(n) { S.coins += n; if (b) b.coinGain = (b.coinGain || 0) + n; hud(); return n; }
+const phSum = () => Object.keys(S.ph).reduce((a, k) => a + (S.ph[k] || 0), 0);
+const stageOf = o => Math.min(5, (o.srsStage || 0) + 1);
+const toneless = t => t.normalize('NFD').replace(/[̀́̄̌]/g, '').normalize('NFC');
+const bagN = () => { const n = S.bag.tea + S.bag.tal + S.bag.gls; return n ? ' ×' + n : ''; };
+// The card at the end of a battle: +XP · +Coins · SRS Stage
+function summaryHTML() {
+  let xp = b.xpGain || 0, srs;
+  if (b.type === 'wild') { const d = dexOf(b.w.h); srs = d.c ? 'SRS Stage ' + stageOf(d) + '/5 · ' + (isDue(d) ? 'review due' : 'next review in ' + d.intervalDays + (d.intervalDays === 1 ? ' day' : ' days')) : 'Not sealed · no review date yet'; }
+  else if (b.type === 'scene') {
+    xp = Math.max(0, phSum() - b.ph0);
+    const st = [...new Set(b.turns.flatMap(t => t.ph || []))].filter(id => S.phs[id]).map(id => stageOf(S.phs[id])), lo = Math.min(...st), hi = Math.max(...st);
+    srs = st.length ? 'Phrases at SRS Stage ' + lo + (hi > lo ? '–' + hi : '') + '/5' : 'No phrases scheduled yet';
+  } else srs = 'SRS · ' + dueCount() + ' review' + (dueCount() === 1 ? '' : 's') + ' due';
+  return `<div class="vsum"><b>${b.type === 'wild' && !dexOf(b.w.h).c ? 'SUMMARY' : 'VICTORY'}</b><span>${b.type === 'tr' && !xp ? b.total + ' sentences built' : '+' + xp + ' XP'}</span><span><i class="coin" aria-hidden="true"></i> +${b.coinGain || 0} Coins</span><span>${srs}</span></div>`;
+}
+// Why an item cannot be used right now ('' means it can)
+function itemBlock(k) {
+  if (!(S.bag[k] > 0)) return 'None left';
+  if (k === 'tea') return S.hp >= maxHP() ? 'HP is full' : '';
+  if (k === 'tal') return b.type !== 'wild' ? 'Wild spirits only' : dexOf(b.w.h).c ? 'Already sealed' : b.tal ? 'Active this battle' : '';
+  if (b.glass) return 'Active this turn';
+  return (b.type === 'wild' ? showPy(b.w) : pyBase()) ? 'Pinyin is already on' : '';
+}
+function useItem(k) {
+  if (!b || !ITEMS[k] || itemBlock(k)) return;
+  S.bag[k]--; sfx('item');
+  if (k === 'tea') { const was = S.hp; S.hp = Math.min(maxHP(), S.hp + 10); b.bagMsg = `🧋 +${S.hp - was} HP. You are at ${S.hp}/${maxHP()}.`; }
+  if (k === 'tal') { b.tal = 1; b.bagMsg = '📜 SEAL is twice as likely to hold for the rest of this battle.'; }
+  if (k === 'gls') { b.glass = 1; b.bagMsg = '👓 Pinyin is showing until you answer. On a tone question the tone marks stay hidden.'; }
+  hud(); save(); render();
+}
+function bagHTML() {
+  return `<div class="log bagl"><p class="q">BAG · items do not use up your turn</p>${b.bagMsg ? `<p class="good">${b.bagMsg}</p>` : ''}${Object.keys(ITEMS).map(k => { const it = ITEMS[k], why = itemBlock(k);
+    return `<button class="btn bagit" data-act="use" data-item="${k}" ${why ? 'disabled' : ''}><span>${it.ic} <b>${it.en}</b> ×${S.bag[k]}<br><i lang="zh-Hans">${it.h}</i> ${it.p}</span><small>${why || it.use}</small></button>`; }).join('')}</div><div class="panel">${btn('Back to the battle', 'bagBack', 'primary')}</div>`;
+}
+// Item Shop 杂货店: the merchant greets you in Mandarin, then the shop menu opens
+const SHOP_HI = { h: '欢迎光临！你想买什么？', tr: '歡迎光臨！你想買什麼？', p: 'Huānyíng guānglín! Nǐ xiǎng mǎi shénme?', en: 'Welcome! What would you like to buy?' };
+const SHOP_TY = { h: '谢谢！给你。', tr: '謝謝！給你。', p: 'Xièxie! Gěi nǐ.', en: 'Thank you! Here you go.' };
+function greetShop(n) { speak(SHOP_HI.h); say([`${SHOP_HI.h} (${SHOP_HI.p}) – ${SHOP_HI.en}`], () => { b = { type: 'shop', msg: SHOP_HI }; openBattle(); }, n ? n.name : 'Merchant'); }
+function buyItem(k) {
+  const it = ITEMS[k]; if (!it || S.coins < it.cost) return;
+  S.coins -= it.cost; S.bag[k]++; sfx('coin'); b.msg = SHOP_TY; b.bought = k; speak(SHOP_TY.h); hud(); save(); render();
+}
+function shopHTML() {
+  const m = b.msg;
+  return `<div class="plate"><span>ITEM SHOP</span><span class="chip">${zh('杂货店')} [${'<span lang="zh-Hant">雜貨店</span>'}] záhuòdiàn</span><span class="purse" title="Coins 铜钱 (tóngqián)"><i class="coin" aria-hidden="true"></i> ${S.coins} <span class="cn">${zh('铜钱')} [<span lang="zh-Hant">銅錢</span>] tóngqián</span></span><button class="btn mini" data-act="run">Leave</button></div>
+    <div class="log npc shopsay"><div><p class="who">MERCHANT SAYS</p><p><span class="sent" lang="zh-Hans">${m.h}</span> <span class="trad" lang="zh-Hant">[${m.tr}]</span><br>${m.p}<br>"${m.en}"</p></div><button class="btn mini" data-act="shopHi" aria-label="Listen to the merchant">🔊</button></div>
+    <div class="shoplist">${Object.keys(ITEMS).map(k => { const it = ITEMS[k], short = it.cost - S.coins;
+      return `<div class="item${b.bought === k ? ' got' : ''}"><span class="ic" aria-hidden="true">${it.ic}</span><div class="inf"><b class="nm" lang="zh-Hans">${it.h}</b>${it.tr ? ` <span class="trad" lang="zh-Hant">[${it.tr}]</span>` : ''} <span class="pyl">${it.p}</span><b>${it.en}</b><span class="d"> · ${it.d}</span><span class="u"> · ${it.use}</span><small class="own">In your bag: ×${S.bag[k]}</small></div>
+        <button class="btn${short > 0 ? '' : ' primary'}" data-act="buy" data-item="${k}" ${short > 0 ? 'disabled' : ''}>Buy · ${it.cost}<small>${short > 0 ? 'need ' + short + ' more' : 'coins'}</small></button></div>`; }).join('')}</div>`;
+}
+// Blue-roofed shops (one per town), their merchants, and three tutorial signposts in the Village
+[[14, 3, 16, 6], [44, 3, 46, 6], [68, 3, 70, 6]].forEach(([x, y, nx, ny], i) => {
+  R(13, x, y, x + 2, y + 1); R(5, x, y + 2, x + 2, y + 2); map[y + 2][x + 1] = 14;
+  NPCS.push({ id: 'shop' + i, shop: 1, dir: 0, x: nx, y: ny, name: 'Merchant · 杂货店 Item Shop', col: C('#3a2a1a', '#2f7fe0', '#27324d') });
+});
+const TIPS = {
+  '3,8': ['TIP 1 · GETTING AROUND. Tap any spot to walk there, or use the D-pad, the arrow keys or WASD. Tap a person or a sign to walk up and talk.', 'Speech bubble: a Daily Life conversation. Yellow !: a trainer. Cup: the Tea Master. Coin: a Merchant.'],
+  '12,7': ['TIP 2 · BATTLES. FIGHT weakens a spirit. SEAL catches it, and never fails at one heart. Three right answers in a row earn a streak bonus.', 'BAG lets you use an item without losing your turn. A blinking red HP bar and a chime mean you are under 25% HP.'],
+  '17,7': ['TIP 3 · COINS 铜钱 (tóngqián). Sealing a spirit, finishing a conversation and winning a trainer battle each pay 10 to 25 coins.', 'Spend them at the blue-roofed Item Shop 杂货店 (záhuòdiàn), just north-west of this sign. There is one in every town.'],
+};
+Object.keys(TIPS).forEach(k => { const [x, y] = k.split(',').map(Number); map[y][x] = 15; });
+// Tap-to-walk: breadth-first search over walkable tiles. Tall grass is avoided when another way exists.
+function pathTo(tx, ty) {
+  const run = avoid => {
+    const prev = new Map([[P.y * MW + P.x, -1]]), q = [[P.x, P.y]];
+    while (q.length) {
+      const [x, y] = q.shift();
+      if (x === tx && y === ty) { const out = []; let k = y * MW + x; while (prev.get(k) !== -1) { const d = prev.get(k); out.unshift(d); k -= DY[d] * MW + DX[d]; } return out; }
+      for (let d = 0; d < 4; d++) {
+        const nx = x + DX[d], ny = y + DY[d], k = ny * MW + nx;
+        if (prev.has(k) || !walkable(nx, ny) || (avoid && map[ny][nx] === 2 && !(nx === tx && ny === ty))) continue;
+        prev.set(k, d); q.push([nx, ny]);
+      }
+    }
+    return null;
+  };
+  return run(true) || run(false);
+}
+function tapTile(tx, ty) {
+  if (mode !== 'world' || tx < 0 || ty < 0 || tx >= MW || ty >= MH || (tx === P.x && ty === P.y)) return;
+  held.length = 0;
+  const t = map[ty][tx];
+  if (npcAt(tx, ty) || t === 8 || t === 14 || t === 15 || (t === 10 && !S.badges[2])) {   // a person, sign or shop door: walk up to it, then talk
+    let best = null, dir = 0;
+    for (let d = 0; d < 4; d++) { const sx = tx - DX[d], sy = ty - DY[d]; if (!(sx === P.x && sy === P.y) && !walkable(sx, sy)) continue; const pth = pathTo(sx, sy); if (pth && (!best || pth.length < best.length)) { best = pth; dir = d; } }
+    if (!best) return;
+    route = best; routeAct = { dir }; tapMark = { x: tx, y: ty };
+  } else if (walkable(tx, ty)) { const pth = pathTo(tx, ty); if (!pth) return; route = pth; routeAct = null; tapMark = { x: tx, y: ty }; }
+}
+cv.addEventListener('click', e => {
+  if (mode === 'dialog') return nextLine();
+  const r = cv.getBoundingClientRect(); if (!r.width || !r.height) return;
+  tapTile(Math.floor(((e.clientX - r.left) * cv.width / r.width + camX) / TS), Math.floor(((e.clientY - r.top) * cv.height / r.height + camY) / TS));
+});
+// one-off notices: shown straight away, or added to the end of a dialog that is already open
+const news = lines => { if (mode === 'world') say(lines, null, 'Update'); else if (mode === 'dialog') dq.push(...lines); };
 
 /* ───────────── INPUT ───────────── */
 const KEYDIR = { ArrowDown: 0, s: 0, ArrowUp: 1, w: 1, ArrowLeft: 2, a: 2, ArrowRight: 3, d: 3 };
@@ -2214,11 +2665,12 @@ $('#btnPy').addEventListener('click', () => { S.py = S.py ? 0 : 1; hud(); save()
 /* ───────────── BOOT ───────────── */
 function intro() {
   if (S.intro) return;
-  S.intro = 1; save();
+  S.intro = 1; S.seenShop = 1; save();
   say(['Welcome to HanziMon! Three zones, three Gym Leaders, and a field full of Hanzi Spirits between you and the Academy.',
     'Walk into tall grass to meet spirits. Name their tone, radical or meaning to hit them, then Seal them into your HanziDex.',
     'Talk to people with a yellow ! to battle with sentence tiles. Leaders with a red ! block the road until you win their badge.',
     'People with a speech bubble run Daily Life scenes: the restaurant, the market, the MTR station and a new colleague. Clearing them fills your Phrasebook.',
+    'A Starter Gift is in your Bag: 30 coins 铜钱 and 1 Bubble Tea 珍珠奶茶. Blue-roofed shops 杂货店 sell more. Read the wooden signposts for quick tips, and tap any spot to walk there.',
     'Grandpa Chén is just south-east of here. Talk to him first. 加油 (jiāyóu)!'], null, 'Guide');
 }
 if (!walkable(P.x, P.y)) { P.x = P.tx = 4; P.y = P.ty = 7; }
@@ -2233,14 +2685,18 @@ function begin() {
   started = true; mode = 'world'; screen_('world');
   tag(ZONES[zoneOf(P.x)]); onStep.z = zoneOf(P.x);
   intro();
-  if (S.seenDaily) return;
-  S.seenDaily = 1; save();
-  if (mode === 'world') say(['New in the Village: Daily Life scenes. Look for the four people with a speech bubble along the main road.',
+  if (!S.seenDaily) { S.seenDaily = 1; save();
+  news(['New in the Village: Daily Life scenes. Look for the four people with a speech bubble along the main road.',
     'Waiter: get a table, order and pay. Stall Owner: numbers, prices and measure words. MTR Staff: asking the way. Xiǎo Lì: getting to know someone.',
-    'Every phrase you use correctly is saved in the new Phrasebook tab inside the DEX.'], null, 'Update');
+    'Every phrase you use correctly is saved in the new Phrasebook tab inside the DEX.']); }
+  if (!S.seenShop) { S.seenShop = 1; save();
+    news(['New in v3.0: coins 铜钱 (tóngqián) and a blue-roofed Item Shop 杂货店 (záhuòdiàn) in every town. Your Bag holds ' + S.coins + ' coins and ' + S.bag.tea + ' Bubble Tea 珍珠奶茶.',
+      'Seal spirits, finish conversations and win trainer battles to earn coins. Open BAG in a battle to use an item without losing your turn.',
+      'You can now tap any spot on the map to walk there, and three wooden signposts in the Village hold quick tips.']); }
 }
 showStart();
-window.__hq = { begin, pickTrack, openInfo, closeInfo, showStart, RADINFO, CURR, S, P, WORDS, POOLS, NPCS, G, map, walkable, startWild, startTrainer, startQuiz, exportCode, importCode, cv, spawnWeight, markHit, markMiss, startScene, SCENES, PHR, migrateSave, AVATARS, wipeSave, startTrainerF: n => { startTrainer(n); b.intro = 0; b.phase = 'build'; render(); }, BGM, ac: () => ac, numHan, numPy, state: () => ({ mode, b }) };
+setInterval(hud, 60000);   // keeps the due badge current as reviews come due
+window.__hq = { ITEMS, pathTo, tapTile, greetShop, earn, nav: () => ({ route, routeAct, tapMark, camX, camY }), srsAnswer, isDue, track, rollDay, dueCount, accuracy, pace, dayStr, now, begin, pickTrack, openInfo, closeInfo, showStart, RADINFO, CURR, S, P, WORDS, POOLS, NPCS, G, map, walkable, startWild, startTrainer, startQuiz, exportCode, importCode, cv, spawnWeight, markHit, markMiss, startScene, SCENES, PHR, migrateSave, AVATARS, wipeSave, startTrainerF: n => { startTrainer(n); b.intro = 0; b.phase = 'build'; render(); }, BGM, ac: () => ac, numHan, numPy, state: () => ({ mode, b }) };
 })();
 </script>
 </body>
