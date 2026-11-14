@@ -638,6 +638,35 @@ body:not([data-screen="world"]) #pad{display:none}
 @media (max-width:760px),(max-height:520px){.item .d{display:none}.item .u{display:inline}.shopsay{font-size:13.5px;padding:6px 8px}.shopsay .sent{font-size:17px}.item .own{display:inline}.item .own::before{content:" · "}.item .pyl{margin-bottom:1px}#battle.shop{gap:6px;padding:8px}}
 @media (max-width:440px){#hud{gap:5px}.hud-btn{padding:7px 6px}.hp .bar{width:40px}.hp{gap:4px}.coins{gap:3px;font-size:9px}.coin{width:12px;height:12px}}
 @media (orientation:landscape) and (max-height:560px){.bagit{min-height:38px;padding:2px 10px}.bagit i{display:none}.bagit br{display:none}}
+/* v3.0.1 mobile layout fixes (CSS only) */
+/* 1. Listen / Hint / Bag: one compact full-width row */
+.duo,.bpanel .duo{display:flex;flex-direction:row;width:100%;gap:8px;height:44px;grid-column:1/-1}
+.duo .btn,.bpanel .duo .btn{flex:1 1 0;min-width:0;height:100%;min-height:0;padding:4px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;line-height:1.1}
+@media (max-width:400px){.duo,.bpanel .duo{gap:6px}.duo .btn,.bpanel .duo .btn{font-size:12px;padding:4px 2px}}
+@media (max-width:345px){.duo,.bpanel .duo{gap:4px}.duo .btn,.bpanel .duo .btn{font-size:11px;padding:4px 1px}}
+/* 2. answer buttons keep a comfortable height instead of stretching */
+#battle.arn.st-q .bpanel>.panel{flex:0 0 auto;grid-auto-rows:auto;align-content:end;margin-top:auto}
+#battle.arn.st-q .bpanel>.panel>.btn[data-ans]{min-height:54px;max-height:76px;padding:10px}
+#battle.arn.st-q .bpanel>.panel>.btn:not([data-ans]){min-height:44px;padding:6px 8px}
+#battle.arn.st-q .bpanel>.log{flex:1 0 auto}
+@media (max-height:700px),(max-width:385px){
+  #battle.arn.st-q .bpanel>.panel{gap:6px}
+  #battle.arn.st-q .bpanel>.panel>.btn[data-ans]{min-height:46px;padding:4px 8px;line-height:1.15;font-size:14px}
+  .duo,.bpanel .duo{height:40px}
+  #battle.arn.st-q .bpanel>.panel>.btn:not([data-ans]){min-height:40px;padding:4px 8px}
+}
+/* 3. top bar stays on one row on phones. The pixel font is too wide for seven items, so the bar uses the body font here. */
+@media (max-width:440px){
+  #hud{flex-wrap:nowrap;gap:4px;justify-content:space-between}
+  .hud-btn{font:700 11px var(--body);padding:4px 6px;white-space:nowrap;flex-shrink:0}
+  .hud-btn .due.n{font:700 10px var(--body);margin-left:3px;padding:1px 5px}
+  #badges{gap:2px;flex-shrink:0}.badge{width:18px;height:18px;font-size:10px;border-width:1px}
+  .hp{gap:3px;min-width:22px;flex:0 1 38px}.hp .bar{width:100%;min-width:0}
+  #hptxt{font:700 9px var(--body);white-space:nowrap}
+  .coins{gap:3px;font:700 11px var(--body);flex-shrink:0}.coin{width:12px;height:12px}
+}
+@media (max-width:385px){#hud{gap:3px}.badge{width:16px;height:16px;font-size:9px}#badges{gap:1px}}
+@media (max-width:345px){.hud-btn{padding:4px 5px}}
 </style>
 </head>
 <body data-screen="world">
