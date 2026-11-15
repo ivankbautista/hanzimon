@@ -667,6 +667,62 @@ body:not([data-screen="world"]) #pad{display:none}
 }
 @media (max-width:385px){#hud{gap:3px}.badge{width:16px;height:16px;font-size:9px}#badges{gap:1px}}
 @media (max-width:345px){.hud-btn{padding:4px 5px}}
+/* v3.1: sentence context, cloze, Blind Audio-First, character families (additions only) */
+.ctx{margin:0 0 6px;font-size:13px;line-height:1.35}
+.ctx .sent,.log .ctx .sent{font-size:17px;line-height:1.35}
+.ctx.hid{border:2px dashed var(--ink);border-radius:4px;padding:6px 8px;background:var(--lcd-2);font-weight:700}
+mark.tw{background:var(--gold);color:var(--ink);border-radius:3px;padding:0 1px}
+.gap{display:inline-block;min-width:2.4em;border-bottom:3px solid var(--hurt);color:transparent;margin:0 3px;line-height:1}
+.cpy{font-size:12px}
+.czt{display:block;font:8px var(--display);color:var(--jade);margin-bottom:4px}
+.btn.cz{position:relative}
+.btn.cz .k{position:absolute;left:6px;top:5px;margin:0}
+.panel .full{grid-column:1/-1}
+.nopy #battle.glass .btn .py{display:block}
+.filters .btn [lang]{font-family:var(--han)}
+.fams{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;align-items:start}
+.fam{border:3px solid var(--ink);border-radius:4px;background:#f6fae9;min-width:0}
+.fam.open{grid-column:1/-1;background:#fff}
+.fam-root{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;text-align:left;background:none;border:0;padding:8px 10px;color:var(--ink);min-height:60px;font-size:13px}
+.fam-root::after{content:"+";font:12px var(--display)}
+.fam.open .fam-root::after{content:"–"}
+.fam-root .fr{font:900 36px/1 var(--han)}
+.fam-root small{display:block;font-size:12px;opacity:.8}
+.fam-root .kids{font:900 16px var(--han);letter-spacing:2px;color:var(--t5)}
+.fam-tree{padding:0 10px 10px}
+.fam-note{font-size:13px;margin:0 0 8px;border-left:4px solid var(--gold);padding-left:8px}
+.fam-note [lang],.fam-eq [lang],.fam-tag [lang]{font-family:var(--han)}
+.fam-brs{margin:0 0 10px 18px;border-left:3px solid var(--ink)}
+.fam-br{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;align-items:center;padding:6px 0 6px 22px;font-size:13.5px}
+.fam-br::before{content:"";position:absolute;left:0;top:50%;width:16px;border-top:3px solid var(--ink)}
+.fam-br .g{font:900 34px/1.1 var(--han);background:#f6fae9;border:3px solid var(--ink);border-radius:4px;box-shadow:0 3px 0 var(--ink);min-width:60px;min-height:60px;padding:4px 6px;cursor:pointer;touch-action:manipulation}
+.fam-br .g:active{transform:translateY(3px);box-shadow:none}
+.fam-br .g small{display:block;font:500 11px var(--han);color:var(--t5)}
+.fam-eq{font-size:12.5px;margin-top:2px}
+.fam-eq b{font-weight:900;font-size:15px}
+.fam-tag{font-size:11.5px;font-weight:700;color:var(--jade);margin-top:2px}
+@media (max-width:520px){
+  .filters .btn[data-filter="fam"]{grid-column:1/-1}
+  .fam-root .kids{display:none}
+  .fam-brs{margin-left:10px}
+  .fam-br{padding-left:16px;gap:2px 8px}
+  .fam-br::before{width:11px}
+  .fam-br .g{font-size:30px;min-width:54px;min-height:54px}
+}
+@media (max-width:520px),(max-height:640px){.ctx{margin-bottom:4px;font-size:12.5px}.ctx .sent,.log .ctx .sent{font-size:16px}.ctx.hid{padding:4px 8px}}
+mark.tw{white-space:nowrap}
+.fb .oh{font:900 19px var(--han);margin-right:6px}
+[data-act="reveal"]{white-space:nowrap}
+@media (max-width:400px){#battle .panel [data-act="reveal"]{font-size:13px;padding-left:4px;padding-right:4px}}
+/* spoken-sentence answers are whole English sentences: smaller type, free height */
+#battle .panel>.btn.en[data-ans],#battle.arn.st-q .bpanel>.panel>.btn.en[data-ans]{max-height:none;font-size:12.5px;line-height:1.2;padding:5px 6px}
+@media (orientation:landscape) and (max-height:560px){
+  #battle.st-q .ctx .cpy,#battle.st-q .czt{display:none}
+  .ctx.hid{padding:3px 8px;font-size:12px}
+  .bpanel .mrow .log{justify-content:flex-start;overflow-y:auto}
+  .bpanel .mrow .log p:has(+ .ctx),.bpanel .mrow .log .ctx+p{display:none}
+}
+@media (orientation:landscape) and (max-height:560px){.bpanel .mrow .ctx .cpy{display:none}}
 </style>
 </head>
 <body data-screen="world">
@@ -830,8 +886,110 @@ RAW[1].push(
   ["服务员", "服務員", "fúwùyuán", "242", "月", "moon", "waiter / waitress", 8, "服务 service + 员 staff member.", "服务员，买单！|Fúwùyuán, mǎidān!|Waiter, the bill please!"],
   ["现金", "現金", "xiànjīn", "41", "王", "jade", "cash", 8, "现 present + 金 gold: money you can see right now.", "可以用现金吗？|Kěyǐ yòng xiànjīn ma?|Can I use cash?"],
   ["两", "兩", "liǎng", "3", "一", "one", "two (of something)", 7, "Two people 人人 sharing one yoke: a pair.", "我要两杯咖啡。|Wǒ yào liǎng bēi kāfēi.|I want two cups of coffee."]);
+/* Vocabulary Pack #2 (v3.1): 40 HSK 2–3 words for transit, health, housing and hotels, and grammar connectors.
+   Same ten columns as Pack #1. 地铁, 但是, 因为, 把 and 被 were already spirits, so they keep their place and gain a sentence below. */
+RAW[1].push(
+  ["地铁站", "地鐵站", "dìtiězhàn", "434", "土", "earth", "subway / MTR station", 6, "地铁 subway + 站 station: where the underground iron road stops.", "请问地铁站怎么走？|Qǐngwèn dìtiězhàn zěnme zǒu?|Excuse me, how do I get to the subway station?"],
+  ["机场", "機場", "jīchǎng", "13", "木", "tree", "airport", 6, "机 machine (short for 飞机, a plane) + 场 field: a field for flying machines.", "我明天早上去机场。|Wǒ míngtiān zǎoshang qù jīchǎng.|I am going to the airport tomorrow morning."],
+  ["路口", "", "lùkǒu", "43", "足", "foot", "intersection", 13, "A road 路 that opens like a mouth 口: a crossing.", "在前面的路口右转。|Zài qiánmiàn de lùkǒu yòu zhuǎn.|Turn right at the intersection ahead."],
+  ["出租车", "出租車", "chūzūchē", "111", "凵", "open box", "taxi", 5, "出租 for hire + 车 car. Three 1st tones in a row: keep them all high and flat.", "我们坐出租车去机场吧。|Wǒmen zuò chūzūchē qù jīchǎng ba.|Let us take a taxi to the airport."],
+  ["公交车", "公交車", "gōngjiāochē", "111", "八", "eight", "bus", 4, "公 public + 交 traffic + 车 vehicle: the public bus.", "我每天坐公交车上班。|Wǒ měitiān zuò gōngjiāochē shàngbān.|I take the bus to work every day."],
+  ["票", "", "piào", "4", "西", "west", "ticket", 11, "A cover 覀 over an altar 示: a stamped slip that lets you through.", "我想买两张高铁票。|Wǒ xiǎng mǎi liǎng zhāng gāotiě piào.|I want to buy two high-speed train tickets."],
+  ["到", "", "dào", "4", "刂", "knife", "to arrive / to", 8, "至 means to reach, and 刂 (dāo) gives the sound.", "我们快到机场了。|Wǒmen kuài dào jīchǎng le.|We are almost at the airport."],
+  ["药店", "藥店", "yàodiàn", "44", "艹", "grass", "pharmacy", 9, "药 medicine + 店 shop. Two falling tones in a row.", "附近有药店吗？|Fùjìn yǒu yàodiàn ma?|Is there a pharmacy nearby?"],
+  ["休息", "", "xiūxi", "15", "亻", "person", "to rest", 6, "A person 亻 leaning against a tree 木: taking a rest. 息 is neutral.", "你应该多休息。|Nǐ yīnggāi duō xiūxi.|You should rest more."],
+  ["医院", "醫院", "yīyuàn", "14", "匚", "box", "hospital", 7, "医 is an arrow 矢 taken out and laid in a box 匚: to heal. 院 is a courtyard.", "医院离这儿不远。|Yīyuàn lí zhèr bù yuǎn.|The hospital is not far from here."],
+  ["疼", "", "téng", "2", "疒", "sickness", "to hurt / painful", 10, "The sickbed 疒 over winter 冬: an ache as sharp as winter cold.", "我头很疼。|Wǒ tóu hěn téng.|My head hurts a lot."],
+  ["身体", "身體", "shēntǐ", "13", "身", "body", "body / health", 7, "身 is a side view of a body; 体 is a person 亻 and their root 本.", "你身体怎么样？|Nǐ shēntǐ zěnmeyàng?|How is your health?"],
+  ["生病", "", "shēngbìng", "14", "生", "life", "to fall ill", 5, "生 to grow + 病 illness (under the sickbed 疒): an illness takes hold.", "他生病了，在家休息。|Tā shēngbìng le, zài jiā xiūxi.|He is ill and resting at home."],
+  ["房间", "房間", "fángjiān", "21", "户", "door", "room", 8, "房 is a door 户 with 方 fāng for the sound; 间 is the space between doors 门.", "我的房间在三楼。|Wǒ de fángjiān zài sān lóu.|My room is on the third floor."],
+  ["所以", "", "suǒyǐ", "33", "户", "door", "so / therefore", 8, "Two 3rd tones in a row, so 所 rises: it sounds like suóyǐ. It answers 因为.", "因为下雨，所以我坐出租车。|Yīnwèi xiàyǔ, suǒyǐ wǒ zuò chūzūchē.|Because it is raining, I am taking a taxi."],
+  ["就", "", "jiù", "4", "亠", "lid", "then / right away", 12, "京 the capital + 尤: heading straight there, so \"then, at once\". It answers 如果.", "如果有时间，我就去。|Rúguǒ yǒu shíjiān, wǒ jiù qù.|If I have time, I will go."],
+  ["还是", "還是", "háishi", "25", "辶", "walk", "still / or (in questions)", 7, "还 walks 辶 back again: still. 是 is neutral here.", "虽然很累，我还是想去。|Suīrán hěn lèi, wǒ háishi xiǎng qù.|Although I am tired, I still want to go."],
+  ["帮", "幫", "bāng", "1", "巾", "cloth", "to help", 9, "邦 (sound) over a cloth 巾: helping to carry the bundle.", "你可以帮我一下吗？|Nǐ kěyǐ bāng wǒ yíxià ma?|Can you help me for a moment?"],
+  ["一直", "", "yìzhí", "42", "一", "one", "straight on / all along", 1, "一 is said yì before 2nd-tone 直, which means straight.", "一直走，到路口左转。|Yìzhí zǒu, dào lùkǒu zuǒ zhuǎn.|Go straight, then turn left at the intersection."],
+  ["打开", "打開", "dǎkāi", "31", "扌", "hand", "to open / to turn on", 5, "打 a hand 扌 striking + 开 open: to get something open or switched on.", "请帮我打开空调。|Qǐng bāng wǒ dǎkāi kōngtiáo.|Please turn on the air conditioner for me."]);
+RAW[2].push(
+  ["高铁", "高鐵", "gāotiě", "13", "高", "tall", "high-speed rail", 10, "高 high (speed) + 铁 iron: the fast iron road.", "我想坐高铁去广州。|Wǒ xiǎng zuò gāotiě qù Guǎngzhōu.|I want to take the high-speed train to Guangzhou."],
+  ["换", "換", "huàn", "4", "扌", "hand", "to change / to transfer", 10, "A hand 扌 swapping one thing for another: change trains, change money.", "我要在下一站换车。|Wǒ yào zài xià yí zhàn huàn chē.|I need to change trains at the next stop."],
+  ["迟到", "遲到", "chídào", "24", "辶", "walk", "to be late", 7, "迟 walks 辶 slowly, then 到 arrives: to arrive late.", "对不起，我迟到了。|Duìbuqǐ, wǒ chídào le.|Sorry, I am late."],
+  ["感冒", "", "gǎnmào", "34", "心", "heart", "a cold / to catch a cold", 13, "感 to feel (心 heart below) + 冒 to give off: you feel it coming out.", "我感冒了，有点发烧。|Wǒ gǎnmào le, yǒudiǎn fāshāo.|I have a cold and a bit of a fever."],
+  ["发烧", "發燒", "fāshāo", "11", "又", "right hand", "to have a fever", 5, "发 to give off + 烧 to burn (火 fire): giving off heat.", "他发烧了，今天不能上班。|Tā fāshāo le, jīntiān bù néng shàngbān.|He has a fever and cannot go to work today."],
+  ["舒服", "", "shūfu", "15", "舌", "tongue", "comfortable / well", 12, "舒 to stretch out + 服 (neutral): stretched out and at ease. 不舒服 means unwell.", "我今天不太舒服。|Wǒ jīntiān bú tài shūfu.|I do not feel very well today."],
+  ["租房子", "", "zū fángzi", "125", "禾", "grain", "to rent a flat", 10, "租 is grain 禾 handed over as payment; 房子 is a house. 子 is neutral.", "我想在地铁站附近租房子。|Wǒ xiǎng zài dìtiězhàn fùjìn zū fángzi.|I want to rent a flat near the subway station."],
+  ["空调", "空調", "kōngtiáo", "12", "穴", "cave", "air conditioner", 8, "空 air + 调 to adjust: it adjusts the air.", "麻烦帮我把空调打开。|Máfan bāng wǒ bǎ kōngtiáo dǎkāi.|Could you turn on the air conditioner for me, please?"],
+  ["预订", "預訂", "yùdìng", "44", "页", "head", "to book / to reserve", 10, "预 in advance + 订 to order (讠 speech): spoken for ahead of time.", "我预订了一个房间。|Wǒ yùdìng le yí ge fángjiān.|I have booked a room."],
+  ["密码", "密碼", "mìmǎ", "43", "宀", "roof", "password / PIN", 11, "密 secret (kept under a roof 宀) + 码 code.", "Wi-Fi密码是多少？|Wi-Fi mìmǎ shì duōshao?|What is the Wi-Fi password?"],
+  ["酒店", "", "jiǔdiàn", "34", "氵", "water", "hotel", 10, "酒 wine (water 氵 + jar 酉) + 店 shop: once an inn that served wine.", "这个酒店离机场很近。|Zhège jiǔdiàn lí jīchǎng hěn jìn.|This hotel is close to the airport."],
+  ["护照", "護照", "hùzhào", "44", "扌", "hand", "passport", 7, "护 to protect (a hand 扌 at the door 户) + 照 a permit: the paper that protects you abroad.", "请给我看一下您的护照。|Qǐng gěi wǒ kàn yíxià nín de hùzhào.|Please let me see your passport."],
+  ["楼", "樓", "lóu", "2", "木", "tree", "floor / building", 13, "Wood 木 stacked storey on storey; 娄 gives the sound.", "洗手间在二楼。|Xǐshǒujiān zài èr lóu.|The restroom is on the second floor."],
+  ["电梯", "電梯", "diàntī", "41", "田", "field", "lift / elevator", 5, "电 electric + 梯 ladder (木 wood): an electric ladder.", "电梯在那边。|Diàntī zài nàbian.|The lift is over there."],
+  ["附近", "", "fùjìn", "44", "阝", "city", "nearby", 7, "附 attached to (阝 on the left is a mound) + 近 near: right next to here.", "附近有地铁站吗？|Fùjìn yǒu dìtiězhàn ma?|Is there a subway station nearby?"],
+  ["关", "關", "guān", "1", "八", "eight", "to close / to turn off", 6, "The traditional 關 shows a bolt across a door 門: shut.", "请帮我把空调关了。|Qǐng bāng wǒ bǎ kōngtiáo guān le.|Please turn off the air conditioner for me."],
+  ["虽然", "雖然", "suīrán", "12", "虫", "insect", "although", 9, "虽 has 口 over 虫. It opens the first half and waits for 但是 in the second.", "虽然今天很冷，但是我还是想去跑步。|Suīrán jīntiān hěn lěng, dànshì wǒ háishi xiǎng qù pǎobù.|Although it is cold today, I still want to go running."],
+  ["如果", "", "rúguǒ", "23", "女", "woman", "if", 6, "如 as + 果 result: \"as the result would be\", so if. It pairs with 就.", "如果你不舒服，就早点休息。|Rúguǒ nǐ bù shūfu, jiù zǎo diǎn xiūxi.|If you feel unwell, rest early."],
+  ["麻烦", "麻煩", "máfan", "25", "麻", "hemp", "to trouble / could you please", 11, "麻 tangled hemp + 烦 vexed: a tangle that bothers someone. 烦 is neutral.", "麻烦你帮我叫一辆出租车。|Máfan nǐ bāng wǒ jiào yí liàng chūzūchē.|Could you call a taxi for me, please?"],
+  ["应该", "應該", "yīnggāi", "11", "广", "shelter", "should", 7, "Two 1st tones in a row: keep both high and flat.", "你感冒了，应该多喝水。|Nǐ gǎnmào le, yīnggāi duō hē shuǐ.|You have a cold, so you should drink more water."]);
 const WORDS = [];
 RAW.forEach((list, z) => list.forEach(a => WORDS.push({ h: a[0], tr: a[1], py: a[2], t: [...a[3]].map(Number), r: a[4], rm: a[5], m: a[6], st: a[7], n: a[8], ex: a[9] ? a[9].split('|') : null, z })));
+/* v3.1 sentence mining: the 54 original spirits get an everyday sentence too (sentence | pinyin | English), so every spirit can be reviewed in context. */
+const EX0 = {
+  '买': '我想买一杯咖啡。|Wǒ xiǎng mǎi yì bēi kāfēi.|I want to buy a cup of coffee.',
+  '好': '今天天气很好。|Jīntiān tiānqì hěn hǎo.|The weather is nice today.',
+  '吃': '你想吃什么？|Nǐ xiǎng chī shénme?|What would you like to eat?',
+  '喝': '我想喝水。|Wǒ xiǎng hē shuǐ.|I want to drink water.',
+  '你': '你叫什么名字？|Nǐ jiào shénme míngzi?|What is your name?',
+  '他': '他是我的同事。|Tā shì wǒ de tóngshì.|He is my colleague.',
+  '妈': '我妈很忙。|Wǒ mā hěn máng.|My mom is busy.',
+  '说': '请说慢一点。|Qǐng shuō màn yìdiǎn.|Please speak a little slower.',
+  '请': '请再说一遍。|Qǐng zài shuō yí biàn.|Please say it again.',
+  '钱': '我没有钱。|Wǒ méiyǒu qián.|I have no money.',
+  '茶': '我要一杯热茶。|Wǒ yào yì bēi rè chá.|I want a cup of hot tea.',
+  '看': '我想看一下菜单。|Wǒ xiǎng kàn yíxià càidān.|I would like to have a look at the menu.',
+  '是': '这是我的手机。|Zhè shì wǒ de shǒujī.|This is my phone.',
+  '水': '请给我一瓶水。|Qǐng gěi wǒ yì píng shuǐ.|Please give me a bottle of water.',
+  '学': '我在学中文。|Wǒ zài xué Zhōngwén.|I am learning Chinese.',
+  '饭': '我们去吃饭吧。|Wǒmen qù chī fàn ba.|Let us go and eat.',
+  '叫': '我叫小明。|Wǒ jiào Xiǎo Míng.|My name is Xiao Ming.',
+  '谢谢': '谢谢你的帮忙。|Xièxie nǐ de bāngmáng.|Thank you for your help.',
+  '觉得': '我觉得这个菜很好吃。|Wǒ juéde zhège cài hěn hǎochī.|I think this dish is delicious.',
+  '因为': '因为下雨，所以我不去。|Yīnwèi xiàyǔ, suǒyǐ wǒ bú qù.|Because it is raining, I am not going.',
+  '但是': '这个很贵，但是很好用。|Zhège hěn guì, dànshì hěn hǎoyòng.|This is expensive, but it works well.',
+  '快': '地铁很快。|Dìtiě hěn kuài.|The subway is fast.',
+  '慢': '这个车太慢了。|Zhège chē tài màn le.|This car is too slow.',
+  '找': '我在找洗手间。|Wǒ zài zhǎo xǐshǒujiān.|I am looking for the restroom.',
+  '送': '可以送到我家吗？|Kěyǐ sòng dào wǒ jiā ma?|Can it be delivered to my home?',
+  '远': '机场离这儿很远。|Jīchǎng lí zhèr hěn yuǎn.|The airport is far from here.',
+  '近': '我家离公司很近。|Wǒ jiā lí gōngsī hěn jìn.|My home is close to the office.',
+  '贵': '这个太贵了。|Zhège tài guì le.|This is too expensive.',
+  '忙': '我今天很忙。|Wǒ jīntiān hěn máng.|I am busy today.',
+  '药': '这个药一天吃三次。|Zhège yào yì tiān chī sān cì.|Take this medicine three times a day.',
+  '洗': '我去洗手。|Wǒ qù xǐ shǒu.|I am going to wash my hands.',
+  '晴': '明天是晴天。|Míngtiān shì qíngtiān.|Tomorrow will be sunny.',
+  '让': '请让我看一下。|Qǐng ràng wǒ kàn yíxià.|Please let me have a look.',
+  '穿': '今天很冷，多穿一点。|Jīntiān hěn lěng, duō chuān yìdiǎn.|It is cold today, so wear a bit more.',
+  '等': '请等一下。|Qǐng děng yíxià.|Please wait a moment.',
+  '懂': '对不起，我听不懂。|Duìbuqǐ, wǒ tīng bu dǒng.|Sorry, I do not understand.',
+  '环境': '这里的环境很好。|Zhèlǐ de huánjìng hěn hǎo.|The environment here is very good.',
+  '决定': '我决定明天去。|Wǒ juédìng míngtiān qù.|I have decided to go tomorrow.',
+  '解决': '这个问题已经解决了。|Zhège wèntí yǐjīng jiějué le.|This problem has already been solved.',
+  '参加': '我想参加明天的会议。|Wǒ xiǎng cānjiā míngtiān de huìyì.|I want to attend the meeting tomorrow.',
+  '锻炼': '我每天早上锻炼身体。|Wǒ měitiān zǎoshang duànliàn shēntǐ.|I exercise every morning.',
+  '害怕': '别害怕，没问题。|Bié hàipà, méi wèntí.|Do not be afraid, it is no problem.',
+  '礼物': '这是给你的礼物。|Zhè shì gěi nǐ de lǐwù.|This is a gift for you.',
+  '聪明': '你的孩子很聪明。|Nǐ de háizi hěn cōngming.|Your child is very clever.',
+  '努力': '他工作很努力。|Tā gōngzuò hěn nǔlì.|He works very hard.',
+  '熊猫': '我想去看熊猫。|Wǒ xiǎng qù kàn xióngmāo.|I want to go and see the pandas.',
+  '眼镜': '我的眼镜在哪儿？|Wǒ de yǎnjìng zài nǎr?|Where are my glasses?',
+  '地铁': '我每天坐地铁上班。|Wǒ měitiān zuò dìtiě shàngbān.|I take the subway to work every day.',
+  '银行': '银行几点开门？|Yínháng jǐ diǎn kāimén?|What time does the bank open?',
+  '城市': '这个城市很大。|Zhège chéngshì hěn dà.|This city is very big.',
+  '蛋糕': '这个蛋糕很好吃。|Zhège dàngāo hěn hǎochī.|This cake is delicious.',
+  '需要': '你需要帮忙吗？|Nǐ xūyào bāngmáng ma?|Do you need help?',
+  '把': '请把门打开。|Qǐng bǎ mén dǎkāi.|Please open the door.',
+  '被': '我的手机被弟弟拿走了。|Wǒ de shǒujī bèi dìdi názǒu le.|My phone was taken away by my little brother.',
+};
+WORDS.forEach(w => { if (!w.ex && EX0[w.h]) w.ex = EX0[w.h].split('|'); });
 const RADS = [...new Map(WORDS.map(w => [w.r, w.rm])).entries()];
 const TN = { 1: '1st  ˉ  high flat', 2: '2nd  ˊ  rising', 3: '3rd  ˇ  dip', 4: '4th  ˋ  falling', 5: 'neutral  ·' };
 const TS_SHORT = { 1: '1st tone', 2: '2nd tone', 3: '3rd tone', 4: '4th tone', 5: 'neutral tone' };
@@ -1071,7 +1229,7 @@ function track(ok) {
   hud(); return out;
 }
 function migrateSave(s) {
-  const DEF = { x: 4, y: 7, dir: 0, hp: 20, py: 1, heal: 0, intro: 0, grad: 0, seenDaily: 0, track: '', fast: 0, slow: 0, avatar: 0, auto: 1, dstreak: 0, txp: 0, goalDay: '', pace: 'mid' };
+  const DEF = { x: 4, y: 7, dir: 0, hp: 20, py: 1, heal: 0, intro: 0, grad: 0, seenDaily: 0, track: '', fast: 0, slow: 0, avatar: 0, auto: 1, dstreak: 0, txp: 0, goalDay: '', pace: 'mid', blind: 1 };
   for (const k in DEF) if (typeof s[k] !== typeof DEF[k] || (typeof DEF[k] === 'number' && !Number.isFinite(s[k]))) s[k] = typeof s[k] === 'boolean' ? (s[k] ? 1 : 0) : DEF[k];
   s.badges = [0, 1, 2].map(i => Array.isArray(s.badges) && s.badges[i] ? 1 : 0);
   ['dex', 'beat', 'ph', 'stamps'].forEach(k => { if (!s[k] || typeof s[k] !== 'object' || Array.isArray(s[k])) s[k] = {}; });
@@ -1102,7 +1260,10 @@ function migrateSave(s) {
   ['tea', 'tal', 'gls'].forEach(k => { s.bag[k] = Number.isFinite(s.bag[k]) && s.bag[k] > 0 ? Math.floor(s.bag[k]) : 0; });
   if (!s.gift) { if (!s.coins && !s.bag.tea && !s.bag.tal && !s.bag.gls) { s.coins = 30; s.bag.tea = 1; } s.gift = 1; }
   s.seenShop = s.seenShop ? 1 : 0;
-  s.v = 30;
+  // v3.1: Blind Audio-First setting (on by default) and the one-time update notice
+  s.blind = s.blind ? 1 : 0;
+  s.seen31 = s.seen31 ? 1 : 0;
+  s.v = 31;
   return s;
 }
 migrateSave(S); rollDay();
@@ -1137,7 +1298,8 @@ if ('speechSynthesis' in window) { findVoice(); try { speechSynthesis.addEventLi
 function speak(text, slow) {
   try {
     if (!('speechSynthesis' in window)) return;
-    const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = (slow || S.slow) ? 0.56 : 0.8;   // slow = 0.7x of the normal speed if (voice) u.voice = voice;
+    const u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = (slow || S.slow) ? 0.56 : 0.8;   // slow = 0.7x of the normal speed
+    if (voice) u.voice = voice;
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   } catch (e) {}
 }
@@ -1439,11 +1601,18 @@ function startWild() {
   b = { type: 'wild', w, hp: 3, phase: 'menu', last: '', log: `<p>A wild ${zh('<b class="han">' + w.h + '</b>')} spirit appeared!</p><p>What will you do?</p>` };
   // Listening-first: some spirits stay hidden in the grass and you have to recognise them by ear.
   if (first) b.phase = 'intro';
-  else if (canSpeak && Math.random() < (pace() === 'high' ? 0.6 : 0.3)) { b.q = buildQ(w, ['hear']); b.q.action = 'atk'; b.last = 'hear'; b.phase = 'q'; speak(w.h); }
+  else {
+    const k = openKind(w);   // v3.1: mature spirits open with a cloze or a spoken sentence; Blind Audio-First hides the text
+    if (k) { b.q = buildQ(w, [k]); b.q.action = 'atk'; b.last = k; b.phase = 'q'; if (k === 'hear') speak(w.h); else if (b.q.blind) speak(b.q.say); }
+    else if (S.dex[w.h].c && w.ex) {   // sentence first: a sealed spirit arrives inside its sentence, read aloud
+      b.log = `<p>A wild ${zh('<b class="han">' + w.h + '</b>')} spirit appeared!</p>${ctxHTML(w, 'menu')}<p>What will you do?</p>`; speak(w.ex[0]);
+    }
+  }
   openBattle();
 }
 function buildQ(w, kinds) {
   const kind = pick(kinds), q = { kind };
+  if (kind === 'cloze' || kind === 'sent') return earQ(w, q);
   if (kind === 'tone') {
     q.syl = rnd(w.t.length); q.ans = String(w.t[q.syl]);
     q.text = `Which tone is the underlined ${zh('<b>' + w.h[q.syl] + '</b>')}? Tap Listen if you are not sure.`;
@@ -1459,7 +1628,7 @@ function buildQ(w, kinds) {
   }
   return q;
 }
-const whyText = (q, w) => q.kind === 'tone' ? `${zh('<b class="han">' + w.h[q.syl] + '</b>')} is ${TS_SHORT[w.t[q.syl]]}: <b>${w.py}</b>.`
+const whyText = (q, w) => q.cz ? czWhy(q.cz) : q.kind === 'sent' ? sentWhy(w) : q.kind === 'tone' ? `${zh('<b class="han">' + w.h[q.syl] + '</b>')} is ${TS_SHORT[w.t[q.syl]]}: <b>${w.py}</b>.`
   : q.kind === 'rad' ? `The radical of ${zh(w.h[0])} is ${zh('<b class="han">' + w.r + '</b>')} (${w.rm}).` : `${zh('<b class="han">' + w.h + '</b>')} means "${w.m}".`;
 const pickedHTML = (q, v) => { const o = q.opts.find(x => x.v === v); return o ? `<div class="fb no"><span class="tagl">✗ WRONG · YOU CHOSE</span>${o.l}</div>` : ''; };
 function makeQ(action) {
@@ -1483,9 +1652,10 @@ function startQuiz(kind) {
 }
 function quizQ() {
   b.w = b.words[b.i]; b.hint = 0;
-  b.q = buildQ(b.w, b.kind === 'tea' ? (canSpeak ? ['mean', 'tone', 'rad', 'hear'] : ['mean', 'tone', 'rad']) : [['mean', 'tone'][(b.i + b.seed) % 2]]);
+  const ripe = mature(S.dex[b.w.h]) && b.w.ex && Math.random() < 0.6;   // v3.1: 7-day spirits are reviewed inside a sentence
+  b.q = buildQ(b.w, ripe ? [blindFor(b.w) && Math.random() < 0.5 ? 'sent' : 'cloze'] : b.kind === 'tea' ? (canSpeak ? ['mean', 'tone', 'rad', 'hear'] : ['mean', 'tone', 'rad']) : [['mean', 'tone'][(b.i + b.seed) % 2]]);
   b.phase = 'q';
-  if (b.q.kind === 'hear') speak(b.w.h);
+  if (b.q.kind === 'hear') speak(b.w.h); else if (b.q.blind) speak(b.q.say); else if (b.w.ex && !b.q.cz && b.q.kind !== 'tone') speak(b.w.ex[0]);
 }
 function answerQuiz(v) {
   const w = b.w, q = b.q, d = dexOf(w.h), ok = v === q.ans;
@@ -1493,6 +1663,8 @@ function answerQuiz(v) {
   let log;
   if (ok) { b.right++; d.xp = Math.min(100, d.xp + 5); beep(1); log = `<p class="good">Correct! ${zh('<b class="han">' + w.h + '</b>')} ${w.py}: "${w.m}". Mastery +5 XP.</p>` + (markHit(d) ? CLEARED : ''); }
   else { markMiss(d); beep(0); log = `<p class="bad">Not quite.</p><div class="fbrow">${pickedHTML(q, v)}<div class="fb yes"><span class="tagl">✓ CORRECT ANSWER</span>${whyText(q, w)}</div></div>`; }
+  if (ok && q.blind && !q.shown) d.xp = Math.min(100, d.xp + 5);
+  log += resExtra(q, w, ok); if (ok && q.say) speak(q.say);
   if (b.kind === 'tea') {
     if (ok) { S.hp = maxHP(); S.heal = zoneOf(P.x); b.over = 1; log += `<p>The Tea Master pours you a cup of ${zh('茶')} (chá). HP fully restored.</p>`; }
     else { log += '<p>The Tea Master smiles. "No rush. Try one more."</p>'; b.words.push(pick(caught())); }
@@ -1511,7 +1683,7 @@ function answerWild(v) {
   if (ok) {
     combo++;
     const crit = combo % 3 === 0;   // streak bonus: the spirit still takes 1 damage, so no question is skipped
-    const gain = (b.hint ? 5 : 10) * (crit ? 2 : 1);   // a hint halves the XP for that answer, a streak bonus doubles it
+    const gain = (b.hint ? 5 : 10) * (crit ? 2 : 1) + (q.blind && !q.shown ? 5 : 0);   // a hint halves the XP for that answer, a streak bonus doubles it, answering with the text hidden adds 5
     d.xp = Math.min(100, d.xp + gain); b.xpGain = (b.xpGain || 0) + gain;
     if (crit) { S.hp = Math.min(maxHP(), S.hp + 1); hud(); }
     let cleared = markHit(d);
@@ -1534,6 +1706,7 @@ function answerWild(v) {
     hurt(dmg);
     b.log = `<p class="bad">Not quite. ${H} hits you for ${dmg} HP.</p><div class="fbrow">${pickedHTML(q, v)}<div class="fb yes"><span class="tagl">✓ CORRECT ANSWER</span>${why}</div></div>`;
   }
+  b.log += resExtra(q, w, ok); if (ok && q.say) speak(q.say);
   b.log = track(ok) + b.log;
   if (b.over && !b.dead) b.log += summaryHTML();
   save(); render();
@@ -1541,6 +1714,7 @@ function answerWild(v) {
 
 function startTrainer(n) {
   const queue = shuffle(n.pool.slice()).slice(0, n.n);
+  if (zoneOf(n.x) >= 1) addCloze(queue, zoneOf(n.x), n.gym != null ? 2 : 1);   // v3.1: HSK 2–3 trainers add cloze rounds
   b = { type: 'tr', n, queue, total: queue.length, intro: 1, log: `<p><b>${n.name}</b> wants to battle!</p><p>What will you do?</p>` };
   loadSentence(); openBattle();
 }
@@ -1551,8 +1725,10 @@ function mixed(s) {
 }
 function loadSentence() {
   const s = b.s = b.queue[0]; b.placed = []; b.phase = b.intro ? 'menu' : 'build'; if (!b.intro) b.thint = 0;
+  if (s.cloze) return loadCloze();
+  b.q = null; b.hint = 0;
   b.order = mixed(s);
-  b.dict = canSpeak && Math.random() < (pace() === 'high' ? 0.7 : 0.34);   // listening-first: build the sentence from audio alone
+  b.dict = canSpeak && Math.random() < (pace() === 'high' || blindNow() ? 0.7 : 0.34);   // listening-first: build the sentence from audio alone
   if (b.dict && !b.intro) speak(s.ok[0]);
 }
 function checkSentence() {
@@ -1636,7 +1812,7 @@ function arenaHTML() {
   const wild = b.type === 'wild', m = maxHP(), av = AVATARS[S.avatar] || AVATARS[0], pf = Math.max(0, S.hp) / m;
   let foe, plate, xp;
   if (wild) {
-    const w = b.w, q = b.q, d = dexOf(w.h), asking = b.phase === 'q', res = b.phase === 'res' || b.phase === 'intro', mask = asking && q.kind === 'tone', hear = asking && q.kind === 'hear';
+    const w = b.w, q = b.q, d = dexOf(w.h), asking = b.phase === 'q', res = b.phase === 'res' || b.phase === 'intro', mask = asking && q.kind === 'tone', hear = asking && hidQ(q);
     const glyph = hear ? '<span class="dim">？</span>' : [...w.h].map((c, i) => `<span class="${mask ? (i === q.syl ? 'ask' : 'dim') : 't' + w.t[i]}">${c}</span>`).join('');
     const py = b.glass && !res ? (mask ? toneless(w.py) : w.py) : mask || hear ? '· · ·' : (res || showPy(w)) ? w.py : 'WILD SPIRIT';
     const rad = hear || (asking && q.kind === 'rad') ? '?' : `<b lang="zh-Hans">${w.r}</b> ${w.rm}`;
@@ -1666,7 +1842,7 @@ function render() {
   const tb = (s, i, where) => `<button class="tile" data-${where}="${i}"><b lang="zh-Hans">${s.tiles[i].h}</b><span class="py">${s.tiles[i].p}</span></button>`;
   const card = () => {
     const w = b.w, q = b.q, asking = b.phase === 'q', res = b.phase === 'res' || b.phase === 'intro', mask = asking && q.kind === 'tone';
-    const hear = asking && q.kind === 'hear';
+    const hear = asking && hidQ(q);
     const glyph = hear ? '<span class="dim">？</span>' : [...w.h].map((c, i) => `<span class="${mask ? (i === q.syl ? 'ask' : 'dim') : 't' + w.t[i]}">${c}</span>`).join('');
     const py = mask || hear ? '· · ·' : (res || showPy(w)) ? w.py : '';
     const rad = hear || (asking && q.kind === 'rad') ? '?' : `<b lang="zh-Hans">${w.r}</b> ${w.rm}`;
@@ -1678,7 +1854,7 @@ function render() {
     const q = b.q, tea = b.kind === 'tea';
     h += `<div class="plate"><span>${tea ? 'TEA HOUSE ' + zh('<b class="han">茶馆</b>') : 'MEDITATE &amp; REVIEW'}</span><span class="chip">${tea ? 'REVIEW QUESTION' : 'CARD ' + (b.i + 1) + ' OF 3'}</span>
       <span class="hearts" style="color:var(--jade)">${tea ? '100% HP' : '+50% HP'}</span></div>` + card();
-    if (b.phase === 'q') h += `<div class="log"><p class="q">${q.text}</p>${b.hint ? hintHTML() : ''}</div><div class="panel">${q.opts.map((o, i) => kopt(i, o.l, o.v, o.cls)).join('')}<div class="duo">${btn('🔊 Listen', 'listen')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}</div>${q.kind === 'hear' ? btn('No sound? Show it', 'reveal') : ''}${btn('Leave', 'run')}</div>`;
+    if (b.phase === 'q') h += `<div class="log"><p class="q">${q.text}</p>${qCtx()}${b.hint ? hintHTML() : ''}</div><div class="panel">${qOpts(q)}<div class="duo">${btn('🔊 Listen', 'listen', '', q.cz && !q.blind ? 'disabled' : '')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}</div>${revealBtn()}${btn('Leave', 'run', revealBtn() ? '' : 'full')}</div>`;
     else h += `<div class="log">${b.log}</div><div class="panel">${btn(b.over ? 'Done' : tea ? 'Next question' : 'Next card', 'cont', 'primary')}${btn('🔊 Listen', 'listen')}</div>`;
   } else if (b.type === 'wild') {
     const w = b.w, q = b.q, d = dexOf(w.h), asking = b.phase === 'q', res = b.phase === 'res';
@@ -1690,7 +1866,7 @@ function render() {
         <p>${hz(w.n)} ${w.st} strokes${w.h.length > 1 ? ' in ' + zh(w.h[0]) : ''}.</p>${w.ex ? `<p class="exl">Example: ${zh('<b class="han">' + w.ex[0] + '</b>')} ${w.ex[1]} – ${w.ex[2]}</p>` : ''}</div>
         <div class="panel">${btn('Start the battle', 'begin', 'primary')}${btn('🔊 Listen', 'listen')}</div>`;
     } else if (asking) {
-      h += `<div class="log"><p class="q">${q.text}</p>${b.hint ? hintHTML() : ''}</div><div class="panel">${q.opts.map((o, i) => kopt(i, o.l, o.v, o.cls)).join('')}<div class="duo">${btn('🔊 Listen', 'listen')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}${btn('🎒 Bag' + bagN(), 'bag')}</div>${q.kind === 'hear' ? btn('No sound? Show it', 'reveal') + btn('Run', 'run') : ''}</div>`;
+      h += `<div class="log"><p class="q">${q.text}</p>${qCtx()}${b.hint ? hintHTML() : ''}</div><div class="panel">${qOpts(q)}<div class="duo">${btn('🔊 Listen', 'listen', '', q.cz && !q.blind ? 'disabled' : '')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}${btn('🎒 Bag' + bagN(), 'bag')}</div>${hidQ(q) ? revealBtn() + btn('Run', 'run', revealBtn() ? '' : 'full') : ''}</div>`;
     } else if (res) {
       h += `<div class="log">${b.log}</div><div class="panel">${btn('Continue', 'cont', 'primary')}${btn('🔊 Listen', 'listen')}</div>`;
     } else {
@@ -1715,7 +1891,7 @@ function render() {
     if (b.bag) h += bagHTML(); else if (b.phase === 'menu') {
       h += `<div class="mrow"><div class="log say">${b.log}</div><div class="cmd">
         ${btn('FIGHT', 'fight', 'c-fight primary')}${btn('SEAL', 'seal', 'c-seal', 'disabled')}${btn('BAG' + bagN(), 'bag', 'c-bag')}${btn('HINT', 'mhint', 'c-hint')}${btn('RUN', 'run', 'c-run')}</div></div>`;
-    } else
+    } else if (b.phase === 'q') h += czPanel(); else
     if (b.phase === 'build') {
       const tileBtn = (i, where) => tb(s, i, where);
       h += `<div class="prompt">${btn('🎒 Bag' + bagN(), 'bag', 'mini bagm')}<small>${b.dict ? 'LISTEN AND BUILD' : 'SAY IT IN CHINESE'}</small>${b.dict ? 'Build the sentence you hear.' : s.en}${b.thint ? `<p class="hint">💡 ${hz(G[s.g])}</p>` : ''}</div>
@@ -1737,13 +1913,15 @@ function render() {
 $('#battle').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t || !b || t.disabled) return;
   const d = t.dataset;
-  if (d.ans != null) return b.type === 'scene' ? answerScene(+d.ans) : b.type === 'quiz' ? answerQuiz(d.ans) : answerWild(d.ans);
+  if (d.say) return speak(d.say);
+  if (d.ans != null) return b.type === 'scene' ? answerScene(+d.ans) : b.type === 'quiz' ? answerQuiz(d.ans) : b.type === 'tr' ? answerCloze(d.ans) : answerWild(d.ans);
   if (d.in != null) { b.placed.push(+d.in); return render(); }
   if (d.out != null) { b.placed = b.placed.filter(i => i !== +d.out); return render(); }
   switch (d.act) {
     case 'atk': case 'seal': makeQ(d.act); render(); break;
     case 'fight':
       if (b.type === 'wild') makeQ('atk');
+      else if (b.s.cloze) { b.intro = 0; b.phase = 'q'; if (b.q.blind) speak(b.q.say); }
       else { b.intro = 0; b.phase = 'build'; if (b.dict) speak(b.s.ok[0]); }
       render(); break;
     case 'mhint':   // HINT on the command menu: radical memory story plus slow audio (wild), or the grammar pattern (trainers)
@@ -1752,16 +1930,16 @@ $('#battle').addEventListener('click', e => {
         b.log = `<p class="hint">💡 ${zh('<b class="han">' + w.r + '</b>')} ${r ? r[2] : ''} <b>${w.rm}</b>. ${r ? hz(r[3]) : ''}</p><p class="sub">Slow audio is playing. Your next answer earns half XP.</p>`;
         speak(w.h, true);
       } else {
-        b.thint = 1; if (b.phase === 'menu') b.log = `<p class="hint">💡 Pattern: ${hz(G[b.s.g])}</p><p>What will you do?</p>`;
+        b.thint = 1; if (b.phase === 'menu') b.log = `<p class="hint">💡 Pattern: ${hz(G[b.s.g] || 'Read the whole sentence before you choose.')}</p><p>What will you do?</p>`;
         if (b.dict && b.phase === 'build') speak(b.s.ok[0], true);
       }
       render(); break;
-    case 'listen': speak(b.type === 'scene' ? b.turns[b.i].npc.h : b.w ? b.w.h : ''); break;
+    case 'listen': { const tx = b.type === 'scene' ? b.turns[b.i].npc.h : listenText(); if (tx) speak(tx); break; }
     case 'hint': b.hint = 1; render(); break;
     case 'begin': b.phase = 'menu'; b.log = '<p>Now test yourself. What will you do?</p>'; render(); break;
     case 'listenSlow': speak(b.turns[b.i].npc.h, true); break;
     case 'listenSSlow': speak(b.listen || '', true); break;
-    case 'reveal': b.q.kind = 'mean'; b.q.text = `What does ${zh('<b>' + b.w.h + '</b>')} mean?`; render(); break;
+    case 'reveal': if (b.q.kind === 'hear') { b.q.kind = 'mean'; b.q.text = `What does ${zh('<b>' + b.w.h + '</b>')} mean?`; } else b.q.shown = 1; render(); break;   // Reveal Text: the fallback for Blind Audio-First
     case 'showEn': b.dict = false; render(); break;
     case 'listenS': speak(b.listen || (b.s && b.s.ok[0]) || ''); break;
     case 'bag': b.bag = 1; b.bagMsg = ''; render(); break;
@@ -1776,7 +1954,7 @@ $('#battle').addEventListener('click', e => {
       if (b.dead) return faint();
       if (b.type === 'scene') { if (b.over) finishScene(); else { if (b.good) b.i++; loadTurn(); render(); } }
       else if (b.type === 'quiz') { if (b.over) { const k = b.kind; closeBattle(); if (k === 'med') openDex(); } else { b.i++; quizQ(); render(); } }
-      else if (b.type === 'wild') { if (b.over) closeBattle(); else { b.phase = 'menu'; b.log = '<p>What will you do?</p>'; render(); } }
+      else if (b.type === 'wild') { if (b.over) closeBattle(); else { b.phase = 'menu'; b.log = (S.dex[b.w.h] && S.dex[b.w.h].c ? ctxHTML(b.w, 'menu') : '') + '<p>What will you do?</p>'; render(); } }
       else if (b.over) winTrainer(); else { b.listen = null; loadSentence(); render(); }
   }
 });
@@ -1974,8 +2152,8 @@ function finishScene() {
   const n = S.stamps[id]; closeBattle(); hud(); save();
   say([`Scene cleared! You earned a ${sc.short} stamp (${n} so far) and recovered 5 HP.`, 'The phrases you used are now in your Phrasebook: open the DEX and tap Phrasebook. Play again and the details change.'], null, 'Daily Life');
 }
-let dexTab = 'dex', dexFilter = 'all';
-const DEX_FILTERS = { all: ['All', () => true], due: ['Due', (w, d) => !!(d && d.c) && isDue(d)], hsk1: ['HSK 1', w => w.z === 0], hsk2: ['HSK 2', w => w.z === 1], hsk3: ['HSK 3', w => w.z === 2], unsealed: ['Unsealed', (w, d) => !(d && d.c)] };
+let dexTab = 'dex', dexFilter = 'all', famOpen = -1;
+const DEX_FILTERS = { all: ['All', () => true], due: ['Due', (w, d) => !!(d && d.c) && isDue(d)], hsk1: ['HSK 1', w => w.z === 0], hsk2: ['HSK 2', w => w.z === 1], hsk3: ['HSK 3', w => w.z === 2], unsealed: ['Unsealed', (w, d) => !(d && d.c)], fam: ['Families 字族', () => false] };
 function phrasebookHTML() {
   const ids = Object.keys(PHR), got = ids.filter(i => S.ph[i] > 0).length;
   let h = `<p class="autosave">${got} of ${ids.length} phrases collected. Clear Daily Life scenes in the Village (the people with a speech bubble) to collect more. Tap a phrase to hear it.</p>
@@ -2267,9 +2445,29 @@ const RADINFO = {};
   ["用", "use", "🪣", "A wooden bucket: something you put to use.", "用"],
   ["心", "heart", "❤️", "A heart with its chambers (it becomes 忄 on the left).", "想 怎 您"],
   ["一", "one", "➖", "A single stroke; often just a dictionary filing label.", "东 两 七"],
+  ["足", "foot", "🦶", "A kneecap over a foot; squeezed onto the left side it marks walking and running.", "路 跑 跟"],
+  ["凵", "open box", "📦", "A box with its lid off; in 出 something is climbing out of it.", "出 画"],
+  ["八", "eight", "✂️", "Two strokes leaning apart: to divide, and the number eight.", "公 关 分"],
+  ["匚", "box", "🧰", "A box lying on its side, open to the right.", "医 区"],
+  ["疒", "sickness", "🛏️", "A person lying on a sickbed; it marks illness and pain.", "疼 病 瘦"],
+  ["身", "body", "🧍", "A side view of a body with a round belly.", "身 躺"],
+  ["生", "life", "🌱", "A sprout pushing up out of the ground: to grow, to be born.", "生 星 姓"],
+  ["户", "door", "🚪", "A single-leaf door, one half of 门.", "房 所 护"],
+  ["亠", "lid", "🎩", "A dot on a line, like a lid; mostly a dictionary filing label.", "就 京 交"],
+  ["巾", "cloth", "🧣", "A cloth hanging from a belt.", "帮 带 常"],
+  ["高", "tall", "🏯", "A tall tower with a roof and a window.", "高"],
+  ["又", "right hand", "🤚", "A right hand reaching in; on its own it also means \"again\".", "发 友 双"],
+  ["舌", "tongue", "👅", "A tongue sticking out of a mouth 口.", "舒 话 甜"],
+  ["禾", "grain", "🌾", "A stalk of grain with its heavy head drooping.", "租 种 秋"],
+  ["页", "head", "📄", "A head on a body; today it also means \"page\".", "预 顺 题"],
+  ["田", "field", "🌾", "A field divided into four plots.", "电 男 累"],
+  ["麻", "hemp", "🪢", "Hemp stalks hung up to dry under a shelter 广.", "麻"],
 ].forEach(r => { RADINFO[r[0]] = r; });
 const RAD_TOP = Object.keys(RADINFO).slice(0, 25);
 function hintHTML() {
+  const q0 = b.q, half = b.type === 'wild' ? ' A hint halves the XP for this answer.' : '';
+  if (q0 && q0.cz && q0.cz.g) return `<p class="hint">💡 The sentence means: "${q0.cz.en}"${half}</p>`;
+  if (q0 && q0.kind === 'sent') return `<p class="hint">💡 Pinyin: ${b.w.ex[1]}${half}</p>`;
   const w = b.w, r = RADINFO[w.r]; if (!r) return '';
   return b.q.kind === 'rad' ? `<p class="hint">💡 Picture clue: ${r[2]} ${hz(r[3])}</p>`
     : `<p class="hint">💡 Radical clue: ${zh('<b class="han">' + w.r + '</b>')} ${r[2]} <b>${r[1]}</b>. ${hz(r[3])}${b.type === 'wild' ? ' A hint halves the XP for this answer.' : ''}</p>`;
@@ -2333,7 +2531,7 @@ C: { name: 'HSK 3+', cards: [
 
 /* ───────────── START SCREEN AND TRACKS ───────────── */
 const FEEDBACK_URL = 'https://forms.gle/sxKa1P7Hz9RGFvTa6';
-const VERSION = 'v3.0 Beta';
+const VERSION = 'v3.1 Beta';
 const DRAGON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="0" y="0" width="1" height="1" fill="#f2b632"/><rect x="15" y="0" width="1" height="1" fill="#f2b632"/><rect x="0" y="1" width="2" height="1" fill="#f2b632"/><rect x="14" y="1" width="2" height="1" fill="#f2b632"/><rect x="1" y="2" width="2" height="1" fill="#f2b632"/><rect x="13" y="2" width="2" height="1" fill="#f2b632"/><rect x="2" y="3" width="2" height="1" fill="#f2b632"/><rect x="4" y="3" width="8" height="1" fill="#c8102e"/><rect x="12" y="3" width="2" height="1" fill="#f2b632"/><rect x="0" y="4" width="1" height="1" fill="#f2b632"/><rect x="2" y="4" width="1" height="1" fill="#7a0a1c"/><rect x="3" y="4" width="10" height="1" fill="#c8102e"/><rect x="13" y="4" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="4" width="1" height="1" fill="#f2b632"/><rect x="0" y="5" width="1" height="1" fill="#f2b632"/><rect x="1" y="5" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="5" width="1" height="1" fill="#c8102e"/><rect x="3" y="5" width="3" height="1" fill="#7a0a1c"/><rect x="6" y="5" width="4" height="1" fill="#c8102e"/><rect x="10" y="5" width="3" height="1" fill="#7a0a1c"/><rect x="13" y="5" width="1" height="1" fill="#c8102e"/><rect x="14" y="5" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="5" width="1" height="1" fill="#f2b632"/><rect x="1" y="6" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="6" width="1" height="1" fill="#c8102e"/><rect x="3" y="6" width="2" height="1" fill="#ffffff"/><rect x="5" y="6" width="1" height="1" fill="#1b1b2f"/><rect x="6" y="6" width="4" height="1" fill="#c8102e"/><rect x="10" y="6" width="1" height="1" fill="#1b1b2f"/><rect x="11" y="6" width="2" height="1" fill="#ffffff"/><rect x="13" y="6" width="1" height="1" fill="#c8102e"/><rect x="14" y="6" width="1" height="1" fill="#7a0a1c"/><rect x="0" y="7" width="1" height="1" fill="#f2b632"/><rect x="1" y="7" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="7" width="1" height="1" fill="#c8102e"/><rect x="3" y="7" width="1" height="1" fill="#ffffff"/><rect x="4" y="7" width="2" height="1" fill="#1b1b2f"/><rect x="6" y="7" width="4" height="1" fill="#c8102e"/><rect x="10" y="7" width="2" height="1" fill="#1b1b2f"/><rect x="12" y="7" width="1" height="1" fill="#ffffff"/><rect x="13" y="7" width="1" height="1" fill="#c8102e"/><rect x="14" y="7" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="7" width="1" height="1" fill="#f2b632"/><rect x="0" y="8" width="1" height="1" fill="#f2b632"/><rect x="1" y="8" width="1" height="1" fill="#7a0a1c"/><rect x="2" y="8" width="12" height="1" fill="#c8102e"/><rect x="14" y="8" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="8" width="1" height="1" fill="#f2b632"/><rect x="1" y="9" width="1" height="1" fill="#f2b632"/><rect x="2" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="3" y="9" width="3" height="1" fill="#c8102e"/><rect x="6" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="7" y="9" width="2" height="1" fill="#c8102e"/><rect x="9" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="10" y="9" width="3" height="1" fill="#c8102e"/><rect x="13" y="9" width="1" height="1" fill="#7a0a1c"/><rect x="14" y="9" width="1" height="1" fill="#f2b632"/><rect x="1" y="10" width="1" height="1" fill="#f2b632"/><rect x="3" y="10" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="10" width="8" height="1" fill="#c8102e"/><rect x="12" y="10" width="1" height="1" fill="#7a0a1c"/><rect x="14" y="10" width="1" height="1" fill="#f2b632"/><rect x="0" y="11" width="1" height="1" fill="#f2b632"/><rect x="3" y="11" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="11" width="1" height="1" fill="#ffffff"/><rect x="5" y="11" width="1" height="1" fill="#c8102e"/><rect x="6" y="11" width="1" height="1" fill="#ffffff"/><rect x="7" y="11" width="2" height="1" fill="#c8102e"/><rect x="9" y="11" width="1" height="1" fill="#ffffff"/><rect x="10" y="11" width="1" height="1" fill="#c8102e"/><rect x="11" y="11" width="1" height="1" fill="#ffffff"/><rect x="12" y="11" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="11" width="1" height="1" fill="#f2b632"/><rect x="0" y="12" width="1" height="1" fill="#f2b632"/><rect x="3" y="12" width="1" height="1" fill="#7a0a1c"/><rect x="4" y="12" width="8" height="1" fill="#c8102e"/><rect x="12" y="12" width="1" height="1" fill="#7a0a1c"/><rect x="15" y="12" width="1" height="1" fill="#f2b632"/><rect x="4" y="13" width="8" height="1" fill="#7a0a1c"/><rect x="3" y="14" width="1" height="1" fill="#f2b632"/><rect x="5" y="14" width="2" height="1" fill="#f2b632"/><rect x="9" y="14" width="2" height="1" fill="#f2b632"/><rect x="12" y="14" width="1" height="1" fill="#f2b632"/><rect x="2" y="15" width="1" height="1" fill="#f2b632"/><rect x="6" y="15" width="1" height="1" fill="#f2b632"/><rect x="9" y="15" width="1" height="1" fill="#f2b632"/><rect x="13" y="15" width="1" height="1" fill="#f2b632"/></svg>';
 const TRACKS = {
   A: { lv: 'TRACK A · BEGINNER', t: 'Foundations First', d: 'Tones, radicals and word order. Opens the Curriculum and Radical Guide, then the HSK 1 Village. Pinyin on.' },
@@ -2453,15 +2651,17 @@ function openDex(flash) {
       <button class="btn" data-act="rad">Radical Guide<small>picture meanings and memory stories</small></button>
       <button class="btn" data-act="slow">Slow audio 0.7x: ${S.slow ? 'ON' : 'OFF'}<small>applies to every Listen button</small></button>
       <button class="btn" data-act="auto">Auto-Pace: ${S.auto ? 'ON' : 'OFF'}<small>adjusts new material to your accuracy</small></button>
+      <button class="btn" data-act="blind">Blind Audio-First: ${S.blind ? 'AUTO' : 'OFF'}<small>${S.blind ? 'hides the text above 85% accuracy and on 7-day spirits' : 'the text is always shown'}</small></button>
       <button class="btn" data-act="home">Start screen<small>tracks and feedback</small></button>
     </div>
     <div id="saveBox" hidden></div>
     <p class="autosave">HP ${S.hp}/${maxHP()} · Coins ${S.coins} · Daily Goal ${Math.min(S.day.n, GOAL)}/${GOAL} · 🔥 ${S.dstreak} Day${S.dstreak === 1 ? '' : 's'} · Bonus XP ${S.txp} · ${dueCount()} review${dueCount() === 1 ? '' : 's'} due.<br>
       Accuracy over your last ${S.recent.length} answer${S.recent.length === 1 ? '' : 's'}: ${accuracy() == null ? 'none yet' : Math.round(accuracy() * 100) + '%'}. ${S.auto ? PACE_NOTE[S.pace] : 'Auto-Pace is off: no caps or pauses, and pinyin follows the top-bar button.'}</p>
     <div class="tabs" role="tablist"><button class="btn" role="tab" data-act="tabDex" aria-selected="${dexTab === 'dex'}">HanziDex ${got}/${WORDS.length}</button><button class="btn" role="tab" data-act="tabPh" aria-selected="${dexTab === 'ph'}">Phrasebook ${Object.keys(PHR).filter(i => S.ph[i] > 0).length}/${Object.keys(PHR).length}</button></div>
-    ${dexTab === 'ph' ? '' : `<div class="filters" role="tablist" aria-label="Filter the HanziDex">${Object.keys(DEX_FILTERS).map(k => `<button class="btn" role="tab" data-filter="${k}" aria-selected="${k === dexFilter}">${DEX_FILTERS[k][0]} <small>${WORDS.filter(w => DEX_FILTERS[k][1](w, S.dex[w.h])).length}</small></button>`).join('')}</div>`}
+    ${dexTab === 'ph' ? '' : `<div class="filters" role="tablist" aria-label="Filter the HanziDex">${Object.keys(DEX_FILTERS).map(k => `<button class="btn" role="tab" data-filter="${k}" aria-selected="${k === dexFilter}">${hz(DEX_FILTERS[k][0])} <small>${k === 'fam' ? FAMS.length : WORDS.filter(w => DEX_FILTERS[k][1](w, S.dex[w.h])).length}</small></button>`).join('')}</div>`}
     <div class="legend" ${dexTab === 'ph' ? 'hidden' : ''}><span class="t1">■ 1st tone</span><span class="t2">■ 2nd tone</span><span class="t3">■ 3rd tone</span><span class="t4">■ 4th tone</span><span class="t5">■ neutral</span><span>Tap a character to hear it.</span></div>`;
   if (dexTab === 'ph') h += phrasebookHTML();
+  else if (dexFilter === 'fam') h += familiesHTML();
   else if (!WORDS.some(w => DEX_FILTERS[dexFilter][1](w, S.dex[w.h]))) h += `<p class="autosave">${dexFilter === 'due' ? 'Nothing is due right now. Sealed spirits come back here when their review date arrives.' : 'Nothing in this filter yet.'}</p>`;
   else ZONES.forEach((zn, z) => {
     const list = WORDS.filter(w => w.z === z && DEX_FILTERS[dexFilter][1](w, S.dex[w.h]));
@@ -2499,7 +2699,7 @@ function importCode(str) {
   S.phs = {};
   Object.keys(PHR).forEach(id => { const o = j.phs && j.phs[id]; if (S.ph[id] && o && Number.isFinite(o.nextReviewAt)) S.phs[id] = { nextReviewAt: o.nextReviewAt, srsStage: num(o.srsStage, 0, 0, 5) }; });
   Object.assign(S, { recent: j.recent, auto: j.auto === 0 ? 0 : 1, pace: j.pace, day: j.day, dstreak: num(j.dstreak, 0, 0, 99999), goalDay: typeof j.goalDay === 'string' ? j.goalDay : '', txp: num(j.txp, 0, 0, 1e9),
-    coins: num(j.coins, 0, 0, 1e9), bag: { tea: num(j.bag && j.bag.tea, 0, 0, 999), tal: num(j.bag && j.bag.tal, 0, 0, 999), gls: num(j.bag && j.bag.gls, 0, 0, 999) }, gift: j.gift ? 1 : 0, seenShop: j.seenShop ? 1 : 0 });
+    coins: num(j.coins, 0, 0, 1e9), bag: { tea: num(j.bag && j.bag.tea, 0, 0, 999), tal: num(j.bag && j.bag.tal, 0, 0, 999), gls: num(j.bag && j.bag.gls, 0, 0, 999) }, gift: j.gift ? 1 : 0, seenShop: j.seenShop ? 1 : 0, blind: j.blind === 0 ? 0 : 1, seen31: j.seen31 ? 1 : 0 });
   migrateSave(S); rollDay();
   S.hp = num(j.hp, maxHP(), 1, maxHP());
   let x = num(j.x, 4, 0, MW - 1), y = num(j.y, 7, 0, MH - 1);
@@ -2510,13 +2710,20 @@ function importCode(str) {
 function wipeSave() {
   try { localStorage.removeItem(KEY); } catch (err) {}
   const keepAvatar = S.avatar;
-  Object.assign(S, { x: 4, y: 7, dir: 0, hp: 20, badges: [0, 0, 0], dex: {}, beat: {}, heal: 0, intro: 0, grad: 0, ph: {}, stamps: {}, seenDaily: 0, track: '', fast: 0, slow: 0, phs: {}, recent: [], day: null, dstreak: 0, goalDay: '', txp: 0, auto: 1, pace: 'mid', coins: 0, bag: null, gift: 0, seenShop: 0 });
+  Object.assign(S, { x: 4, y: 7, dir: 0, hp: 20, badges: [0, 0, 0], dex: {}, beat: {}, heal: 0, intro: 0, grad: 0, ph: {}, stamps: {}, seenDaily: 0, track: '', fast: 0, slow: 0, phs: {}, recent: [], day: null, dstreak: 0, goalDay: '', txp: 0, auto: 1, pace: 'mid', coins: 0, bag: null, gift: 0, seenShop: 0, blind: 1, seen31: 0 });
     P.x = P.tx = 4; P.y = P.ty = 7; P.dir = 0; P.moving = false; onStep.z = -1; hadSave = false; started = false; hud(); 
   S.avatar = keepAvatar; migrateSave(S); rollDay(); hud(); showStart();
 }
 function closeDex() { mode = 'world'; screen_('world'); }
 $('#dex').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.fam != null) {   // a family root: open or close its tree, and say the root
+    const i = +t.dataset.fam, top = $('#dex').scrollTop; famOpen = famOpen === i ? -1 : i;
+    if (famOpen === i) speak(FAMS[i].h);
+    openDex(); $('#dex').scrollTop = top;
+    const el = $('#dex .fam.open'); if (el) el.scrollIntoView({ block: 'nearest' });
+    return;
+  }
   if (t.dataset.say) return speak(t.dataset.say);
   if (t.dataset.act === 'close') return closeDex();
   if (t.dataset.act === 'tea') { if (!(S.bag.tea > 0) || S.hp >= maxHP()) return; const was = S.hp; S.bag.tea--; S.hp = Math.min(maxHP(), S.hp + 10); sfx('item'); hud(); save(); return openDex(`🧋 ${zh('珍珠奶茶')} Bubble Tea: +${S.hp - was} HP. You are at ${S.hp}/${maxHP()}.`); }
@@ -2525,6 +2732,7 @@ $('#dex').addEventListener('click', e => {
   if (t.dataset.act === 'curr' || t.dataset.act === 'rad') { mode = 'world'; return openInfo(t.dataset.act); }
   if (t.dataset.act === 'slow') { S.slow = S.slow ? 0 : 1; save(); return openDex(); }
   if (t.dataset.act === 'auto') { S.auto = S.auto ? 0 : 1; hud(); save(); return openDex(); }
+  if (t.dataset.act === 'blind') { S.blind = S.blind ? 0 : 1; save(); return openDex(); }
   if (t.dataset.act === 'home') return showStart();
   if (t.dataset.act === 'med') { closeDex(); return startQuiz('med'); }
   const box = $('#saveBox');
@@ -2569,7 +2777,7 @@ function summaryHTML() {
     const st = [...new Set(b.turns.flatMap(t => t.ph || []))].filter(id => S.phs[id]).map(id => stageOf(S.phs[id])), lo = Math.min(...st), hi = Math.max(...st);
     srs = st.length ? 'Phrases at SRS Stage ' + lo + (hi > lo ? '–' + hi : '') + '/5' : 'No phrases scheduled yet';
   } else srs = 'SRS · ' + dueCount() + ' review' + (dueCount() === 1 ? '' : 's') + ' due';
-  return `<div class="vsum"><b>${b.type === 'wild' && !dexOf(b.w.h).c ? 'SUMMARY' : 'VICTORY'}</b><span>${b.type === 'tr' && !xp ? b.total + ' sentences built' : '+' + xp + ' XP'}</span><span><i class="coin" aria-hidden="true"></i> +${b.coinGain || 0} Coins</span><span>${srs}</span></div>`;
+  return `<div class="vsum"><b>${b.type === 'wild' && !dexOf(b.w.h).c ? 'SUMMARY' : 'VICTORY'}</b><span>${b.type === 'tr' && !xp ? b.total + ' rounds cleared' : '+' + xp + ' XP'}</span><span><i class="coin" aria-hidden="true"></i> +${b.coinGain || 0} Coins</span><span>${srs}</span></div>`;
 }
 // Why an item cannot be used right now ('' means it can)
 function itemBlock(k) {
@@ -2654,6 +2862,233 @@ cv.addEventListener('click', e => {
 // one-off notices: shown straight away, or added to the end of a dialog that is already open
 const news = lines => { if (mode === 'world') say(lines, null, 'Update'); else if (mode === 'dialog') dq.push(...lines); };
 
+/* ───────────── v3.1: sentence-first reviews, cloze battles, Blind Audio-First, character families ─────────────
+   Sealed spirits are reviewed inside a sentence with the word marked: 我想用【支付宝】支付。
+   A spirit is "mature" once it has reached the 7-day gap (srsStage 2 or more): it opens with a cloze or a spoken sentence.
+   Blind Audio-First plays the audio and hides the text when accuracy is above 85% (Auto-Pace on) or the spirit is mature. */
+Object.assign(MON_OF, { '禾': 'leaf', '麻': 'leaf', '田': 'leaf' });
+const mature = d => !!d && !!d.c && (d.srsStage || 0) >= 2;
+const hot = () => !!(S.auto && S.recent.length >= 10 && accuracy() > 0.85);
+const blindNow = () => !!(canSpeak && S.blind && hot());
+const blindFor = w => !!(canSpeak && S.blind && (hot() || mature(S.dex[w.h])));
+const hidQ = q => !!q && (q.kind === 'hear' || q.kind === 'cloze' || q.kind === 'sent');
+const markW = w => w.ex[0].replace(w.h, `<mark class="tw">【${w.h}】</mark>`);
+// The spirit's sentence. mode 'q': characters only · 'menu': plus pinyin when pinyin is showing · 'full': pinyin and English
+function ctxHTML(w, mode) {
+  if (!w || !w.ex) return '';
+  const py = mode === 'full' || (mode === 'menu' && showPy(w));
+  return `<p class="ctx"><button class="exb" data-say="${w.ex[0]}" aria-label="Listen to the sentence">🔊</button> <span class="sent" lang="zh-Hans">${markW(w)}</span>${py ? `<br><span class="cpy">${w.ex[1]}</span>` : ''}${mode === 'full' ? `<br>"${w.ex[2]}"` : ''}</p>`;
+}
+/* Grammar cloze bank: [level (1 = HSK 2, 2 = HSK 3), sentence with ＿ for the blank, answer, three wrong choices, pinyin, English, one-sentence reason] */
+const CLOZE = [
+  [1, '虽然今天很冷，＿我还是想去跑步。', '但是', '所以 因为 如果', 'Suīrán jīntiān hěn lěng, dànshì wǒ háishi xiǎng qù pǎobù.', 'Although it is cold today, I still want to go running.', '虽然 always pairs with 但是: Chinese says both "although" and "but".'],
+  [1, '＿这个手机很贵，但是很好用。', '虽然', '因为 如果 所以', 'Suīrán zhège shǒujī hěn guì, dànshì hěn hǎoyòng.', 'Although this phone is expensive, it works well.', '但是 in the second half tells you the first half opens with 虽然.'],
+  [1, '＿工作很忙，但是他每天都锻炼。', '虽然', '因为 如果 所以', 'Suīrán gōngzuò hěn máng, dànshì tā měitiān dōu duànliàn.', 'Although work is busy, he exercises every day.', 'A contrast needs the pair 虽然 … 但是 …; 因为 would need 所以.'],
+  [1, '因为下雨了，＿我们坐地铁去。', '所以', '但是 虽然 如果', 'Yīnwèi xiàyǔ le, suǒyǐ wǒmen zuò dìtiě qù.', 'Because it is raining, we are taking the subway.', '因为 gives the reason and 所以 introduces the result.'],
+  [1, '因为地铁很快，＿我每天坐地铁上班。', '所以', '但是 如果 虽然', 'Yīnwèi dìtiě hěn kuài, suǒyǐ wǒ měitiān zuò dìtiě shàngbān.', 'Because the subway is fast, I take it to work every day.', 'Reason first with 因为, then the result with 所以.'],
+  [1, '＿我感冒了，所以今天不去上班。', '因为', '虽然 如果 但是', 'Yīnwèi wǒ gǎnmào le, suǒyǐ jīntiān bú qù shàngbān.', 'Because I have a cold, I am not going to work today.', '所以 marks the result, so the reason before it starts with 因为.'],
+  [1, '我想买一＿咖啡。', '杯', '本 件 张', 'Wǒ xiǎng mǎi yì bēi kāfēi.', 'I want to buy a cup of coffee.', 'Drinks are counted by the cup: number + 杯 + drink.'],
+  [1, '这＿衣服太贵了。', '件', '杯 本 张', 'Zhè jiàn yīfu tài guì le.', 'This piece of clothing is too expensive.', 'Clothes take the measure word 件: 这件衣服, 一件衣服.'],
+  [1, '我昨天买了三＿书。', '本', '杯 件 张', 'Wǒ zuótiān mǎi le sān běn shū.', 'I bought three books yesterday.', 'Books and other bound things take the measure word 本.'],
+  [1, '请给我两＿票。', '张', '本 杯 件', 'Qǐng gěi wǒ liǎng zhāng piào.', 'Please give me two tickets.', 'Flat things such as tickets, paper and tables take 张.'],
+  [1, '桌子上有一＿水。', '瓶', '本 件 张', 'Zhuōzi shang yǒu yì píng shuǐ.', 'There is a bottle of water on the table.', 'Bottled drinks take 瓶; 本, 件 and 张 cannot count water.'],
+  [1, '他家有两＿猫。', '只', '本 张 件', 'Tā jiā yǒu liǎng zhī māo.', 'His family has two cats.', 'Small animals take the measure word 只.'],
+  [2, '如果明天不下雨，我们＿去公园。', '就', '但是 所以 因为', 'Rúguǒ míngtiān bú xiàyǔ, wǒmen jiù qù gōngyuán.', 'If it does not rain tomorrow, we will go to the park.', '如果 sets the condition, and 就 comes after the subject to give the result.'],
+  [2, '＿你有时间，就给我打电话。', '如果', '虽然 因为 所以', 'Rúguǒ nǐ yǒu shíjiān, jiù gěi wǒ dǎ diànhuà.', 'If you have time, give me a call.', '就 in the second half answers a condition, and the condition opens with 如果.'],
+  [2, '如果你不舒服，＿早点儿休息吧。', '就', '但是 因为 虽然', 'Rúguǒ nǐ bù shūfu, jiù zǎo diǎnr xiūxi ba.', 'If you feel unwell, then rest early.', '如果 … 就 …: 就 introduces what follows from the condition.'],
+  [2, '麻烦帮我＿空调打开。', '把', '被 比 从', 'Máfan bāng wǒ bǎ kōngtiáo dǎkāi.', 'Could you turn on the air conditioner for me, please?', '把 moves the object (空调) in front of the verb, and the verb needs a result (打开).'],
+  [2, '请＿护照给我看一下。', '把', '被 比 跟', 'Qǐng bǎ hùzhào gěi wǒ kàn yíxià.', 'Please show me your passport.', '把 + object + verb: the thing being handled comes before the verb.'],
+  [2, '我＿房间的密码忘了。', '把', '被 比 离', 'Wǒ bǎ fángjiān de mìmǎ wàng le.', 'I forgot the password for the room.', '把 puts the object (密码) before the verb, and 了 completes the action.'],
+  [2, '我的雨伞＿同事拿走了。', '被', '把 比 从', 'Wǒ de yǔsǎn bèi tóngshì názǒu le.', 'My umbrella was taken away by a colleague.', 'Passive: receiver + 被 + doer + verb. The umbrella did not take the colleague.'],
+  [2, '蛋糕＿弟弟吃完了。', '被', '把 比 离', 'Dàngāo bèi dìdi chīwán le.', 'The cake was finished by my little brother.', 'The cake receives the action, so the doer (弟弟) is introduced by 被.'],
+].map(r => ({ lv: r[0], s: r[1], a: r[2], opts: [r[2], ...r[3].split(' ')], py: r[4], en: r[5], why: r[6], g: 1, full: r[1].replace('＿', r[2]) }));
+const PYX = { '件': 'jiàn', '本': 'běn', '张': 'zhāng', '瓶': 'píng', '只': 'zhī', '比': 'bǐ', '从': 'cóng', '跟': 'gēn', '离': 'lí' };
+const optPy = h => (WORDS.find(w => w.h === h) || {}).py || PYX[h] || '';
+const PYL = 'a-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü';
+// The sentence's pinyin with the answer blanked out ('' when the answer cannot be found in it)
+function czPy(c) {
+  const p = optPy(c.a); if (!p) return '';
+  const re = new RegExp('(^|[^' + PYL + '])' + p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![' + PYL + '])', 'i');
+  return re.test(c.py) ? c.py.replace(re, '$1____') : '';
+}
+const czMark = c => c.s.replace('＿', `<mark class="tw">【${c.a}】</mark>`);
+const czOpts = c => shuffle(c.opts.slice()).map(h => ({ l: `<b class="oh" lang="zh-Hans">${h}</b><span class="py">${optPy(h)}</span>`, v: h }));
+// A cloze for one spirit: a grammar cloze when its word is a connector, measure word, 把 or 被; otherwise its own sentence with the word taken out.
+function clozeFor(w) {
+  const cur = CLOZE.filter(c => c.a === w.h);
+  if (cur.length && Math.random() < 0.7) return pick(cur);
+  const verb = o => /^to /.test(o.m);
+  const rank = o => (verb(o) === verb(w) ? 0 : 2) + (o.z === w.z ? 0 : 1) + (o.h.length === w.h.length ? 0 : 1);   // wrong choices that look like the answer: same kind of word, same level, same length
+  const others = shuffle(WORDS.filter(o => o.h !== w.h && !w.ex[0].includes(o.h) && !o.h.includes(w.h) && !w.h.includes(o.h))).sort((x, y) => rank(x) - rank(y)).slice(0, 3);
+  return { a: w.h, s: w.ex[0].replace(w.h, '＿'), full: w.ex[0], py: w.ex[1], en: w.ex[2], opts: [w.h, ...others.map(o => o.h)], why: `【${w.h}】 (${w.py}) means "${w.m}". ${w.n}` };
+}
+// The two sentence questions. 'cloze': pick the missing word. 'sent': hear the sentence, pick what it means.
+function earQ(w, q) {
+  q.blind = blindFor(w) ? 1 : 0;
+  if (q.kind === 'sent') {
+    q.ans = w.ex[2]; q.say = w.ex[0]; q.text = 'Listen to the sentence. What does it mean?';
+    const others = [...new Set(shuffle(WORDS.filter(o => o.ex && o.z === w.z && o.ex[2] !== w.ex[2])).map(o => o.ex[2]))].slice(0, 3);
+    q.opts = shuffle([w.ex[2], ...others]).map(m => ({ l: m, v: m, cls: 'en' }));
+    return q;
+  }
+  const c = q.cz = clozeFor(w);
+  q.ans = c.a; q.say = c.full; q.text = 'Which word completes the sentence?'; q.opts = czOpts(c);
+  return q;
+}
+// How a wild spirit you have met before opens: '' is the normal command menu.
+function openKind(w) {
+  const d = S.dex[w.h], sealed = !!(d && d.c), bl = blindFor(w);
+  if (sealed && w.ex && mature(d)) return bl && Math.random() < 0.5 ? 'sent' : 'cloze';
+  if (sealed && w.ex && bl) return Math.random() < 0.6 ? 'sent' : 'hear';
+  return canSpeak && Math.random() < (bl || pace() === 'high' ? 0.6 : 0.3) ? 'hear' : '';
+}
+// What sits under the question: the hidden-text notice, the cloze sentence, or the spirit's sentence with the word marked.
+function qCtx() {
+  const q = b.q, w = b.w;
+  if (q.blind && !q.shown) return '<p class="ctx hid">🎧 Ear first: the text is hidden. Listen, then answer.</p>';
+  if (q.cz) { const c = q.cz, p = pyBase() ? czPy(c) : ''; return `<p class="ctx"><span class="sent" lang="zh-Hans">${c.s.replace('＿', '<span class="gap">＿＿</span>')}</span>${p ? `<br><span class="cpy">${p}</span>` : ''}${c.g ? '' : `<br>"${c.en}"`}</p>`; }
+  if (q.kind === 'sent') return ctxHTML(w, pyBase() ? 'menu' : 'q');
+  if (q.kind === 'hear' || !w || !w.ex || !(S.dex[w.h] && S.dex[w.h].c)) return '';
+  return ctxHTML(w, 'q');
+}
+const qOpts = q => q.opts.map((o, i) => kopt(i, o.l, o.v, (o.cls || '') + (q.cz ? ' cz' : ''))).join('');
+function revealBtn() {
+  const q = b.q;
+  if (q.kind === 'hear') return btn('👁 Reveal Text', 'reveal');
+  if (q.blind) return btn(q.shown ? 'Text shown' : '👁 Reveal Text', 'reveal', '', q.shown ? 'disabled' : '');
+  return '';
+}
+// What the Listen button plays. A written cloze is answered by eye, so it stays silent until you answer.
+function listenText() {
+  const q = b.q;
+  if (b.phase === 'q' && q && q.say) return q.blind || q.kind === 'sent' ? q.say : '';
+  return b.w ? b.w.h : '';
+}
+const czWhy = c => `<span class="sent" lang="zh-Hans">${czMark(c)}</span><br>${c.py}<br>"${c.en}"<br><b>Why:</b> ${hz(c.why)}`;
+const sentWhy = w => `<span class="sent" lang="zh-Hans">${markW(w)}</span><br>${w.ex[1]}<br>"${w.ex[2]}"<br>${zh('<b class="han">' + w.h + '</b>')} ${w.py} means "${w.m}".`;
+// Added under the result of a spirit question: the ear bonus, the reason for a cloze, or the spirit's sentence.
+function resExtra(q, w, ok) {
+  let h = ok && q.blind && !q.shown ? '<p class="good">👂 Ear first: you answered with the text hidden. +5 mastery XP.</p>' : '';
+  if (q.cz || q.kind === 'sent') { if (ok) h += `<p>${whyText(q, w)}</p>`; }
+  else if (S.dex[w.h] && S.dex[w.h].c) h += ctxHTML(w, 'full');
+  return h;
+}
+/* Cloze rounds in HSK 2–3 trainer battles */
+function addCloze(queue, z, k) {
+  shuffle(CLOZE.filter(c => z > 1 ? c.lv === 2 || Math.random() < 0.25 : c.lv === 1)).slice(0, k)
+    .forEach(c => queue.splice(1 + rnd(queue.length), 0, { cloze: 1, c, en: c.en, ok: [c.full], g: null, tiles: [] }));   // never the opening round
+}
+function loadCloze() {
+  const c = b.s.c; b.dict = false; b.hint = 0;
+  b.q = { kind: 'cloze', cz: c, ans: c.a, say: c.full, text: 'Which word completes the sentence?', opts: czOpts(c), blind: blindNow() ? 1 : 0 };
+  if (!b.intro) { b.phase = 'q'; if (b.q.blind) speak(c.full); }
+}
+function czPanel() {
+  const q = b.q;
+  return `<div class="log"><p class="q"><small class="czt">CLOZE CHALLENGE</small>${q.text}</p>${qCtx()}${b.hint ? hintHTML() : ''}</div>
+    <div class="panel">${qOpts(q)}<div class="duo">${btn('🔊 Listen', 'listen', '', q.blind ? '' : 'disabled')}${btn('💡 Hint', 'hint', '', b.hint ? 'disabled' : '')}${btn('🎒 Bag' + bagN(), 'bag')}</div>${revealBtn()}${btn('Run', 'run', q.blind ? '' : 'full')}</div>`;
+}
+function answerCloze(v) {
+  const q = b.q, c = q.cz, ok = v === q.ans;
+  const full = `<span class="sent" lang="zh-Hans">${czMark(c)}</span><br><span>${c.py}</span><br>"${c.en}"`, why = `<p><b>Why:</b> ${hz(c.why)}</p>`;
+  b.phase = 'res'; b.glass = 0; b.hint = 0; b.listen = c.full;
+  if (ok) {
+    combo++;
+    const crit = combo % 3 === 0;
+    b.queue.shift();
+    let bonus = '';
+    if (crit) {
+      S.hp = Math.min(maxHP(), S.hp + 1); hud();
+      const got = WORDS.filter(w => S.dex[w.h] && S.dex[w.h].c && c.full.includes(w.h));
+      got.forEach(w => { S.dex[w.h].xp = Math.min(100, S.dex[w.h].xp + 10); }); b.xpGain = (b.xpGain || 0) + 10 * got.length;
+      bonus = `<p class="crit">★ STREAK BONUS! +1 HP${got.length ? ' · +10 mastery for ' + zh(got.map(w => w.h).join(' ')) : ''}</p>`;
+    }
+    b.fx = crit ? 'hit crit' : 'hit'; sfx(crit ? 'crit' : 'hit'); speak(c.full);
+    b.log = `${bonus}<p class="good">Direct hit! The missing word is ${zh('<b class="han">' + c.a + '</b>')}.</p><p>${full}</p>${why}`;
+    if (!b.queue.length) { b.over = 1; earn(b.n.gym != null ? 25 : 15 + rnd(6)); }
+  } else {
+    combo = 0;
+    b.queue.push(b.queue.shift()); b.fx = 'miss'; sfx('miss');
+    const dmg = 4 + zoneOf(b.n.x) + (b.n.gym != null ? 1 : 0); hurt(dmg);
+    b.log = `<p class="bad">Not quite. ${b.n.name} hits you for ${dmg} HP.</p><div class="fbrow">${pickedHTML(q, v)}<div class="fb yes"><span class="tagl">✓ CORRECT ANSWER</span>${full}</div></div>${why}`;
+  }
+  b.log = track(ok) + b.log;
+  if (b.over && !b.dead) b.log += summaryHTML();
+  save(); render();
+}
+// Trainer sentences built from Pack #2
+Object.assign(G, {
+  zenme: 'Place + 怎么走 asks the way. 怎么 (how) goes right before the verb.',
+  youdian: '有点 goes BEFORE the problem: 有点 + 发烧. 了 after 感冒 shows the change: you have a cold now.',
+});
+POOLS.t4.push(
+  sen('Excuse me, how do I get to the subway station?', '请问 qǐngwèn|地铁站 dìtiězhàn|怎么 zěnme|走 zǒu', 'zenme'),
+  sen('I have a cold and a bit of a fever.', '我 wǒ|感冒 gǎnmào|了 le|有点 yǒudiǎn|发烧 fāshāo', 'youdian'));
+POOLS.g2.push(sen('Although it is cold today, I still want to go running.', '虽然 suīrán|今天 jīntiān|很冷 hěn lěng|但是 dànshì|我还是 wǒ háishi|想去 xiǎng qù|跑步 pǎobù', 'sr', ['今天虽然很冷但是我还是想去跑步']));
+POOLS.t5.push(sen('Could you turn on the air conditioner for me, please?', '麻烦 máfan|帮 bāng|我 wǒ|把 bǎ|空调 kōngtiáo|打开 dǎkāi', 'ba'));
+POOLS.t6.push(sen('If you feel unwell, rest early.', '如果 rúguǒ|你 nǐ|不舒服 bù shūfu|就 jiù|早点 zǎo diǎn|休息 xiūxi', 'rg'));
+
+/* Character families 字族: one shared part, several radicals.
+   kid: [character, pinyin, tone, added part, its meaning, meaning of the character, how the added part shifts the meaning, traditional if different] */
+const FAMS = [
+  { h: '青', tr: '', py: 'qīng', t: 1, m: 'blue-green, fresh', note: 'All four borrow the sound of 青 (qing); only the tone changes. The radical tells you what the word is about.', kids: [
+    ['请', 'qǐng', 3, '讠', 'speech', 'please / to invite', 'polite requests are made with words', '請'],
+    ['清', 'qīng', 1, '氵', 'water', 'clear / clean', 'water you can see through', ''],
+    ['晴', 'qíng', 2, '日', 'sun', 'sunny', 'the sun out in a clear sky', ''],
+    ['情', 'qíng', 2, '忄', 'heart', 'feeling', 'what the heart holds', '']] },
+  { h: '包', tr: '', py: 'bāo', t: 1, m: 'to wrap / bag', note: 'The sound stays close to bao and sometimes shifts to pao. 包 means to wrap, and a little of that idea survives in each branch.', kids: [
+    ['饱', 'bǎo', 3, '饣', 'food', 'full (after eating)', 'wrapped full of food', '飽'],
+    ['抱', 'bào', 4, '扌', 'hand', 'to hug / to carry', 'arms wrapped round something', ''],
+    ['跑', 'pǎo', 3, '足', 'foot', 'to run', 'feet on the move', ''],
+    ['泡', 'pào', 4, '氵', 'water', 'bubble / to soak', 'water wrapped round air', '']] },
+  { h: '马', tr: '馬', py: 'mǎ', t: 3, m: 'horse', note: 'All five are said "ma". The tone and the added part tell them apart: this is the classic tone family.', kids: [
+    ['妈', 'mā', 1, '女', 'woman', 'mom', 'the woman of the family', '媽'],
+    ['吗', 'ma', 5, '口', 'mouth', '(question particle)', 'a spoken marker at the end of a question', '嗎'],
+    ['骂', 'mà', 4, '口口', 'two mouths', 'to scold', 'two mouths shouting', '罵'],
+    ['码', 'mǎ', 3, '石', 'stone', 'code / number', 'stone counters used for numbers', '碼']] },
+  { h: '门', tr: '門', py: 'mén', t: 2, m: 'door', note: '们, 问 and 闻 borrow the sound of 门 (men, wen). In 间 the door gives the meaning instead.', kids: [
+    ['们', 'men', 5, '亻', 'person', '(plural for people)', 'more than one person: 我们, 你们', '們'],
+    ['问', 'wèn', 4, '口', 'mouth', 'to ask', 'a mouth at the door, asking', '問'],
+    ['闻', 'wén', 2, '耳', 'ear', 'to hear / to smell', 'an ear at the door', '聞'],
+    ['间', 'jiān', 1, '日', 'sun', 'between / room', 'sunlight through the gap in a door', '間']] },
+  { h: '可', tr: '', py: 'kě', t: 3, m: 'can / may', note: 'The sound drifts from ke to ge to he, all made at the back of the mouth.', kids: [
+    ['哥', 'gē', 1, '可', 'a second 可', 'older brother', '可 stacked twice', ''],
+    ['歌', 'gē', 1, '欠', 'open mouth', 'song', '哥 beside a wide-open mouth: singing', ''],
+    ['河', 'hé', 2, '氵', 'water', 'river', 'water that flows on and on', '']] },
+  { h: '方', tr: '', py: 'fāng', t: 1, m: 'square / direction', note: 'Every branch is said "fang"; only the tone changes.', kids: [
+    ['房', 'fáng', 2, '户', 'door', 'house / room', 'a door you live behind', ''],
+    ['放', 'fàng', 4, '攵', 'tap', 'to put / to let go', 'a hand setting something down', ''],
+    ['访', 'fǎng', 3, '讠', 'speech', 'to visit', 'going to talk with someone', '訪']] },
+  { h: '占', tr: '', py: 'zhàn', t: 4, m: 'to occupy', note: '站 keeps the sound zhan exactly; 店 and 点 shift it to dian.', kids: [
+    ['站', 'zhàn', 4, '立', 'stand', 'station / to stand', 'standing at a fixed spot', ''],
+    ['店', 'diàn', 4, '广', 'shelter', 'shop', 'a shelter where goods are laid out', ''],
+    ['点', 'diǎn', 3, '灬', 'fire', 'dot / o\'clock / to order', 'small dots like sparks', '點']] },
+  { h: '巴', tr: '', py: 'bā', t: 1, m: 'to cling to', note: 'Every branch is said "ba"; the tone and the radical do the rest.', kids: [
+    ['把', 'bǎ', 3, '扌', 'hand', 'to hold / (moves the object forward)', 'a hand taking hold', ''],
+    ['吧', 'ba', 5, '口', 'mouth', '(suggestion particle)', 'a spoken softener at the end: 走吧', ''],
+    ['爸', 'bà', 4, '父', 'father', 'dad', 'the father of the family', '']] },
+  { h: '元', tr: '', py: 'yuán', t: 2, m: 'first / yuan (money)', note: '远, 园 and 院 keep the sound yuan. 完 shifts to wan, and 院 is built on 完.', kids: [
+    ['远', 'yuǎn', 3, '辶', 'walk', 'far', 'a long way to walk', '遠'],
+    ['园', 'yuán', 2, '囗', 'enclosure', 'garden / park', 'a space with a wall round it', '園'],
+    ['完', 'wán', 2, '宀', 'roof', 'to finish', 'the roof is on, so the house is done', ''],
+    ['院', 'yuàn', 4, '阝', 'mound', 'courtyard, as in 医院', 'a walled yard, built on 完', '']] },
+  { h: '交', tr: '', py: 'jiāo', t: 1, m: 'to hand over / to cross', note: '饺 and 较 keep jiao; 校 softens it to xiao.', kids: [
+    ['饺', 'jiǎo', 3, '饣', 'food', 'dumpling', 'food with crossed, folded edges', '餃'],
+    ['较', 'jiào', 4, '车', 'vehicle', 'to compare / rather', 'carts set side by side', '較'],
+    ['校', 'xiào', 4, '木', 'tree', 'school', 'a wooden building for learning', '']] },
+];
+function familiesHTML() {
+  return `<p class="autosave">${zh('字族')} (zìzú) are character families: one shared part carries the sound, and the radical beside it changes the meaning. Tap a root to open its tree, then tap any character to hear it.</p>
+    <div class="fams">${FAMS.map((f, i) => {
+      const open = famOpen === i;
+      const tree = !open ? '' : `<div class="fam-tree"><p class="fam-note">${hz(f.note)}</p><div class="fam-brs">${f.kids.map(k => {
+        const ws = WORDS.filter(w => w.h.includes(k[0])).slice(0, 3);
+        return `<div class="fam-br"><button class="g" data-say="${k[0]}" lang="zh-Hans" aria-label="Listen to ${k[1]}"><span class="t${k[2]}">${k[0]}</span>${k[7] ? `<small lang="zh-Hant">[${k[7]}]</small>` : ''}</button>
+          <div><b>${k[1]}</b> · ${k[5]}<div class="fam-eq"><b lang="zh-Hans">${k[3]}</b> ${k[4]} + <b lang="zh-Hans">${f.h}</b> ${f.py} → ${hz(k[6])}</div>${ws.length ? `<div class="fam-tag">Spirit${ws.length > 1 ? 's' : ''}: ${ws.map(w => zh(w.h) + (S.dex[w.h] && S.dex[w.h].c ? ' ✓ sealed' : '')).join(' · ')}</div>` : ''}</div></div>`; }).join('')}</div>
+        <button class="btn mini" data-say="${[f.h, ...f.kids.map(k => k[0])].join('，')}">🔊 Hear the whole family</button></div>`;
+      return `<div class="fam${open ? ' open' : ''}"><button class="fam-root" data-fam="${i}" aria-expanded="${open}"><span class="fr t${f.t}" lang="zh-Hans">${f.h}</span><span><b>${f.py}</b> · ${f.m}${f.tr ? ` <span class="trad" lang="zh-Hant">[${f.tr}]</span>` : ''}<small>${f.kids.length} branches · tap to ${open ? 'close' : 'open'}</small></span><span class="kids" lang="zh-Hans">${f.kids.map(k => k[0]).join('')}</span></button>${tree}</div>`; }).join('')}</div>`;
+}
+
 /* ───────────── INPUT ───────────── */
 const KEYDIR = { ArrowDown: 0, s: 0, ArrowUp: 1, w: 1, ArrowLeft: 2, a: 2, ArrowRight: 3, d: 3 };
 function press(d) { const i = held.indexOf(d); if (i >= 0) held.splice(i, 1); held.push(d); }
@@ -2694,7 +3129,7 @@ $('#btnPy').addEventListener('click', () => { S.py = S.py ? 0 : 1; hud(); save()
 /* ───────────── BOOT ───────────── */
 function intro() {
   if (S.intro) return;
-  S.intro = 1; S.seenShop = 1; save();
+  S.intro = 1; S.seenShop = 1; S.seen31 = 1; save();
   say(['Welcome to HanziMon! Three zones, three Gym Leaders, and a field full of Hanzi Spirits between you and the Academy.',
     'Walk into tall grass to meet spirits. Name their tone, radical or meaning to hit them, then Seal them into your HanziDex.',
     'Talk to people with a yellow ! to battle with sentence tiles. Leaders with a red ! block the road until you win their badge.',
@@ -2722,10 +3157,15 @@ function begin() {
     news(['New in v3.0: coins 铜钱 (tóngqián) and a blue-roofed Item Shop 杂货店 (záhuòdiàn) in every town. Your Bag holds ' + S.coins + ' coins and ' + S.bag.tea + ' Bubble Tea 珍珠奶茶.',
       'Seal spirits, finish conversations and win trainer battles to earn coins. Open BAG in a battle to use an item without losing your turn.',
       'You can now tap any spot on the map to walk there, and three wooden signposts in the Village hold quick tips.']); }
+  if (!S.seen31) { S.seen31 = 1; save();
+    news(['New in v3.1: every spirit now lives in a sentence. When you meet a spirit you have sealed, you see and hear it in use, with the word marked 【like this】.',
+      'Spirits that have reached the 7-day review hide inside a fill-in-the-blank sentence. Trainers in the Crossroads and the Academy add cloze rounds on 因为…所以, 虽然…但是, 如果…就, measure words, 把 and 被.',
+      'Blind Audio-First: above 85% accuracy, and on 7-day spirits, you hear the sentence before you see it. Tap Reveal Text if you need it, or switch the mode off in the DEX menu.',
+      'Also new: 40 HSK 2–3 spirits for transit, health and hotels in the Crossroads and the Academy, and a Families 字族 tab in the HanziDex.']); }
 }
 showStart();
 setInterval(hud, 60000);   // keeps the due badge current as reviews come due
-window.__hq = { ITEMS, pathTo, tapTile, greetShop, earn, nav: () => ({ route, routeAct, tapMark, camX, camY }), srsAnswer, isDue, track, rollDay, dueCount, accuracy, pace, dayStr, now, begin, pickTrack, openInfo, closeInfo, showStart, RADINFO, CURR, S, P, WORDS, POOLS, NPCS, G, map, walkable, startWild, startTrainer, startQuiz, exportCode, importCode, cv, spawnWeight, markHit, markMiss, startScene, SCENES, PHR, migrateSave, AVATARS, wipeSave, startTrainerF: n => { startTrainer(n); b.intro = 0; b.phase = 'build'; render(); }, BGM, ac: () => ac, numHan, numPy, state: () => ({ mode, b }) };
+window.__hq = { ITEMS, pathTo, tapTile, greetShop, earn, nav: () => ({ route, routeAct, tapMark, camX, camY }), srsAnswer, isDue, track, rollDay, dueCount, accuracy, pace, dayStr, now, begin, pickTrack, openInfo, closeInfo, showStart, RADINFO, CURR, S, P, WORDS, POOLS, NPCS, G, map, walkable, startWild, startTrainer, startQuiz, exportCode, importCode, cv, spawnWeight, markHit, markMiss, startScene, SCENES, PHR, migrateSave, AVATARS, wipeSave, startTrainerF: n => { startTrainer(n); b.intro = 0; b.phase = 'build'; render(); }, BGM, ac: () => ac, numHan, numPy, state: () => ({ mode, b }), FAMS, CLOZE, clozeFor, czPy, optPy, blindFor, mature, openKind, openDex, render };
 })();
 </script>
 </body>
